@@ -117,9 +117,9 @@ void main_driver(const char* argv)
 
         dmap.define(ba);
 
-	if (turbForcing == 1) {
-	  turbforce.define(ba,dmap,turb_a,turb_b);
-	}
+  if (turbForcing == 1) {
+    turbforce.define(ba,dmap,turb_a,turb_b);
+  }
 
         const RealBox& realDomain = geom.ProbDomain();
         int dm;
@@ -475,23 +475,23 @@ void main_driver(const char* argv)
 
         Real step_strt_time = ParallelDescriptor::second();
 
-	if(variance_coef_mom != 0.0) {
+  if(variance_coef_mom != 0.0) {
 
-	  // Fill stochastic terms
-	  sMflux.fillMomStochastic();
+    // Fill stochastic terms
+    sMflux.fillMomStochastic();
 
-	  // compute stochastic force terms
-	  sMflux.StochMomFluxDiv(mfluxdiv_stoch,0,eta_cc,eta_ed,temp_cc,temp_ed,weights,dt);
-	}
+    // compute stochastic force terms
+    sMflux.StochMomFluxDiv(mfluxdiv_stoch,0,eta_cc,eta_ed,temp_cc,temp_ed,weights,dt);
+  }
 
-	// Advance umac
+  // Advance umac
         advance(umac,umacTemp,pres,mfluxdiv_stoch,
                 alpha_fc,beta,gamma,beta_ed,geom,dt,turbforce);
 
-	//////////////////////////////////////////////////
+  //////////////////////////////////////////////////
 
         // add a snapshot to the structure factor
-	if (step > n_steps_skip && struct_fact_int > 0 && (step-n_steps_skip)%struct_fact_int == 0) {
+  if (step > n_steps_skip && struct_fact_int > 0 && (step-n_steps_skip)%struct_fact_int == 0) {
 
             // add this snapshot to the average in the structure factor
 

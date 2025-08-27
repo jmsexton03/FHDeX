@@ -48,7 +48,7 @@ void app_bc_phonon_gpu(const paramPlane* surf, FhdParticleContainer::ParticleTyp
           //(*specCount)++;
           amrex::Gpu::Atomic::Add(specCount, 1);
           dotprod = part.rdata(FHD_realData::velx)*surf->rnx + part.rdata(FHD_realData::vely)*surf->rny
-          	+ part.rdata(FHD_realData::velz)*surf->rnz;
+            + part.rdata(FHD_realData::velz)*surf->rnz;
 
           part.rdata(FHD_realData::velx) = -2.0*dotprod*surf->rnx + part.rdata(FHD_realData::velx);
           part.rdata(FHD_realData::vely) = -2.0*dotprod*surf->rny + part.rdata(FHD_realData::vely);
@@ -141,7 +141,7 @@ void app_bc_phonon_gpu(const paramPlane* surf, FhdParticleContainer::ParticleTyp
           //(*specCount)++;
           amrex::Gpu::Atomic::Add(specCount, 1);
           dotprod = part.rdata(FHD_realData::velx)*surf->lnx + part.rdata(FHD_realData::vely)*surf->lny
-          	+ part.rdata(FHD_realData::velz)*surf->lnz;
+            + part.rdata(FHD_realData::velz)*surf->lnz;
 
           part.rdata(FHD_realData::velx) = -2.0*dotprod*surf->lnx + part.rdata(FHD_realData::velx);
           part.rdata(FHD_realData::vely) = -2.0*dotprod*surf->lny + part.rdata(FHD_realData::vely);

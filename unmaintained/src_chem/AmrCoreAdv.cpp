@@ -369,7 +369,7 @@ void AmrCoreAdv::InitData ( BoxArray & ba, DistributionMapping & dm)
 // with interpolated coarse level data. Note: overrides the pure virtual
 // function in AmrCore
 void AmrCoreAdv::MakeNewLevelFromCoarse (int lev, Real time, const BoxArray & ba,
-				         const DistributionMapping & dm)
+                 const DistributionMapping & dm)
 {
 
     const int ncomp  = con_new[lev-1]->nComp();
@@ -382,7 +382,7 @@ void AmrCoreAdv::MakeNewLevelFromCoarse (int lev, Real time, const BoxArray & ba
     t_old[lev] = time - 1.e200;
 
     if (lev > 0 && do_reflux) {
-	flux_reg[lev].reset(new FluxRegister(ba, dm, refRatio(lev-1), lev, ncomp));
+  flux_reg[lev].reset(new FluxRegister(ba, dm, refRatio(lev-1), lev, ncomp));
     }
 
     FillCoarsePatch(lev, time, *con_new[lev], 0, ncomp);
@@ -411,7 +411,7 @@ void AmrCoreAdv::RemakeLevel (int lev, Real time, const BoxArray & ba,
     t_old[lev] = time - 1.e200;
 
     if (lev > 0 && do_reflux) {
-	flux_reg[lev].reset(new FluxRegister(ba, dm, refRatio(lev-1), lev, ncomp));
+  flux_reg[lev].reset(new FluxRegister(ba, dm, refRatio(lev-1), lev, ncomp));
     }
 }
 
@@ -430,7 +430,7 @@ AmrCoreAdv::ClearLevel (int lev)
 // Only used during initialization.
 // overrides the pure virtual function in AmrCore
 void AmrCoreAdv::MakeNewLevelFromScratch (int lev, Real time, const BoxArray& ba,
-					  const DistributionMapping& dm)
+            const DistributionMapping& dm)
 {
 
     const int ncomp = 1;
@@ -444,7 +444,7 @@ void AmrCoreAdv::MakeNewLevelFromScratch (int lev, Real time, const BoxArray& ba
     t_old[lev] = time - 1.e200;
 
 //    if (lev > 0 && do_reflux) {
-//	flux_reg[lev].reset(new FluxRegister(ba, dm, refRatio(lev-1), lev, ncomp));
+//  flux_reg[lev].reset(new FluxRegister(ba, dm, refRatio(lev-1), lev, ncomp));
 //    }
 
     const Real* dx = geom[lev].CellSize();
@@ -459,9 +459,9 @@ void AmrCoreAdv::MakeNewLevelFromScratch (int lev, Real time, const BoxArray& ba
         const int* lo  = box.loVect();
         const int* hi  = box.hiVect();
 
-	initdata(&lev, &cur_time, AMREX_ARLIM_3D(lo), AMREX_ARLIM_3D(hi),
-		 BL_TO_FORTRAN_3D(state[mfi]), AMREX_ZFILL(dx),
-		 AMREX_ZFILL(prob_lo));
+  initdata(&lev, &cur_time, AMREX_ARLIM_3D(lo), AMREX_ARLIM_3D(hi),
+     BL_TO_FORTRAN_3D(state[mfi]), AMREX_ZFILL(dx),
+     AMREX_ZFILL(prob_lo));
     }
 
 }
@@ -478,17 +478,17 @@ AmrCoreAdv::ErrorEst (int lev, TagBoxArray& tags, Real time, int ngrow)
     // only do this during the first call to ErrorEst
     if (first)
     {
-	first = false;
+  first = false;
         // read in an array of "conerr", which is the tagging threshold
         // in this example, we tag values of "con" which are greater than conerr
         // for that particular level
         // in subroutine state_error, you could use more elaborate tagging, such
         // as more advanced logical expressions, or gradients, etc.
-	ParmParse pp("adv");
-	int n = pp.countval("conerr");
-	if (n > 0) {
-	    pp.getarr("conerr", conerr, 0, n);
-	}
+  ParmParse pp("adv");
+  int n = pp.countval("conerr");
+  if (n > 0) {
+      pp.getarr("conerr", conerr, 0, n);
+  }
     }
 
     if (lev >= conerr.size()) return;
@@ -507,35 +507,35 @@ AmrCoreAdv::ErrorEst (int lev, TagBoxArray& tags, Real time, int ngrow)
     {
         Vector<int>  itags;
 
-	for (MFIter mfi(state,true); mfi.isValid(); ++mfi)
-	{
-	    const Box& tilebox  = mfi.tilebox();
+  for (MFIter mfi(state,true); mfi.isValid(); ++mfi)
+  {
+      const Box& tilebox  = mfi.tilebox();
 
             TagBox&     tagfab  = tags[mfi];
 
-	    // We cannot pass tagfab to Fortran becuase it is BaseFab<char>.
-	    // So we are going to get a temporary integer array.
+      // We cannot pass tagfab to Fortran becuase it is BaseFab<char>.
+      // So we are going to get a temporary integer array.
             // set itags initialle re intent(in) :: dx(3iy to 'untagged' everywhere
             // we define itags over the tilebox region
-	    tagfab.get_itags(itags, tilebox);
+      tagfab.get_itags(itags, tilebox);
 
             // data pointer and index space
-	    int*        tptr    = itags.dataPtr();
-	    const int*  tlo     = tilebox.loVect();
-	    const int*  thi     = tilebox.hiVect();
+      int*        tptr    = itags.dataPtr();
+      const int*  tlo     = tilebox.loVect();
+      const int*  thi     = tilebox.hiVect();
 
             // tag cells for refinement
-	    state_error(tptr,  AMREX_ARLIM_3D(tlo), AMREX_ARLIM_3D(thi),
-			BL_TO_FORTRAN_3D(state[mfi]),
-			&tagval, &clearval,
-			AMREX_ARLIM_3D(tilebox.loVect()), AMREX_ARLIM_3D(tilebox.hiVect()),
-			AMREX_ZFILL(dx), AMREX_ZFILL(prob_lo), &time, &conerr[lev]);
-	    //
-	    // Now update the tags in the TagBox in the tilebox region
+      state_error(tptr,  AMREX_ARLIM_3D(tlo), AMREX_ARLIM_3D(thi),
+      BL_TO_FORTRAN_3D(state[mfi]),
+      &tagval, &clearval,
+      AMREX_ARLIM_3D(tilebox.loVect()), AMREX_ARLIM_3D(tilebox.hiVect()),
+      AMREX_ZFILL(dx), AMREX_ZFILL(prob_lo), &time, &conerr[lev]);
+      //
+      // Now update the tags in the TagBox in the tilebox region
             // to be equal to itags
-	    //
-	    tagfab.tags_and_untags(itags, tilebox);
-	}
+      //
+      tagfab.tags_and_untags(itags, tilebox);
+  }
     }
 }
 
@@ -586,10 +586,10 @@ AmrCoreAdv::FillPatch (int lev, Real time, MultiFab& mf, int icomp, int ncomp)
 
     if (lev == 0)
     {
-	Vector<MultiFab*> smf;
-	Vector<Real> stime;
+  Vector<MultiFab*> smf;
+  Vector<Real> stime;
 
-	GetData(0, time, smf, stime);
+  GetData(0, time, smf, stime);
 
 
         BndryFuncArray bfunc(confill);
@@ -605,21 +605,21 @@ AmrCoreAdv::FillPatch (int lev, Real time, MultiFab& mf, int icomp, int ncomp)
    }
     else
     {
-	Vector<MultiFab*> cmf, fmf;
-	Vector<Real> ctime, ftime;
-	GetData(lev-1, time, cmf, ctime);
-	GetData(lev  , time, fmf, ftime);
+  Vector<MultiFab*> cmf, fmf;
+  Vector<Real> ctime, ftime;
+  GetData(lev-1, time, cmf, ctime);
+  GetData(lev  , time, fmf, ftime);
 
         BndryFuncArray bfunc(confill);
         PhysBCFunct<BndryFuncArray> cphysbc(geom[lev-1],bcs,bfunc);
         PhysBCFunct<BndryFuncArray> fphysbc(geom[lev  ],bcs,bfunc);
 
-	Interpolater* mapper = &cell_cons_interp;
+  Interpolater* mapper = &cell_cons_interp;
 
-	amrex::FillPatchTwoLevels(mf, time, cmf, ctime, fmf, ftime,
-				   0, icomp, ncomp, geom[lev-1], geom[lev],
-				   cphysbc,0, fphysbc, 0, refRatio(lev-1),
-				   mapper, bcs,0);
+  amrex::FillPatchTwoLevels(mf, time, cmf, ctime, fmf, ftime,
+           0, icomp, ncomp, geom[lev-1], geom[lev],
+           cphysbc,0, fphysbc, 0, refRatio(lev-1),
+           mapper, bcs,0);
     }
 }
 
@@ -636,7 +636,7 @@ AmrCoreAdv::FillCoarsePatch (int lev, Real time, MultiFab& mf, int icomp, int nc
     GetData(lev-1, time, cmf, ctime);
 
     if (cmf.size() != 1) {
-	amrex::Abort("FillCoarsePatch: how did this happen?");
+  amrex::Abort("FillCoarsePatch: how did this happen?");
     }
     BndryFuncArray bfunc(confill);
     PhysBCFunct<BndryFuncArray> cphysbc(geom[lev-1],bcs,bfunc);
@@ -648,8 +648,8 @@ AmrCoreAdv::FillCoarsePatch (int lev, Real time, MultiFab& mf, int icomp, int nc
     Interpolater* mapper = &cell_cons_interp;
 
     amrex::InterpFromCoarseLevel(mf, time, *cmf[0], 0, icomp, ncomp, geom[lev-1], geom[lev],
-				 cphysbc,0, fphysbc, 0, refRatio(lev-1),
-				 mapper, bcs,0);
+         cphysbc,0, fphysbc, 0, refRatio(lev-1),
+         mapper, bcs,0);
 }
 
 // utility to copy in data from con_old and/or con_new into another multifab
@@ -814,8 +814,8 @@ void AmrCoreAdv::Advance (int lev, Real time, Real dt_lev, int iteration, int nc
             const FArrayBox & statein =   Sborder[mfi];
             FArrayBox & stateout      =     (*S_new)[mfi];
             FArrayBox & ptS           =  ptSource[mfi];
-            IArrayBox & fabsl 	      =   sloc_mf[mfi];
-            IArrayBox & fabil 	      =   iloc_mf[mfi];
+            IArrayBox & fabsl         =   sloc_mf[mfi];
+            IArrayBox & fabil         =   iloc_mf[mfi];
             FArrayBox & uface_mf      = uface_lev[mfi];
             FArrayBox & vface_mf      = vface_lev[mfi];
 
@@ -1113,7 +1113,7 @@ void AmrCoreAdv::con_new_copy(int  lev, amrex::Vector<std::unique_ptr<MultiFab>>
 
     MF[lev]->setVal(0.);
 
-	MF[lev]->copy(* Dcon_y[lev], 0, 0,1, yng, 0);
+  MF[lev]->copy(* Dcon_y[lev], 0, 0,1, yng, 0);
     }
     else if (indicator==3){
   #if (AMREX_SPACEDIM>=3)
@@ -1124,7 +1124,7 @@ void AmrCoreAdv::con_new_copy(int  lev, amrex::Vector<std::unique_ptr<MultiFab>>
     MF[lev].reset(new MultiFab(z_face_ba, condm, 1, 0));
 
     MF[lev]->setVal(0.);
-	 MF[lev]->copy(* Dcon_z[lev], 0, 0,1, zng, 0);
+   MF[lev]->copy(* Dcon_z[lev], 0, 0,1, zng, 0);
   #endif
     }
     else if (indicator==4){
@@ -1132,7 +1132,7 @@ void AmrCoreAdv::con_new_copy(int  lev, amrex::Vector<std::unique_ptr<MultiFab>>
 
     MF[lev]->setVal(0.);
 
-	 MF[lev]->copy(* MagDcon[lev], 0, 0,1, 0, 0);
+   MF[lev]->copy(* MagDcon[lev], 0, 0,1, 0, 0);
     }
     else if (indicator==5){
     DistributionMapping condm = Dconc_x[lev]->DistributionMap();
@@ -1156,7 +1156,7 @@ void AmrCoreAdv::con_new_copy(int  lev, amrex::Vector<std::unique_ptr<MultiFab>>
 
     MF[lev]->setVal(0.);
 
-	MF[lev]->copy(* Dconc_y[lev], 0, 0,1, yng, 0);
+  MF[lev]->copy(* Dconc_y[lev], 0, 0,1, yng, 0);
     }
     else if (indicator==7){
   #if (AMREX_SPACEDIM>=3)
@@ -1168,7 +1168,7 @@ void AmrCoreAdv::con_new_copy(int  lev, amrex::Vector<std::unique_ptr<MultiFab>>
     MF[lev].reset(new MultiFab(conba, condm, 1, 0));
 
     MF[lev]->setVal(0.);
-	 MF[lev]->copy(* Dconc_z[lev], 0, 0,1, zng, 0);
+   MF[lev]->copy(* Dconc_z[lev], 0, 0,1, zng, 0);
   #endif
     }
 

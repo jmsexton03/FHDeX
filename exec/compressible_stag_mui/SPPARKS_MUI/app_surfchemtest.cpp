@@ -97,9 +97,9 @@ AppSurfchemtest::AppSurfchemtest(SPPARKS *spk, int narg, char **arg) :
   for (int i = 0; i < 4; i++) {
     for (int j = 0; j < 4; j++) {
       for (int k = 0; k < 6; k++) {
-	for (int l = 0; l < 6; l++) {
-		V_neighbor[i][j][k][l] = 0.0;
-	}
+  for (int l = 0; l < 6; l++) {
+    V_neighbor[i][j][k][l] = 0.0;
+  }
       }
     }
   }
@@ -258,11 +258,11 @@ void AppSurfchemtest::input_app(char *command, int narg, char **arg)
     } else if (rstyle == 2) {
       if (narg < 8 || narg > 9) error->all(FLERR,"Illegal event command");
       if (narg == 9) {
-	if (strcmp(arg[8],"neighbor") == 0) neighboring_diff[ntwo] = true;
-	else error->all(FLERR,"Illegal event command");
+  if (strcmp(arg[8],"neighbor") == 0) neighboring_diff[ntwo] = true;
+  else error->all(FLERR,"Illegal event command");
       }
       else {
-	neighboring_diff[ntwo] = false;
+  neighboring_diff[ntwo] = false;
       }
       if (strcmp(arg[1],"siteA") == 0) dtype[ntwo][0] = SITEA;
       else if (strcmp(arg[1],"siteB") == 0) dtype[ntwo][0] = SITEB;
@@ -415,11 +415,11 @@ void AppSurfchemtest::input_app(char *command, int narg, char **arg)
     } else if (rstyle == 5) {   // desorption
       if (narg < 5 || narg > 6) error->all(FLERR,"Illegal event command");
       if (narg == 6) {
-	if (strcmp(arg[5],"neighbor") == 0) neighboring_des[ndes] = true;
-	else error->all(FLERR,"Illegal event command");
+  if (strcmp(arg[5],"neighbor") == 0) neighboring_des[ndes] = true;
+  else error->all(FLERR,"Illegal event command");
       }
       else {
-	neighboring_des[ndes] = false;
+  neighboring_des[ndes] = false;
       }
       if (strcmp(arg[1],"siteA") == 0) destype[ndes] = SITEA;
       else if (strcmp(arg[1],"siteB") == 0) destype[ndes] = SITEB;
@@ -529,11 +529,11 @@ void AppSurfchemtest::input_app(char *command, int narg, char **arg)
     } else if (rstyle == 7) { // associative desorption
       if (narg < 9 || narg > 10) error->all(FLERR,"Illegal event command");
       if (narg == 10) {
-	if (strcmp(arg[9],"neighbor") == 0) neighboring_ades[nassocdes] = true;
-	else error->all(FLERR,"Illegal event command");
+  if (strcmp(arg[9],"neighbor") == 0) neighboring_ades[nassocdes] = true;
+  else error->all(FLERR,"Illegal event command");
       }
       else {
-	neighboring_ades[nassocdes] = false;
+  neighboring_ades[nassocdes] = false;
       }
       if (strcmp(arg[1],"siteA") == 0) adestype[nassocdes][0] = SITEA;
       else if (strcmp(arg[1],"siteB") == 0) adestype[nassocdes][0] = SITEB;
@@ -600,11 +600,11 @@ void AppSurfchemtest::input_app(char *command, int narg, char **arg)
     } else if (rstyle == 8) { // (reaction) associative desorption
       if (narg < 9 || narg > 10) error->all(FLERR,"Illegal event command");
       if (narg == 10) {
-	if (strcmp(arg[9],"neighbor") == 0) neighboring_rxn[nreaction] = true;
-	else error->all(FLERR,"Illegal event command");
+  if (strcmp(arg[9],"neighbor") == 0) neighboring_rxn[nreaction] = true;
+  else error->all(FLERR,"Illegal event command");
       }
       else {
-	neighboring_rxn[nreaction] = false;
+  neighboring_rxn[nreaction] = false;
       }
       if (strcmp(arg[1],"siteA") == 0) rxntype[nreaction][0] = SITEA;
       else if (strcmp(arg[1],"siteB") == 0) rxntype[nreaction][0] = SITEB;
@@ -949,23 +949,23 @@ double AppSurfchemtest::site_propensity(int i)
       if (type[j] != dtype[m][1] || element[j] != dinput[m][1]) continue;
 
       if (neighboring_diff[m]) { // diffusion
-	V_int = 0.0;
-	for (int x = 0; x < numneigh[i]; x++) {
-	  k = neighbor[i][x];
-	  V_int += -2*V_neighbor[type[i]][type[k]][element[i]][element[k]];
-	}
-	for (int y = 0; y < numneigh[j]; y++) {
-	  l = neighbor[j][y];
-	  V_int += 2*V_neighbor[type[j]][type[l]][element[i]][element[l]];
-	}
-	if (V_int > 0) {
-	  add_event(i,2,m,dpropensity[m]*exp(-V_int/(kB*temperature)),j,-1);
-	  proball += dpropensity[m]*exp(-V_int/(kB*temperature));
-	}
-	else {
-	  add_event(i,2,m,dpropensity[m],j,-1);
-	  proball += dpropensity[m];
-	}
+  V_int = 0.0;
+  for (int x = 0; x < numneigh[i]; x++) {
+    k = neighbor[i][x];
+    V_int += -2*V_neighbor[type[i]][type[k]][element[i]][element[k]];
+  }
+  for (int y = 0; y < numneigh[j]; y++) {
+    l = neighbor[j][y];
+    V_int += 2*V_neighbor[type[j]][type[l]][element[i]][element[l]];
+  }
+  if (V_int > 0) {
+    add_event(i,2,m,dpropensity[m]*exp(-V_int/(kB*temperature)),j,-1);
+    proball += dpropensity[m]*exp(-V_int/(kB*temperature));
+  }
+  else {
+    add_event(i,2,m,dpropensity[m],j,-1);
+    proball += dpropensity[m];
+  }
       }
       else {
         add_event(i,2,m,dpropensity[m],j,-1);
@@ -1025,8 +1025,8 @@ double AppSurfchemtest::site_propensity(int i)
     if (neighboring_des[m]) {
       V_int = 0.0;
       for (int k = 0; k < numneigh[i]; k++) {
-	j = neighbor[i][k];
-	V_int += 2*V_neighbor[type[i]][type[j]][element[i]][element[j]];
+  j = neighbor[i][k];
+  V_int += 2*V_neighbor[type[i]][type[j]][element[i]][element[j]];
       }
       despropensity = desrate[m]*exp(V_int/(kB*temperature));
     }
@@ -1064,25 +1064,25 @@ double AppSurfchemtest::site_propensity(int i)
       if (type[i] != adestype[m][0] || element[i] != adesinput[m][0]) continue;
       if (type[j] != adestype[m][1] || element[j] != adesinput[m][1]) continue;
       if (neighboring_ades[m]) {
-	V_int = 0.0;
-	for (int x = 0; x < numneigh[i]; x++) {
-	  k = neighbor[i][x];
-	  V_int += V_neighbor[type[i]][type[k]][element[i]][element[k]];
-	  V_int += V_neighbor[type[k]][type[i]][element[k]][element[i]];
-	}
-	for (int y = 0; y < numneigh[j]; y++) {
-	  l = neighbor[j][y];
-	  V_int += V_neighbor[type[j]][type[l]][element[j]][element[l]];
-	  V_int += V_neighbor[type[l]][type[j]][element[l]][element[j]];
-	}
-	V_int -= 2*V_neighbor[type[i]][type[j]][element[i]][element[j]];
-	V_int -= 2*V_neighbor[type[j]][type[i]][element[j]][element[i]];
-	add_event(i,7,m,adespropensity[m]*exp(V_int/(kB*temperature)),j,-1);
-	proball += adespropensity[m]*exp(V_int/(kB*temperature));
+  V_int = 0.0;
+  for (int x = 0; x < numneigh[i]; x++) {
+    k = neighbor[i][x];
+    V_int += V_neighbor[type[i]][type[k]][element[i]][element[k]];
+    V_int += V_neighbor[type[k]][type[i]][element[k]][element[i]];
+  }
+  for (int y = 0; y < numneigh[j]; y++) {
+    l = neighbor[j][y];
+    V_int += V_neighbor[type[j]][type[l]][element[j]][element[l]];
+    V_int += V_neighbor[type[l]][type[j]][element[l]][element[j]];
+  }
+  V_int -= 2*V_neighbor[type[i]][type[j]][element[i]][element[j]];
+  V_int -= 2*V_neighbor[type[j]][type[i]][element[j]][element[i]];
+  add_event(i,7,m,adespropensity[m]*exp(V_int/(kB*temperature)),j,-1);
+  proball += adespropensity[m]*exp(V_int/(kB*temperature));
       }
       else {
-	add_event(i,7,m,adespropensity[m],j,-1);
-  	proball += adespropensity[m];
+  add_event(i,7,m,adespropensity[m],j,-1);
+    proball += adespropensity[m];
       }
     }
   }
@@ -1095,25 +1095,25 @@ double AppSurfchemtest::site_propensity(int i)
       if (type[i] != rxntype[m][0] || element[i] != rxninput[m][0]) continue;
       if (type[j] != rxntype[m][1] || element[j] != rxninput[m][1]) continue;
       if (neighboring_rxn[m]) {
-	V_int = 0.0;
-	for (int x = 0; x < numneigh[i]; x++) {
-	  k = neighbor[i][x];
-	  V_int += V_neighbor[type[i]][type[k]][element[i]][element[k]];
-	  V_int += V_neighbor[type[k]][type[i]][element[k]][element[i]];
-	}
-	for (int y = 0; y < numneigh[j]; y++) {
-	  l = neighbor[j][y];
-	  V_int += V_neighbor[type[j]][type[l]][element[j]][element[l]];
-	  V_int += V_neighbor[type[l]][type[j]][element[l]][element[j]];
-	}
-	V_int -= 2*V_neighbor[type[i]][type[j]][element[i]][element[j]];
-	V_int -= 2*V_neighbor[type[j]][type[i]][element[j]][element[i]];
-	add_event(i,8,m,rxnpropensity[m]*exp(V_int/(kB*temperature)),j,-1);
-	proball += rxnpropensity[m]*exp(V_int/(kB*temperature));
+  V_int = 0.0;
+  for (int x = 0; x < numneigh[i]; x++) {
+    k = neighbor[i][x];
+    V_int += V_neighbor[type[i]][type[k]][element[i]][element[k]];
+    V_int += V_neighbor[type[k]][type[i]][element[k]][element[i]];
+  }
+  for (int y = 0; y < numneigh[j]; y++) {
+    l = neighbor[j][y];
+    V_int += V_neighbor[type[j]][type[l]][element[j]][element[l]];
+    V_int += V_neighbor[type[l]][type[j]][element[l]][element[j]];
+  }
+  V_int -= 2*V_neighbor[type[i]][type[j]][element[i]][element[j]];
+  V_int -= 2*V_neighbor[type[j]][type[i]][element[j]][element[i]];
+  add_event(i,8,m,rxnpropensity[m]*exp(V_int/(kB*temperature)),j,-1);
+  proball += rxnpropensity[m]*exp(V_int/(kB*temperature));
       }
       else {
-	add_event(i,8,m,rxnpropensity[m],j,-1);
-  	proball += rxnpropensity[m];
+  add_event(i,8,m,rxnpropensity[m],j,-1);
+    proball += rxnpropensity[m];
       }
     }
   }

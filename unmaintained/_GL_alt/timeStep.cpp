@@ -41,7 +41,7 @@ void RK2step(MultiFab& phi, MultiFab& phin, MultiFab& rannums,
 
         integrate(BL_TO_FORTRAN_BOX(bx),
                    phi[mfi].dataPtr(),
-      	           dx,
+                     dx,
                    &integral);
 
     }
@@ -66,7 +66,7 @@ void RK2step(MultiFab& phi, MultiFab& phin, MultiFab& rannums,
                    rannums[mfi].dataPtr(),
                    &integral,
                    &energy, &teng,&H1_semi_norm,
-      	           dx, &dt,&phi_avg);
+                     dx, &dt,&phi_avg);
     }
     ParallelDescriptor::ReduceRealSum(phi_avg);
     phi_avg = phi_avg/(n_cells[0]*n_cells[1]);
@@ -92,7 +92,7 @@ void RK2step(MultiFab& phi, MultiFab& phin, MultiFab& rannums,
                 //                   phin[mfi].dataPtr(),
                 //                   rannums[mfi].dataPtr(),
                 //                     &integral,
-                //      	           ZFILL(dx), &dt);
+                //                     ZFILL(dx), &dt);
                 //    }
 }
 

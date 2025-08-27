@@ -54,7 +54,7 @@ void DiagDiffusion::compute()
 void DiagDiffusion::stats(char *strtmp)
 {
   sprintf(strtmp," %10g %10g %10g %10g",
-	  deposit_success,deposit_failed,nfirst_all,nsecond_all);
+    deposit_success,deposit_failed,nfirst_all,nsecond_all);
 }
 
 /* ---------------------------------------------------------------------- */
@@ -62,5 +62,5 @@ void DiagDiffusion::stats(char *strtmp)
 void DiagDiffusion::stats_header(char *strtmp)
 {
   sprintf(strtmp," %10s %10s %10s %10s",
-	  "Deposit","FailedDep","1stHops","2ndHops");
+    "Deposit","FailedDep","1stHops","2ndHops");
 }

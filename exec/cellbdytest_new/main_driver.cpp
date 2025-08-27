@@ -77,16 +77,16 @@ void main_driver(const char* argv)
             tempang = 4;
         }
         else if (eskernel_fluid[i] == 4) {
-	        tempang = 3;
+          tempang = 3;
         }
         else if (eskernel_fluid[i] == 5) {
-	        tempang = 3;
+          tempang = 3;
         }
         else if (eskernel_fluid[i] == 6) {
-	        tempang = 4;
+          tempang = 4;
         }
         else {
-	        tempang = floor(eskernel_fluid[i]/2)+1;
+          tempang = floor(eskernel_fluid[i]/2)+1;
         }
 
         if(tempang > ang)
@@ -263,7 +263,7 @@ void main_driver(const char* argv)
         ReadCheckPoint(step,time,statsCount,umac,umacM,pres,
                        particleMeans,particleVars,chargeM,
                        potential,potentialM,
-		       struct_cc_numdens0_real,struct_cc_numdens0_imag);
+           struct_cc_numdens0_real,struct_cc_numdens0_imag);
 
         // grab DistributionMap from umac
         dmap = umac[0].DistributionMap();
@@ -368,92 +368,92 @@ void main_driver(const char* argv)
            wetRad[j] = 1.481*dxAv;
        }
        else if (pkernel_fluid[j] == 1) {
-	   wetRad[j] = 1.255*dxAv;
+     wetRad[j] = 1.255*dxAv;
        }
        else if (eskernel_fluid[j] == 4) {
-	   if (eskernel_beta[j] < 4 || eskernel_beta[j] > 12) {
-	      Abort("Please provide eskernel_beta within the range [1,3]*eskernel_fluid.");
-	   }
+     if (eskernel_beta[j] < 4 || eskernel_beta[j] > 12) {
+        Abort("Please provide eskernel_beta within the range [1,3]*eskernel_fluid.");
+     }
 
        int targetLine = ((int)(10*eskernel_beta[j])-10*eskernel_fluid[j])+1;
-	   std::ifstream wetRad_w4("wetRad_w4.dat");
-	   for (int lineCount=0; lineCount < targetLine-1; lineCount++) {
-	       wetRad_w4.ignore(100000, '\n');
-	   }
-	   wetRad_w4 >> wetRad[j];
-	   Print() << "wetRad read from file is " << wetRad[j] << std::endl;
-	   wetRad[j] *= dxAv;
-	   wetRad_w4.close();
-	   //wetRad[j] = 1.300*dxAv; // With beta = 5.22
+     std::ifstream wetRad_w4("wetRad_w4.dat");
+     for (int lineCount=0; lineCount < targetLine-1; lineCount++) {
+         wetRad_w4.ignore(100000, '\n');
+     }
+     wetRad_w4 >> wetRad[j];
+     Print() << "wetRad read from file is " << wetRad[j] << std::endl;
+     wetRad[j] *= dxAv;
+     wetRad_w4.close();
+     //wetRad[j] = 1.300*dxAv; // With beta = 5.22
        }
        else if (eskernel_fluid[j] == 5) {
-	   if (eskernel_beta[j] < 5 || eskernel_beta[j] > 15) {
-	      Abort("Please provide eskernel_beta within the range [1,3]*eskernel_fluid.");
-	   }
+     if (eskernel_beta[j] < 5 || eskernel_beta[j] > 15) {
+        Abort("Please provide eskernel_beta within the range [1,3]*eskernel_fluid.");
+     }
 
        int targetLine = ((int)(10*eskernel_beta[j])-10*eskernel_fluid[j])+1;
-	   //Print() << targetLine << std::endl;
-	   std::ifstream wetRad_w5("wetRad_w5.dat");
-	   for (int lineCount=0; lineCount < targetLine-1; lineCount++) {
-	       wetRad_w5.ignore(100000, '\n');
-	   }
-	   wetRad_w5 >> wetRad[j];
-	   Print() << "wetRad read from file is " << wetRad[j] << std::endl;
-	   wetRad[j] *= dxAv;
-	   wetRad_w5.close();
+     //Print() << targetLine << std::endl;
+     std::ifstream wetRad_w5("wetRad_w5.dat");
+     for (int lineCount=0; lineCount < targetLine-1; lineCount++) {
+         wetRad_w5.ignore(100000, '\n');
+     }
+     wetRad_w5 >> wetRad[j];
+     Print() << "wetRad read from file is " << wetRad[j] << std::endl;
+     wetRad[j] *= dxAv;
+     wetRad_w5.close();
        }
        else if (eskernel_fluid[j] == 6) {
-	   if (eskernel_beta[j] < 6 || eskernel_beta[j] > 18) {
-	      Abort("Please provide eskernel_beta within the range [1,3]*eskernel_fluid.");
-	   }
+     if (eskernel_beta[j] < 6 || eskernel_beta[j] > 18) {
+        Abort("Please provide eskernel_beta within the range [1,3]*eskernel_fluid.");
+     }
 
        int targetLine = ((int)(10*eskernel_beta[j])-10*eskernel_fluid[j])+1;
-	   //Print() << targetLine << std::endl;
-	   std::ifstream wetRad_w6("wetRad_w6.dat");
-	   for (int lineCount=0; lineCount < targetLine-1; lineCount++) {
-	       wetRad_w6.ignore(100000, '\n');
-	   }
-	   wetRad_w6 >> wetRad[j];
-	   Print() << "wetRad read from file is " << wetRad[j] << std::endl;
-	   wetRad[j] *= dxAv;
-	   wetRad_w6.close();
+     //Print() << targetLine << std::endl;
+     std::ifstream wetRad_w6("wetRad_w6.dat");
+     for (int lineCount=0; lineCount < targetLine-1; lineCount++) {
+         wetRad_w6.ignore(100000, '\n');
+     }
+     wetRad_w6 >> wetRad[j];
+     Print() << "wetRad read from file is " << wetRad[j] << std::endl;
+     wetRad[j] *= dxAv;
+     wetRad_w6.close();
            //wetRad[j] = 1.478*dxAv; // With beta = 8.64
        }
        else if (eskernel_fluid[j] == 3) {
-	   if (eskernel_beta[j] < 3 || eskernel_beta[j] > 9) {
-	      Abort("Please provide eskernel_beta within the range [1,3]*eskernel_fluid.");
-	   }
+     if (eskernel_beta[j] < 3 || eskernel_beta[j] > 9) {
+        Abort("Please provide eskernel_beta within the range [1,3]*eskernel_fluid.");
+     }
 
        int targetLine = ((int)(10*eskernel_beta[j])-10*eskernel_fluid[j])+1;
-	   //Print() << targetLine << std::endl;
-	   std::ifstream wetRad_w3("wetRad_w3.dat");
-	   for (int lineCount=0; lineCount < targetLine-1; lineCount++) {
-	       wetRad_w3.ignore(100000, '\n');
-	   }
-	   wetRad_w3 >> wetRad[j];
-	   Print() << "wetRad read from file is " << wetRad[j] << std::endl;
-	   wetRad[j] *= dxAv;
-	   wetRad_w3.close();
+     //Print() << targetLine << std::endl;
+     std::ifstream wetRad_w3("wetRad_w3.dat");
+     for (int lineCount=0; lineCount < targetLine-1; lineCount++) {
+         wetRad_w3.ignore(100000, '\n');
+     }
+     wetRad_w3 >> wetRad[j];
+     Print() << "wetRad read from file is " << wetRad[j] << std::endl;
+     wetRad[j] *= dxAv;
+     wetRad_w3.close();
        }
        else if (eskernel_fluid[j] == 7) {
-	   if (eskernel_beta[j] < 7 || eskernel_beta[j] > 21) {
-	      Abort("Please provide eskernel_beta within the range [1,3]*eskernel_fluid.");
-	   }
+     if (eskernel_beta[j] < 7 || eskernel_beta[j] > 21) {
+        Abort("Please provide eskernel_beta within the range [1,3]*eskernel_fluid.");
+     }
 
        int targetLine = ((int)(10*eskernel_beta[j])-10*eskernel_fluid[j])+1;
-	   Print() << "TARGET: " << targetLine << std::endl;
-	   std::ifstream wetRad_w7("wetRad_w7.dat");
-	   for (int lineCount=0; lineCount < targetLine-1; lineCount++) {
-	       wetRad_w7.ignore(100000, '\n');
-	   }
-	   wetRad_w7 >> wetRad[j];
-	   Print() << "wetRad read from file is " << wetRad[j] << std::endl;
-	   wetRad[j] *= dxAv;
-	   wetRad_w7.close();
+     Print() << "TARGET: " << targetLine << std::endl;
+     std::ifstream wetRad_w7("wetRad_w7.dat");
+     for (int lineCount=0; lineCount < targetLine-1; lineCount++) {
+         wetRad_w7.ignore(100000, '\n');
+     }
+     wetRad_w7 >> wetRad[j];
+     Print() << "wetRad read from file is " << wetRad[j] << std::endl;
+     wetRad[j] *= dxAv;
+     wetRad_w7.close();
        }
        else {
            Abort("Currently the code only supports pkernel_fluid = 1,3,4,6 or eskernel_fluid = 3,4,5,6,7.");
-	   //wetRad[j] = 1.255*dxAv;
+     //wetRad[j] = 1.255*dxAv;
        }
     }
 
@@ -854,14 +854,14 @@ void main_driver(const char* argv)
     //}
     Print() << "Pinned particles y location is " << particles.getPinnedY() << std::endl;
     for (int d=0; d<AMREX_SPACEDIM; ++d) {
-	// record actual shear speed, used to update particle velocity due to shear
+  // record actual shear speed, used to update particle velocity due to shear
         particles.wallspeed_x_lo_real[d] = wallspeed_x_lo[d];
         particles.wallspeed_y_lo_real[d] = wallspeed_y_lo[d];
         particles.wallspeed_z_lo_real[d] = wallspeed_z_lo[d];
         particles.wallspeed_x_hi_real[d] = wallspeed_x_hi[d];
         particles.wallspeed_y_hi_real[d] = wallspeed_y_hi[d];
         particles.wallspeed_z_hi_real[d] = wallspeed_z_hi[d];
-	// reset shear speed to 0 before GMRES solver
+  // reset shear speed to 0 before GMRES solver
         wallspeed_x_lo[d] = 0.;
         wallspeed_y_lo[d] = 0.;
         wallspeed_z_lo[d] = 0.;
@@ -1055,7 +1055,7 @@ void main_driver(const char* argv)
     int init_step = step;
     if(ramp_step==2){
         dt = dt*1e-7;
-	if(step < 100 && step > 50) dt = dt*2;
+  if(step < 100 && step > 50) dt = dt*2;
         if(step < 150 && step > 100) dt = dt*4;
         if(step < 200 && step > 150) dt = dt*8;
         if(step < 250 && step > 200) dt = dt*16;
@@ -1079,7 +1079,7 @@ void main_driver(const char* argv)
 
     }else if(ramp_step==1){
         dt = dt*1e-6;
-	if(step < 40 && step > 20) dt = dt*2;
+  if(step < 40 && step > 20) dt = dt*2;
         if(step < 80 && step > 40) dt = dt*10;
         if(step < 160 && step > 80) dt = dt*50;
         if(step < 240 && step > 160) dt = dt*100;
@@ -1094,7 +1094,7 @@ void main_driver(const char* argv)
 
     }else{
         dt = dt*1e-5;
-	if(step < 40 && step > 20) dt = dt*10;
+  if(step < 40 && step > 20) dt = dt*10;
         if(step < 60 && step > 40) dt = dt*100;
         if(step < 80 && step > 60) dt = dt*1000;
         if(step < 100 && step > 80) dt = dt*10000;
@@ -1451,15 +1451,15 @@ void main_driver(const char* argv)
             sourceTemp[d].setVal(0.0);      // reset source terms
             sourceRFD[d].setVal(0.0);      // reset source terms
             particles.ResetMarkers(0);
-	    umac[d].setVal(0.0);
+      umac[d].setVal(0.0);
         }
 
-	//// subtract shear velocity to previous umac
-	//if (istep > 1) {
-	//   MultiFab::Subtract(umac[0],externalV[0],0,0,externalV[0].nComp(),externalV[0].nGrow());
-	//   MultiFab::Subtract(umac[1],externalV[1],0,0,externalV[1].nComp(),externalV[1].nGrow());
-	//   MultiFab::Subtract(umac[2],externalV[2],0,0,externalV[2].nComp(),externalV[2].nGrow());
-	//}
+  //// subtract shear velocity to previous umac
+  //if (istep > 1) {
+  //   MultiFab::Subtract(umac[0],externalV[0],0,0,externalV[0].nComp(),externalV[0].nGrow());
+  //   MultiFab::Subtract(umac[1],externalV[1],0,0,externalV[1].nComp(),externalV[1].nGrow());
+  //   MultiFab::Subtract(umac[2],externalV[2],0,0,externalV[2].nComp(),externalV[2].nGrow());
+  //}
 
         //particles.BuildCorrectionTable(dxp,0);
 
@@ -1474,7 +1474,7 @@ void main_driver(const char* argv)
             // set velx/y/z and forcex/y/z for each particle to zero
             particles.ResetMarkers(0);
         }
-//	    particles.SetForce(1,0.00001,0,0);
+//      particles.SetForce(1,0.00001,0,0);
 //        Real origin[3];
 //        origin[0] = prob_hi[0]/2.0;
 //        origin[1] = prob_hi[1]/2.0;
@@ -1503,16 +1503,16 @@ void main_driver(const char* argv)
 
         if (es_tog==2) {
             // compute pairwise Coulomb force (currently hard-coded to work with y-wall).
-	    particles.computeForcesCoulombGPU(simParticles);
-	     }
+      particles.computeForcesCoulombGPU(simParticles);
+       }
 
-	//particles.computeForcesSpringGPU(simParticles);
-	//particles.computeForcesFENEGPU(simParticles);
-	if (bond_tog != 0) {
-	    particles.computeForcesBondGPU(simParticles);
-	}
+  //particles.computeForcesSpringGPU(simParticles);
+  //particles.computeForcesFENEGPU(simParticles);
+  if (bond_tog != 0) {
+      particles.computeForcesBondGPU(simParticles);
+  }
 
-	//particles.SetForce(1,0,0,-1, particles.id_global_map);
+  //particles.SetForce(1,0,0,-1, particles.id_global_map);
         //particles.SetForce(0,0,0,1, particles.id_global_map);
 
         // compute other forces and spread to grid
@@ -1533,7 +1533,7 @@ void main_driver(const char* argv)
             if (fluid_tog ==2) {
                 sMflux.StochMomFluxDiv(stochMfluxdivC,0,eta_cc,eta_ed,temp_cc,temp_ed,weights,dt);
             }
-	}
+  }
 
 
         MultiFab::Add(source[0],sourceRFD[0],0,0,sourceRFD[0].nComp(),sourceRFD[0].nGrow());
@@ -1548,11 +1548,11 @@ void main_driver(const char* argv)
 
                 Real check;
 
-		/* */
-		// Uncomment this section to calculate mobility matrix for pinned particles; this should only run for 1 step
-		//   if discos-particle wall is regular, we can just calculate mobility matrix on one particle and shift it around.
-		if (pinMatrix_tog == 1)
-		{
+    /* */
+    // Uncomment this section to calculate mobility matrix for pinned particles; this should only run for 1 step
+    //   if discos-particle wall is regular, we can just calculate mobility matrix on one particle and shift it around.
+    if (pinMatrix_tog == 1)
+    {
                     particles.clearMobilityMatrix();
                     for(int ii=0;ii<particles.getTotalPinnedMarkers();ii++)
                     {
@@ -1596,24 +1596,24 @@ void main_driver(const char* argv)
 
                     particles.invertMatrix();
 
-		    if(ParallelDescriptor::MyProc() == 0) {
-		        Abort("Finish calculating pinned mobility matrix, thus program aborts. To use pinned mobility matrix, set pinMatrix_tog=0 and rerun");
-		    }
-		}
+        if(ParallelDescriptor::MyProc() == 0) {
+            Abort("Finish calculating pinned mobility matrix, thus program aborts. To use pinned mobility matrix, set pinMatrix_tog=0 and rerun");
+        }
+    }
                 /* */
 
                 advanceStokes(umac,pres,stochMfluxdiv,source,alpha_fc,beta,gamma,beta_ed,geom,dt);
-		//MultiFab::Add(umac[0],externalVU[0],0,0,externalVU[0].nComp(),externalVU[0].nGrow());
-		//MultiFab::Add(umac[1],externalVU[1],0,0,externalVU[1].nComp(),externalVU[1].nGrow());
-		//MultiFab::Add(umac[2],externalVU[2],0,0,externalVU[2].nComp(),externalVU[2].nGrow());
+    //MultiFab::Add(umac[0],externalVU[0],0,0,externalVU[0].nComp(),externalVU[0].nGrow());
+    //MultiFab::Add(umac[1],externalVU[1],0,0,externalVU[1].nComp(),externalVU[1].nGrow());
+    //MultiFab::Add(umac[2],externalVU[2],0,0,externalVU[2].nComp(),externalVU[2].nGrow());
                 particles.InterpolateMarkersGpu(0, dx, umac, RealFaceCoords, check);
                 particles.velNorm();
 
-		//particles.PrintParticles();
+    //particles.PrintParticles();
 
                 particles.pinnedParticleInversion(particles.id_global_map);
 
-		//particles.PrintParticles();
+    //particles.PrintParticles();
 
                 for (int d=0; d<AMREX_SPACEDIM; ++d) {
                         source    [d].setVal(0.0);      // reset source terms
@@ -1627,21 +1627,21 @@ void main_driver(const char* argv)
                 MultiFab::Add(source[2],sourceRFD[2],0,0,sourceRFD[2].nComp(),sourceRFD[2].nGrow());
 
                 advanceStokes(umac,pres,stochMfluxdiv,source,alpha_fc,beta,gamma,beta_ed,geom,dt);
-		//MultiFab::Add(umac[0],externalV[0],0,0,externalV[0].nComp(),externalV[0].nGrow());
-		//MultiFab::Add(umac[1],externalV[1],0,0,externalV[1].nComp(),externalV[1].nGrow());
-		//MultiFab::Add(umac[2],externalV[2],0,0,externalV[2].nComp(),externalV[2].nGrow());
+    //MultiFab::Add(umac[0],externalV[0],0,0,externalV[0].nComp(),externalV[0].nGrow());
+    //MultiFab::Add(umac[1],externalV[1],0,0,externalV[1].nComp(),externalV[1].nGrow());
+    //MultiFab::Add(umac[2],externalV[2],0,0,externalV[2].nComp(),externalV[2].nGrow());
                 particles.InterpolateMarkersGpu(0, dx, umac, RealFaceCoords, check);
                 particles.velNorm();
 
-		//particles.PrintParticles();
+    //particles.PrintParticles();
 
             }else
             {
-		// TODO: still missing RFD here?
+    // TODO: still missing RFD here?
                 advanceStokes(umac,pres,stochMfluxdiv,source,alpha_fc,beta,gamma,beta_ed,geom,dt);
-		//MultiFab::Add(umac[0],externalV[0],0,0,externalV[0].nComp(),externalV[0].nGrow());
-		//MultiFab::Add(umac[1],externalV[1],0,0,externalV[0].nComp(),externalV[1].nGrow());
-		//MultiFab::Add(umac[2],externalV[2],0,0,externalV[0].nComp(),externalV[2].nGrow());
+    //MultiFab::Add(umac[0],externalV[0],0,0,externalV[0].nComp(),externalV[0].nGrow());
+    //MultiFab::Add(umac[1],externalV[1],0,0,externalV[0].nComp(),externalV[1].nGrow());
+    //MultiFab::Add(umac[2],externalV[2],0,0,externalV[0].nComp(),externalV[2].nGrow());
 
             }
 
@@ -1663,7 +1663,7 @@ void main_driver(const char* argv)
                                paramPlaneCount, 3 /*this number currently does nothing, but we will use it later*/);
 
 
-	    //particles.PrintParticles();
+      //particles.PrintParticles();
 
             // reset statistics after step n_steps_skip
             // if n_steps_skip is negative, we use it as an interval
@@ -1681,18 +1681,18 @@ void main_driver(const char* argv)
             Print() << "Finish move.\n";
         }
 
-	/* uncomment this section if using Delong et al method: add shear velocity to umac
-	 *   also need to add shear velocity in MoveIonsCPP (1-step or 2-step)
-	MultiFab::Add(umac[0],externalV[0],0,0,externalV[0].nComp(),externalV[0].nGrow());
-	MultiFab::Add(umac[1],externalV[1],0,0,externalV[1].nComp(),externalV[1].nGrow());
-	MultiFab::Add(umac[2],externalV[2],0,0,externalV[2].nComp(),externalV[2].nGrow());
-	*/
+  /* uncomment this section if using Delong et al method: add shear velocity to umac
+   *   also need to add shear velocity in MoveIonsCPP (1-step or 2-step)
+  MultiFab::Add(umac[0],externalV[0],0,0,externalV[0].nComp(),externalV[0].nGrow());
+  MultiFab::Add(umac[1],externalV[1],0,0,externalV[1].nComp(),externalV[1].nGrow());
+  MultiFab::Add(umac[2],externalV[2],0,0,externalV[2].nComp(),externalV[2].nGrow());
+  */
 
         // collect particle positions onto one processor
-	particles.GetAllParticlePositions(posxVec,posyVec,poszVec,axVec,ayVec,azVec);
+  particles.GetAllParticlePositions(posxVec,posyVec,poszVec,axVec,ayVec,azVec);
         if (dsf_flag == 1)
         {
-	   if (ParallelDescriptor::MyProc()==0){
+     if (ParallelDescriptor::MyProc()==0){
               std::string filename = Concatenate("partPos_restart", init_step, 9);
               std::ofstream ofs2(filename, std::ofstream::app);
               //ofstream ofs( filename, ios::binary );
@@ -1705,7 +1705,7 @@ void main_driver(const char* argv)
               ofs2.close();
               //ofs.close();
               Print() << "Finished writing particle positions.\n";
-	   }
+     }
         }
 
         /*
@@ -1767,26 +1767,26 @@ void main_driver(const char* argv)
         // also write out time-averaged current to currentEst
         particles.EvaluateStats(particleInstant, particleMeans, ionParticle[0], dt,statsCount);
 
-	if (dsf_fft) {
-	   // save t0 stats
-	   if ((n_steps_skip > 0 && istep == n_steps_skip) ||
+  if (dsf_fft) {
+     // save t0 stats
+     if ((n_steps_skip > 0 && istep == n_steps_skip) ||
                (n_steps_skip < 0 && istep%n_steps_skip == 0) ||
-	       istep == 1) {
+         istep == 1) {
 
                Print() << "resetting dsf stats at " << istep << " step.\n";
-	       MultiFab::Copy(struct_cc_numdens0, particleInstant, 0, 0, nvar_sf_numdens, 0);
-	       structFact_numdens.ComputeFFT(struct_cc_numdens0, struct_cc_numdens0_real, struct_cc_numdens0_imag,geomC);
+         MultiFab::Copy(struct_cc_numdens0, particleInstant, 0, 0, nvar_sf_numdens, 0);
+         structFact_numdens.ComputeFFT(struct_cc_numdens0, struct_cc_numdens0_real, struct_cc_numdens0_imag,geomC);
 
            }
 
-	   // compute dynamic structure factor, using particleInstant and particleInstant0
+     // compute dynamic structure factor, using particleInstant and particleInstant0
            MultiFab::Copy(struct_cc_numdens, particleInstant, 0, 0, nvar_sf_numdens, 0);
-	   structFact_numdens.DynStructureDens(struct_cc_numdens,
-	   		                 struct_cc_numdens0_real, struct_cc_numdens0_imag,
-	   			         geomC, ktarg);
+     structFact_numdens.DynStructureDens(struct_cc_numdens,
+                          struct_cc_numdens0_real, struct_cc_numdens0_imag,
+                    geomC, ktarg);
 
            Print() << "Finish dynamic structure factor.\n";
-	}
+  }
 
 
         // compute the mean and variance of umac
@@ -1801,8 +1801,8 @@ void main_driver(const char* argv)
 
         statsCount++;
 
-	//_______________________________________________________________________
-	// Update structure factor
+  //_______________________________________________________________________
+  // Update structure factor
         if (struct_fact_int > 0 &&
             istep > amrex::Math::abs(n_steps_skip) &&
             (istep-amrex::Math::abs(n_steps_skip)-1)%struct_fact_int == 0) {
@@ -1850,7 +1850,7 @@ void main_driver(const char* argv)
             WriteCheckPoint(istep, time, statsCount, umac, umacM, pres,
                             particles, particleMeans, particleVars, chargeM,
                             potential, potentialM,
-			    struct_cc_numdens0_real, struct_cc_numdens0_imag);
+          struct_cc_numdens0_real, struct_cc_numdens0_imag);
         }
 
 //        particles.PrintParticles();

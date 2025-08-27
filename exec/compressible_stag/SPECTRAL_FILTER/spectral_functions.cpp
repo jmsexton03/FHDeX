@@ -194,7 +194,7 @@ void SpectralVelDecomp(const MultiFab& vel,
     BaseFab<GpuComplex<Real> > spectral_field_Dx(c_local_box, 1, The_Device_Arena()); // dilatationalx
     BaseFab<GpuComplex<Real> > spectral_field_Dy(c_local_box, 1, The_Device_Arena()); // dilatationaly
     BaseFab<GpuComplex<Real> > spectral_field_Dz(c_local_box, 1, The_Device_Arena()); // dilatationalz
-	  MultiFab vel_single(ba, dm, 1, 0);
+    MultiFab vel_single(ba, dm, 1, 0);
 
     int r2c_direction = 0;
 
@@ -216,7 +216,7 @@ void SpectralVelDecomp(const MultiFab& vel,
       r2c_direction, ParallelDescriptor::Communicator());
 
       vel_single.ParallelCopy(vel, 0, 0, 1);
-	    heffte_complex* spectral_data = (heffte_complex*) spectral_field_Tx.dataPtr();
+      heffte_complex* spectral_data = (heffte_complex*) spectral_field_Tx.dataPtr();
       fft.forward(vel_single[local_boxid].dataPtr(),spectral_data);
     }
     // Y
@@ -369,7 +369,7 @@ void SpectralVelDecomp(const MultiFab& vel,
 
     Gpu::streamSynchronize();
 
-	  MultiFab vel_decomp_filter_single(ba, dm, 1, 0);
+    MultiFab vel_decomp_filter_single(ba, dm, 1, 0);
     // inverse Fourier transform filtered total velocity
     {
 #if defined(HEFFTE_CUFFT)
@@ -617,7 +617,7 @@ void SpectralScalarDecomp(const MultiFab& scalar,
 
     // each MPI rank gets storage for its piece of the fft
     BaseFab<GpuComplex<Real> > spectral_field(c_local_box, 1, The_Device_Arena());
-	  MultiFab scalar_single(ba, dm, 1, 0);
+    MultiFab scalar_single(ba, dm, 1, 0);
 
     int r2c_direction = 0;
 
@@ -638,7 +638,7 @@ void SpectralScalarDecomp(const MultiFab& scalar,
       r2c_direction, ParallelDescriptor::Communicator());
 
       scalar_single.ParallelCopy(scalar, 0, 0, 1);
-	    heffte_complex* spectral_data = (heffte_complex*) spectral_field.dataPtr();
+      heffte_complex* spectral_data = (heffte_complex*) spectral_field.dataPtr();
       fft.forward(scalar_single[local_boxid].dataPtr(),spectral_data);
     }
 
@@ -682,7 +682,7 @@ void SpectralScalarDecomp(const MultiFab& scalar,
 
     Gpu::streamSynchronize();
 
-	  MultiFab scalar_filter_single(ba, dm, 1, 0);
+    MultiFab scalar_filter_single(ba, dm, 1, 0);
     // inverse Fourier transform filtered scalar
     {
 #if defined(HEFFTE_CUFFT)
@@ -935,10 +935,10 @@ void ComputeGrad(const MultiFab & phi_in, std::array<MultiFab, 3> & gphi,
 }
 
 void FCMoments(const std::array<MultiFab, 3>& m1,
-		       const amrex::Vector<int>& comps,
+           const amrex::Vector<int>& comps,
                std::array<MultiFab, 3>&  mscr,
-		       const int& power,
-		       amrex::Vector<amrex::Real>& prod_val)
+           const int& power,
+           amrex::Vector<amrex::Real>& prod_val)
 {
 
   BL_PROFILE_VAR("FCMoments()",FCMoments);
@@ -953,7 +953,7 @@ void FCMoments(const std::array<MultiFab, 3>& m1,
 }
 
 void SumStag(const std::array<MultiFab, 3>& m1,
-	     amrex::Vector<amrex::Real>& sum)
+       amrex::Vector<amrex::Real>& sum)
 {
   BL_PROFILE_VAR("SumStag()",SumStag);
 
@@ -1040,10 +1040,10 @@ void SumStag(const std::array<MultiFab, 3>& m1,
 }
 
 void CCMoments(const amrex::MultiFab& m1,
-		 const int& comp1,
+     const int& comp1,
                  amrex::MultiFab& mscr,
-		 const int& power,
-		 amrex::Real& prod_val)
+     const int& power,
+     amrex::Real& prod_val)
 {
 
   BL_PROFILE_VAR("CCMoments()",CCMoments);
@@ -1058,9 +1058,9 @@ void CCMoments(const amrex::MultiFab& m1,
 }
 
 void SumCC(const amrex::MultiFab& m1,
-	   const int& comp,
-	   amrex::Real& sum,
-	   const bool& divide_by_ncells)
+     const int& comp,
+     amrex::Real& sum,
+     const bool& divide_by_ncells)
 {
   BL_PROFILE_VAR("SumCC()",SumCC);
 

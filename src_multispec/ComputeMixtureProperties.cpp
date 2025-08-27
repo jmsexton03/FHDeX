@@ -1,10 +1,10 @@
 #include "multispec_functions.H"
 
 void ComputeMixtureProperties(const MultiFab& rho_in,
-			      const MultiFab& rhotot_in,
-			      MultiFab& D_bar_in,
-			      MultiFab& D_therm_in,
-			      MultiFab& Hessian_in)
+            const MultiFab& rhotot_in,
+            MultiFab& D_bar_in,
+            MultiFab& D_therm_in,
+            MultiFab& Hessian_in)
 {
 
     BL_PROFILE_VAR("ComputeMixtureProperties()",ComputeMixtureProperties);

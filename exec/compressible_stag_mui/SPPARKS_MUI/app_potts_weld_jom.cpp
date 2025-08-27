@@ -71,21 +71,21 @@ void AppPottsWeldJOM::input_app(char *command, int narg, char **arg)
 {
 
   if (strcmp(command,"deep_width") == 0) {
-  	if (narg != 1) error->all(FLERR, "Illegal deep_width command (provide one positive number)");
-  	deep_width = atoi( arg[0]);
-  	if(deep_width < 0) error->all(FLERR, "Illegal deep_width command (cannot be negative)");
+    if (narg != 1) error->all(FLERR, "Illegal deep_width command (provide one positive number)");
+    deep_width = atoi( arg[0]);
+    if(deep_width < 0) error->all(FLERR, "Illegal deep_width command (cannot be negative)");
   }
 
   else if (strcmp(command, "deep_length") == 0 ){
-  	if (narg != 1) error->all(FLERR, "Illegal deep_length command (provide one positive number)");
-  	deep_length = atoi( arg[0]);
-  	if(deep_length < 0) error->all(FLERR, "Illegal deep_length command (cannot be negative)");
+    if (narg != 1) error->all(FLERR, "Illegal deep_length command (provide one positive number)");
+    deep_length = atoi( arg[0]);
+    if(deep_length < 0) error->all(FLERR, "Illegal deep_length command (cannot be negative)");
   }
 
   else if (strcmp(command, "ellipsoid_depth") == 0) {
-  	if (narg != 1) error->all(FLERR, "Illegal ellipsoid_depth command (provide one positive number)");
-  	ellipsoid_depth = atoi(arg[0]);
-  	if(ellipsoid_depth < 0) error->all(FLERR, "Illegal ellipsoid_depth command (cannot be negative)");
+    if (narg != 1) error->all(FLERR, "Illegal ellipsoid_depth command (provide one positive number)");
+    ellipsoid_depth = atoi(arg[0]);
+    if(ellipsoid_depth < 0) error->all(FLERR, "Illegal ellipsoid_depth command (cannot be negative)");
   }
 
   else error->all(FLERR,"Unrecognized command");
@@ -115,13 +115,13 @@ void AppPottsWeldJOM::init_app()
   if (flagall) error->all(FLERR,"One or more sites have invalid values");
 
   if(ellipsoid_depth == 0) {
-  	ellipsoid_depth = 0.33 * domain->boxzhi/domain->lattice->zlattice;
+    ellipsoid_depth = 0.33 * domain->boxzhi/domain->lattice->zlattice;
   }
   if(deep_width == 0) {
-  	deep_width = 0.25 * domain->boxxhi/domain->lattice->xlattice;
+    deep_width = 0.25 * domain->boxxhi/domain->lattice->xlattice;
   }
   if(deep_length == 0) {
-  	deep_length = 0.25 * domain->boxzhi/domain->lattice->zlattice;
+    deep_length = 0.25 * domain->boxzhi/domain->lattice->zlattice;
   }
 }
 
@@ -187,7 +187,7 @@ void AppPottsWeldJOM::site_event_rejection(int i, RandomPark *random)
     /*We can use the shallow melt pool parameters to only do that and create a "Goldak"-esque double ellipsoid melt pool*/
     else if(weld_type == 1) {
 
-    	int WorkingHAZ = (int)(Haz - Wwidth)/2.0;
+      int WorkingHAZ = (int)(Haz - Wwidth)/2.0;
 
         if (time > StartWeld) {
 
@@ -220,7 +220,7 @@ void AppPottsWeldJOM::site_event_rejection(int i, RandomPark *random)
 
                 }
             }
-			if(Mobility > 1.0 || Mobility < 0.0){
+      if(Mobility > 1.0 || Mobility < 0.0){
                 spin[i] = (int) (nspins*random->uniform());
             }
         }
@@ -263,7 +263,7 @@ void AppPottsWeldJOM::site_event_rejection(int i, RandomPark *random)
                     }
 
                 }
-            	//Set the center of the deep ellipsoid 1/4 of the shallow pool's length from the leading edge
+              //Set the center of the deep ellipsoid 1/4 of the shallow pool's length from the leading edge
                 int y_deep = y_weld - Wlength/4.0;
 
                 //Now lets define the deep ellipsoid

@@ -239,31 +239,31 @@ void RK3stepStag(MultiFab& cu,
 
     // fill stochastic face fluxes
     if (do_1D) { // 1D need only for x- face
-	    MultiFab::LinComb(stochface[0],
+      MultiFab::LinComb(stochface[0],
             stoch_weights[0], stochface_A[0], 4,
             stoch_weights[1], stochface_B[0], 4,
             4, nvars-4, 0);
     }
     else if (do_2D) { // 2D need only for x- and y- faces
-	    MultiFab::LinComb(stochface[0],
+      MultiFab::LinComb(stochface[0],
             stoch_weights[0], stochface_A[0], 4,
             stoch_weights[1], stochface_B[0], 4,
             4, nvars-4, 0);
-	    MultiFab::LinComb(stochface[1],
+      MultiFab::LinComb(stochface[1],
             stoch_weights[0], stochface_A[1], 4,
             stoch_weights[1], stochface_B[1], 4,
             4, nvars-4, 0);
     }
     else { // 3D
-	    MultiFab::LinComb(stochface[0],
+      MultiFab::LinComb(stochface[0],
             stoch_weights[0], stochface_A[0], 4,
             stoch_weights[1], stochface_B[0], 4,
             4, nvars-4, 0);
-	    MultiFab::LinComb(stochface[1],
+      MultiFab::LinComb(stochface[1],
             stoch_weights[0], stochface_A[1], 4,
             stoch_weights[1], stochface_B[1], 4,
             4, nvars-4, 0);
-	    MultiFab::LinComb(stochface[2],
+      MultiFab::LinComb(stochface[2],
             stoch_weights[0], stochface_A[2], 4,
             stoch_weights[1], stochface_B[2], 4,
             4, nvars-4, 0);
@@ -570,31 +570,31 @@ void RK3stepStag(MultiFab& cu,
 
     // fill stochastic face fluxes
     if (do_1D) { // 1D need only for x- face
-	    MultiFab::LinComb(stochface[0],
+      MultiFab::LinComb(stochface[0],
             stoch_weights[0], stochface_A[0], 4,
             stoch_weights[1], stochface_B[0], 4,
             4, nvars-4, 0);
     }
     else if (do_2D) { // 2D need only for x- and y- faces
-	    MultiFab::LinComb(stochface[0],
+      MultiFab::LinComb(stochface[0],
             stoch_weights[0], stochface_A[0], 4,
             stoch_weights[1], stochface_B[0], 4,
             4, nvars-4, 0);
-	    MultiFab::LinComb(stochface[1],
+      MultiFab::LinComb(stochface[1],
             stoch_weights[0], stochface_A[1], 4,
             stoch_weights[1], stochface_B[1], 4,
             4, nvars-4, 0);
     }
     else { // 3D
-	    MultiFab::LinComb(stochface[0],
+      MultiFab::LinComb(stochface[0],
             stoch_weights[0], stochface_A[0], 4,
             stoch_weights[1], stochface_B[0], 4,
             4, nvars-4, 0);
-	    MultiFab::LinComb(stochface[1],
+      MultiFab::LinComb(stochface[1],
             stoch_weights[0], stochface_A[1], 4,
             stoch_weights[1], stochface_B[1], 4,
             4, nvars-4, 0);
-	    MultiFab::LinComb(stochface[2],
+      MultiFab::LinComb(stochface[2],
             stoch_weights[0], stochface_A[2], 4,
             stoch_weights[1], stochface_B[2], 4,
             4, nvars-4, 0);
@@ -904,31 +904,31 @@ void RK3stepStag(MultiFab& cu,
 
     // fill stochastic face fluxes
     if (do_1D) { // 1D need only for x- face
-	    MultiFab::LinComb(stochface[0],
+      MultiFab::LinComb(stochface[0],
             stoch_weights[0], stochface_A[0], 4,
             stoch_weights[1], stochface_B[0], 4,
             4, nvars-4, 0);
     }
     else if (do_2D) { // 2D need only for x- and y- faces
-	    MultiFab::LinComb(stochface[0],
+      MultiFab::LinComb(stochface[0],
             stoch_weights[0], stochface_A[0], 4,
             stoch_weights[1], stochface_B[0], 4,
             4, nvars-4, 0);
-	    MultiFab::LinComb(stochface[1],
+      MultiFab::LinComb(stochface[1],
             stoch_weights[0], stochface_A[1], 4,
             stoch_weights[1], stochface_B[1], 4,
             4, nvars-4, 0);
     }
     else { // 3D
-	    MultiFab::LinComb(stochface[0],
+      MultiFab::LinComb(stochface[0],
             stoch_weights[0], stochface_A[0], 4,
             stoch_weights[1], stochface_B[0], 4,
             4, nvars-4, 0);
-	    MultiFab::LinComb(stochface[1],
+      MultiFab::LinComb(stochface[1],
             stoch_weights[0], stochface_A[1], 4,
             stoch_weights[1], stochface_B[1], 4,
             4, nvars-4, 0);
-	    MultiFab::LinComb(stochface[2],
+      MultiFab::LinComb(stochface[2],
             stoch_weights[0], stochface_A[2], 4,
             stoch_weights[1], stochface_B[2], 4,
             4, nvars-4, 0);

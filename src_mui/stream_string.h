@@ -14,19 +14,19 @@
 namespace mui {
 inline istream& operator>>(istream& stream, std::string& ret)
 {
-	std::size_t size;
-	stream >> size;
-	std::string str(size, '*');
-	for( char& a: str ) stream >> a;
-	ret.swap(str);
-	return stream;
+        std::size_t size;
+        stream >> size;
+        std::string str(size, '*');
+        for( char& a: str ) stream >> a;
+        ret.swap(str);
+        return stream;
 }
 inline ostream& operator<< ( ostream& stream, const std::string& str )
 {
-	std::size_t size = {str.size()};
-	stream << size;
-	stream.write(str.c_str(), str.size());
-	return stream;
+        std::size_t size = {str.size()};
+        stream << size;
+        stream.write(str.c_str(), str.size());
+        return stream;
 }
 }
 

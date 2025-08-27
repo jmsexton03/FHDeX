@@ -54,17 +54,17 @@ void anchor_coupling_markers(IBMarkerContainer & ib_mc, int ib_lev, int componen
 
         long np = ib_mc.GetParticles(ib_lev).at(index).numParticles();
 
-	//find and record velocities of two anchor markers on cell body
+    //find and record velocities of two anchor markers on cell body
         for (int i = 0; i < np; ++i) {
             ParticleType & mark = markers[i];
             if((mark.idata(IBMInt::id_1) == 47)&&(mark.idata(IBMInt::cpu_1) == 1))
                 for (int d=0; d<AMREX_SPACEDIM; ++d) anchor_bdy_marker_1[d] = mark.rdata(component + d) ;
-	    if((mark.idata(IBMInt::id_1) == 95)&&(mark.idata(IBMInt::cpu_1) == 1))
+        if((mark.idata(IBMInt::id_1) == 95)&&(mark.idata(IBMInt::cpu_1) == 1))
                 for (int d=0; d<AMREX_SPACEDIM; ++d) anchor_bdy_marker_2[d] = mark.rdata(component + d) ;
         }
 
         //find and update velocities of two anchor markers on flagellum
-	for (int i = 0; i < np; ++i) {
+    for (int i = 0; i < np; ++i) {
             ParticleType & mark = markers[i];
             if((mark.idata(IBMInt::id_1) == 0)&&(mark.idata(IBMInt::cpu_1) == 0))
                 for (int d=0; d<AMREX_SPACEDIM; ++d) mark.rdata(component + d) = anchor_bdy_marker_1[d] ;
@@ -150,8 +150,8 @@ Real theta(Real amp_ramp, Real time, int i_ib, int index_marker) {
 
 
 void update_bdy_marker(const std::map<std::tuple<int, int>, double> & bond_map,
-		       const std::map<int, std::vector<int>> & bond_neighbors,
-		       Real time,
+               const std::map<int, std::vector<int>> & bond_neighbors,
+               Real time,
                        IBMarkerContainer & ib_mc, int ib_lev,
                        int component, bool pred_pos,
                        const Geometry & geom) {
@@ -217,10 +217,10 @@ void update_bdy_marker(const std::map<std::tuple<int, int>, double> & bond_map,
         for(const auto idx : bond_neighbors.at(id)){
 
             double l_0 = bond_map.at(std::tuple{id, idx});
-	    int global_idx_nbr = IBMarkerContainer::storage_idx(sorted_ibs[idx + reduced_ibs[1]]);
+        int global_idx_nbr = IBMarkerContainer::storage_idx(sorted_ibs[idx + reduced_ibs[1]]);
 
             RealVect      pos = {pos_x[global_idx],     pos_y[global_idx],     pos_z[global_idx]};
-	    RealVect  nbr_pos = {pos_x[global_idx_nbr], pos_y[global_idx_nbr], pos_z[global_idx_nbr]};
+        RealVect  nbr_pos = {pos_x[global_idx_nbr], pos_y[global_idx_nbr], pos_z[global_idx_nbr]};
 
             RealVect r_b = nbr_pos - pos;
 
@@ -229,7 +229,7 @@ void update_bdy_marker(const std::map<std::tuple<int, int>, double> & bond_map,
 
 //            Print() << "Updating spring forces on cell body between markers " << id << "and " << idx << std::endl;
 
-	    //update spring forces between current and neighbor markers
+        //update spring forces between current and neighbor markers
             fx[global_idx]     += f0 * r_b[0]; fy[global_idx]     += f0 * r_b[1]; fz[global_idx]     += f0 * r_b[2];
             fx[global_idx_nbr] -= f0 * r_b[0]; fy[global_idx_nbr] -= f0 * r_b[1]; fz[global_idx_nbr] -= f0 * r_b[2];
         }
@@ -313,7 +313,7 @@ void update_ibm_marker(const RealVect & driv_u, Real driv_amp, Real time,
     for (int i_ib=0; i_ib < n_immbdy; ++i_ib) {
 
         if (n_marker[i_ib] <= 0) continue;
-	if (i_ib != 0) continue;
+    if (i_ib != 0) continue;
 
         int N       = ib_flagellum::n_marker[i_ib];
         Real L      = ib_flagellum::length[i_ib];
@@ -354,7 +354,7 @@ void update_ibm_marker(const RealVect & driv_u, Real driv_amp, Real time,
         //get the first anchor marker and the orientation along the two anchor markers
         //good for one flagellum for now
         int i_c = IBMarkerContainer::storage_idx(sorted_ibs[0]);
-	int i_p = IBMarkerContainer::storage_idx(sorted_ibs[1]);
+    int i_p = IBMarkerContainer::storage_idx(sorted_ibs[1]);
         RealVect x_anchor = {pos_x[i_c],   pos_y[i_c],   pos_z[i_c]};
         RealVect next_pos = {pos_x[i_p],   pos_y[i_p],   pos_z[i_p]};
         RealVect r_p = next_pos - x_anchor;
@@ -467,14 +467,14 @@ void update_ibm_marker(const RealVect & driv_u, Real driv_amp, Real time,
 
             //int i_c = id + std::distance(sorted_ibs.begin(), std::find_if(sorted_ibs.begin(), sorted_ibs.end(), [&](const auto& pair) { return pair.first == i_ib; }));
 
-	    int i_c = IBMarkerContainer::storage_idx(sorted_ibs[id + reduced_ibs[i_ib]]);
+        int i_c = IBMarkerContainer::storage_idx(sorted_ibs[id + reduced_ibs[i_ib]]);
 
-	    //Print() << "Adding forces to particles..." << std::endl;
+        //Print() << "Adding forces to particles..." << std::endl;
 
-	    mark.rdata(IBMReal::forcex) += fx[i_c];
+        mark.rdata(IBMReal::forcex) += fx[i_c];
             mark.rdata(IBMReal::forcey) += fy[i_c];
             mark.rdata(IBMReal::forcez) += fz[i_c];
-	}
+    }
     }
     BL_PROFILE_VAR_STOP(UpdateForces);
 };

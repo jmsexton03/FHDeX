@@ -10,30 +10,30 @@ extern "C"
     // these are interfaces to fortran subroutines
 
     void initdata(const int* level, const amrex_real* time,
-		  const int* lo, const int* hi,
-		  BL_FORT_FAB_ARG_3D(state),
-		  const amrex_real* dx, const amrex_real* problo);
+      const int* lo, const int* hi,
+      BL_FORT_FAB_ARG_3D(state),
+      const amrex_real* dx, const amrex_real* problo);
 
 
     void state_error(int* tag, const int* tag_lo, const int* tag_hi,
-		     const BL_FORT_FAB_ARG_3D(state),
-		     const int* tagval, const int* clearval,
-		     const int* lo, const int* hi,
-		     const amrex_real* dx, const amrex_real* problo,
-		     const amrex_real* time, const amrex_real* conerr);
+         const BL_FORT_FAB_ARG_3D(state),
+         const int* tagval, const int* clearval,
+         const int* lo, const int* hi,
+         const amrex_real* dx, const amrex_real* problo,
+         const amrex_real* time, const amrex_real* conerr);
 
     void advect_2d(const amrex_real* time, const int* lo, const int* hi,
-		const BL_FORT_FAB_ARG_3D(statein),
-		BL_FORT_FAB_ARG_3D(stateout),
+    const BL_FORT_FAB_ARG_3D(statein),
+    BL_FORT_FAB_ARG_3D(stateout),
                 BL_FORT_FAB_ARG_3D(ptS),
-	        int* iface, const int* if_lo, const int* if_hi,
-    	        AMREX_D_DECL(const BL_FORT_FAB_ARG_3D(xvel),
-		       const BL_FORT_FAB_ARG_3D(yvel),
-		       const BL_FORT_FAB_ARG_3D(zvel)),
-		AMREX_D_DECL(BL_FORT_FAB_ARG_3D(fx),
-		       BL_FORT_FAB_ARG_3D(fy),
-		       BL_FORT_FAB_ARG_3D(fz)),
-		const amrex_real* dx, const amrex_real* dt, const amrex_real* nu);
+          int* iface, const int* if_lo, const int* if_hi,
+              AMREX_D_DECL(const BL_FORT_FAB_ARG_3D(xvel),
+           const BL_FORT_FAB_ARG_3D(yvel),
+           const BL_FORT_FAB_ARG_3D(zvel)),
+    AMREX_D_DECL(BL_FORT_FAB_ARG_3D(fx),
+           BL_FORT_FAB_ARG_3D(fy),
+           BL_FORT_FAB_ARG_3D(fz)),
+    const amrex_real* dx, const amrex_real* dt, const amrex_real* nu);
 
     void advect_3d(const amrex_real* time, const int* lo, const int* hi,
                 const BL_FORT_FAB_ARG_3D(statein_p),
@@ -95,13 +95,13 @@ extern "C"
                 int * ctag,const int* c_lo, const int* c_hi,
                 BL_FORT_FAB_ARG_3D(ptS),
                 const amrex_real* strength, const amrex_real* dx,
- 	        const amrex_real* prob_lo, int* Num_source);
+           const amrex_real* prob_lo, int* Num_source);
 
 
      void confill (BL_FORT_FAB_ARG_3D(state),
-		  const int* dlo, const int* dhi,
-		  const amrex_real* dx, const amrex_real* glo,
-		  const amrex_real* time, const int* bc);
+      const int* dlo, const int* dhi,
+      const amrex_real* dx, const amrex_real* glo,
+      const amrex_real* time, const int* bc);
 
 
 #ifdef __cplusplus

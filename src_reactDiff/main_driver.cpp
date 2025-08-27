@@ -267,7 +267,7 @@ void main_driver(const char* argv)
         amrex::Print() << "Time step " << step << " complted in " << step_stop_time << " seconds\n";
 
         // add a snapshot to the structure factor
-	if (step > n_steps_skip && struct_fact_int > 0 && (step-n_steps_skip)%struct_fact_int == 0) {
+  if (step > n_steps_skip && struct_fact_int > 0 && (step-n_steps_skip)%struct_fact_int == 0) {
 
             // add this snapshot to the average in the structure factor
             structFact.FortStructure(n_new);

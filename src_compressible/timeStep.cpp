@@ -73,7 +73,7 @@ void RK3step(MultiFab& cu, MultiFab& cup, MultiFab& cup2, MultiFab& /*cup3*/,
 
     // fill random numbers (can skip density component 0)
     for(int d=0;d<AMREX_SPACEDIM;d++) {
-    	for(int i=1;i<nvars;i++) {
+      for(int i=1;i<nvars;i++) {
             Real variance;
             if (i>=1 && i <= 3) {
                 variance = variance_coef_mom;
@@ -116,16 +116,16 @@ void RK3step(MultiFab& cu, MultiFab& cup, MultiFab& cup2, MultiFab& /*cup3*/,
 
     // apply weights (only momentum and energy)
     for(int d=0;d<AMREX_SPACEDIM;d++) {
-	MultiFab::LinComb(stochFlux[d],
-			  stoch_weights[0], stochFlux_A[d], 1,
-			  stoch_weights[1], stochFlux_B[d], 1,
-			  1, nvars-1, 0);
+  MultiFab::LinComb(stochFlux[d],
+        stoch_weights[0], stochFlux_A[d], 1,
+        stoch_weights[1], stochFlux_B[d], 1,
+        1, nvars-1, 0);
     }
 
     MultiFab::LinComb(rancorn,
-		      stoch_weights[0], rancorn_A, 0,
-		      stoch_weights[1], rancorn_B, 0,
-		      0, 1, 0);
+          stoch_weights[0], rancorn_A, 0,
+          stoch_weights[1], rancorn_B, 0,
+          0, 1, 0);
 
     ///////////////////////////////////////////////////////////
 
@@ -153,12 +153,12 @@ void RK3step(MultiFab& cu, MultiFab& cup, MultiFab& cup2, MultiFab& /*cup3*/,
                      Array4<Real const> const& yflux_fab = flux[1].array(mfi);,
                      Array4<Real const> const& zflux_fab = flux[2].array(mfi););
 
-		  // for the box,
-		  // for loop for GPUS
+      // for the box,
+      // for loop for GPUS
         amrex::ParallelFor(bx, nvars, [=] AMREX_GPU_DEVICE (int i, int j, int k, int n) noexcept // <- just leave it
         {
-        		// nth component of cell i,j,k
-        		// nvars -> nspecies*nspecies
+            // nth component of cell i,j,k
+            // nvars -> nspecies*nspecies
             cup_fab(i,j,k,n) = cu_fab(i,j,k,n) - dt *
                 ( AMREX_D_TERM(  (xflux_fab(i+1,j,k,n) - xflux_fab(i,j,k,n)) / dx[0],
                                + (yflux_fab(i,j+1,k,n) - yflux_fab(i,j,k,n)) / dx[1],
@@ -224,16 +224,16 @@ void RK3step(MultiFab& cu, MultiFab& cup, MultiFab& cup2, MultiFab& /*cup3*/,
 
     // apply weights (only momentum and energy)
     for(int d=0;d<AMREX_SPACEDIM;d++) {
-	MultiFab::LinComb(stochFlux[d],
-			  stoch_weights[0], stochFlux_A[d], 1,
-			  stoch_weights[1], stochFlux_B[d], 1,
-			  1, nvars-1, 0);
+  MultiFab::LinComb(stochFlux[d],
+        stoch_weights[0], stochFlux_A[d], 1,
+        stoch_weights[1], stochFlux_B[d], 1,
+        1, nvars-1, 0);
     }
 
     MultiFab::LinComb(rancorn,
-		      stoch_weights[0], rancorn_A, 0,
-		      stoch_weights[1], rancorn_B, 0,
-		      0, 1, 0);
+          stoch_weights[0], rancorn_A, 0,
+          stoch_weights[1], rancorn_B, 0,
+          0, 1, 0);
 
     ///////////////////////////////////////////////////////////
 
@@ -328,16 +328,16 @@ void RK3step(MultiFab& cu, MultiFab& cup, MultiFab& cup2, MultiFab& /*cup3*/,
 
     // apply weights (only momentum and energy)
     for(int d=0;d<AMREX_SPACEDIM;d++) {
-	MultiFab::LinComb(stochFlux[d],
-			  stoch_weights[0], stochFlux_A[d], 1,
-			  stoch_weights[1], stochFlux_B[d], 1,
-			  1, nvars-1, 0);
+  MultiFab::LinComb(stochFlux[d],
+        stoch_weights[0], stochFlux_A[d], 1,
+        stoch_weights[1], stochFlux_B[d], 1,
+        1, nvars-1, 0);
     }
 
     MultiFab::LinComb(rancorn,
-		      stoch_weights[0], rancorn_A, 0,
-		      stoch_weights[1], rancorn_B, 0,
-		      0, 1, 0);
+          stoch_weights[0], rancorn_A, 0,
+          stoch_weights[1], rancorn_B, 0,
+          0, 1, 0);
 
     ///////////////////////////////////////////////////////////
 

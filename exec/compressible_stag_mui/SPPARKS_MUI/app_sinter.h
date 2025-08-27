@@ -29,12 +29,12 @@ using std::vector;
 namespace SPPARKS_NS {
 
 class AppSinter : public AppLattice {
-	friend class DiagSinterDensity;
-	friend class DiagSinterDensityTK;
-	friend class DiagSinterFreeEnergy;
-	friend class DiagSinterFreeEnergyPore;
+  friend class DiagSinterDensity;
+  friend class DiagSinterDensityTK;
+  friend class DiagSinterFreeEnergy;
+  friend class DiagSinterFreeEnergyPore;
 
-	enum {FRAME=-1, VACANT};
+  enum {FRAME=-1, VACANT};
 
  public:
   AppSinter(class SPPARKS *, int, char **);
@@ -51,8 +51,8 @@ class AppSinter : public AppLattice {
 
   // Functions required as class derives from AppLattice
   double site_energy(int);
-  double site_propensity(int);					// Not used (part of rejection-free KMC)
-  void site_event(int, class RandomPark *);	// Not used (part of rejection-free KMC)
+  double site_propensity(int);          // Not used (part of rejection-free KMC)
+  void site_event(int, class RandomPark *);  // Not used (part of rejection-free KMC)
   void site_event_rejection(int, class RandomPark *);
 
   // Change introduced in AppLattice to be able to stop and synchronize annihilations after sweepping sector
@@ -71,13 +71,13 @@ class AppSinter : public AppLattice {
   void choose_neighbor_grain_site_minimizing_energy( int i, int neighstate, RandomPark *random, double & min_gs_energy, int & newstate );
 
   // Functions for vacancies and annihilations
-  void make_vacancy(int i, RandomPark *random);		// Serial / Parallel
-  void annihilate(int i, RandomPark *random);		// Serial / Parallel
-  void register_annihilation_event(int i);			// Parallel
-  void update_annihilations(RandomPark *random);	// Parallel
+  void make_vacancy(int i, RandomPark *random);    // Serial / Parallel
+  void annihilate(int i, RandomPark *random);    // Serial / Parallel
+  void register_annihilation_event(int i);      // Parallel
+  void update_annihilations(RandomPark *random);  // Parallel
 
   // Processing annihilations SERIAL version
-  bool vacancy_adjacent_grain( int i, RandomPark *random, int & adjacent_grain_spin, int & adjacent_grain_start );	// Serial / Parallel
+  bool vacancy_adjacent_grain( int i, RandomPark *random, int & adjacent_grain_spin, int & adjacent_grain_start );  // Serial / Parallel
   double calculate_mass_center_adjacent_grain(int i, int isite, vector<double> & cm );
   void calculate_vacancy_new_position( int i, vector<double> & cm, vector<double> & p, double &mint, vector<double> & new_pos ); // Serial / Parallel
   void collapse_in_direction( int ind_vac, vector<double> & p, double limit_t, vector<double> & new_pos );
@@ -95,9 +95,9 @@ class AppSinter : public AppLattice {
   double calculate_gb_update(double current_time);
   double calculate_gb_average(double & grain_size_average);
   void cluster_faces( int start_ilocal, vector<bool> & site_included, int & grain_vol, int & face_sites, vector<int> & faces,
-							 bool & multiproc, vector<int> & neigh_procs, vector<double> & cm );
+               bool & multiproc, vector<int> & neigh_procs, vector<double> & cm );
 //  void cluster_faces( int start_ilocal, vector<bool> & site_included, int & grain_vol, int & face_sites, vector<int> & faces,
-//							 bool & multiproc, vector<int> & neigh_procs );
+//               bool & multiproc, vector<int> & neigh_procs );
 
   void consolidate_mass_center_distributed_grains( vector<int> & spins, vector<double> & cm_list, const int LOCALNUMGRAINS );
 
@@ -149,7 +149,7 @@ class AppSinter : public AppLattice {
   int border_depth;
 
   int dimension; // Dimension of simulation space
-  int nbasis;	// Number of basis atoms in unit cell
+  int nbasis;  // Number of basis atoms in unit cell
 
   // For density calculations
   int xstart_density, xend_density;
@@ -178,7 +178,7 @@ class AppSinter : public AppLattice {
   double gsize_ini; // Grain size average at the beginning of sintering
 
   protected:
-	int *spin;
+  int *spin;
 };
 
 }

@@ -431,9 +431,9 @@ void main_driver(const char* argv)
     // need to use dVol for scaling
     Real dVol = dx[0]*dx[1];
     if (AMREX_SPACEDIM == 2) {
-	dVol *= cell_depth;
+  dVol *= cell_depth;
     } else if (AMREX_SPACEDIM == 3) {
-	dVol *= dx[2];
+  dVol *= dx[2];
     }
 
     Vector<Real> var_scaling(structVars*(structVars+1)/2);
@@ -561,8 +561,8 @@ void main_driver(const char* argv)
             Abort("algorithm_type not supported");
         }
 
-	//////////////////////////////////////////////////
-	if (istep > n_steps_skip && struct_fact_int > 0 && (istep-n_steps_skip)%struct_fact_int == 0) {
+  //////////////////////////////////////////////////
+  if (istep > n_steps_skip && struct_fact_int > 0 && (istep-n_steps_skip)%struct_fact_int == 0) {
 
             // add this snapshot to the average in the structure factor
 

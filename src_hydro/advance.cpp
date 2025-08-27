@@ -96,14 +96,14 @@ void advanceStokes(std::array< MultiFab, AMREX_SPACEDIM >& umac,
 }
 
 void advanceLowMach(  std::array< MultiFab, AMREX_SPACEDIM >& umac,
-	       std::array< MultiFab, AMREX_SPACEDIM >& umacNew,
-	       MultiFab& pres, MultiFab& tracer,
-	       const std::array< MultiFab, AMREX_SPACEDIM >& mfluxdiv_predict,
-	       const std::array< MultiFab, AMREX_SPACEDIM >& mfluxdiv_correct,
+         std::array< MultiFab, AMREX_SPACEDIM >& umacNew,
+         MultiFab& pres, MultiFab& tracer,
+         const std::array< MultiFab, AMREX_SPACEDIM >& mfluxdiv_predict,
+         const std::array< MultiFab, AMREX_SPACEDIM >& mfluxdiv_correct,
                std::array< MultiFab, AMREX_SPACEDIM >& alpha_fc,
-	       const MultiFab& beta, const MultiFab& gamma,
-	       const std::array< MultiFab, NUM_EDGE >& beta_ed,
-	       const Geometry geom, const Real& dt)
+         const MultiFab& beta, const MultiFab& gamma,
+         const std::array< MultiFab, NUM_EDGE >& beta_ed,
+         const Geometry geom, const Real& dt)
 {
 
   BL_PROFILE_VAR("advance()",advance);
@@ -263,8 +263,8 @@ void advanceLowMach(  std::array< MultiFab, AMREX_SPACEDIM >& umac,
   // PREDICTOR STEP (heun's method: part 1)
   // compute advective term
   AMREX_D_TERM(MultiFab::Copy(uMom[0], umac[0], 0, 0, 1, 0);,
-	       MultiFab::Copy(uMom[1], umac[1], 0, 0, 1, 0);,
-	       MultiFab::Copy(uMom[2], umac[2], 0, 0, 1, 0););
+         MultiFab::Copy(uMom[1], umac[1], 0, 0, 1, 0);,
+         MultiFab::Copy(uMom[2], umac[2], 0, 0, 1, 0););
 
   // let rho = 1
   for (int d=0; d<AMREX_SPACEDIM; d++) {
@@ -282,7 +282,7 @@ void advanceLowMach(  std::array< MultiFab, AMREX_SPACEDIM >& umac,
 
   // crank-nicolson terms
   StagApplyOp(geom,beta_negwtd,gamma_negwtd,beta_ed_negwtd,
-	      umac,Lumac,alpha_fc_0,dx,theta_alpha);
+        umac,Lumac,alpha_fc_0,dx,theta_alpha);
 
   for (int d=0; d<AMREX_SPACEDIM; d++) {
     MultiFab::Copy(gmres_rhs_u[d], umac[d], 0, 0, 1, 0);
@@ -336,7 +336,7 @@ void advanceLowMach(  std::array< MultiFab, AMREX_SPACEDIM >& umac,
 
   // crank-nicolson terms
   StagApplyOp(geom,beta_negwtd,gamma_negwtd,beta_ed_negwtd,
-	      umac,Lumac,alpha_fc_0,dx,theta_alpha);
+        umac,Lumac,alpha_fc_0,dx,theta_alpha);
 
   for (int d=0; d<AMREX_SPACEDIM; d++) {
     MultiFab::Copy(gmres_rhs_u[d], umac[d], 0, 0, 1, 0);

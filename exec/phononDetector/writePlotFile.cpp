@@ -8,12 +8,12 @@ using namespace amrex;
 using namespace std;
 
 void writePlotFile(const MultiFab& mfcuInst,
-						const MultiFab& mfcuMeans,
-						const MultiFab& mfcuVars,
+                        const MultiFab& mfcuMeans,
+                        const MultiFab& mfcuVars,
                         FhdParticleContainer& particles,
-						const Geometry& geom,
-						Real time,
-						int step) {
+                        const Geometry& geom,
+                        Real time,
+                        int step) {
     BL_PROFILE_VAR("writePlotFile()",writePlotFile);
 
     int ncon    = 5;

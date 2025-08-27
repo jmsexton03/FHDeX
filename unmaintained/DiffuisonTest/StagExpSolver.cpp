@@ -62,19 +62,19 @@ void StagExpSolver(const std::array< MultiFab, AMREX_SPACEDIM >& alpha_fc,
    // phiorig_fc[2].FillBoundary(geom.periodicity());
 
     AMREX_D_TERM(MultiFab::Copy(phipred_fc[0],phiorig_fc[0],0,0,1,0);,
-		 MultiFab::Copy(phipred_fc[1],phiorig_fc[1],0,0,1,0);,
-		 MultiFab::Copy(phipred_fc[2],phiorig_fc[2],0,0,1,0););
+     MultiFab::Copy(phipred_fc[1],phiorig_fc[1],0,0,1,0);,
+     MultiFab::Copy(phipred_fc[2],phiorig_fc[2],0,0,1,0););
     AMREX_D_TERM(MultiFab::Copy(phi_fc[0],phiorig_fc[0],0,0,1,0);,
-		 MultiFab::Copy(phi_fc[1],phiorig_fc[1],0,0,1,0);,
-		 MultiFab::Copy(phi_fc[2],phiorig_fc[2],0,0,1,0););
+     MultiFab::Copy(phi_fc[1],phiorig_fc[1],0,0,1,0);,
+     MultiFab::Copy(phi_fc[2],phiorig_fc[2],0,0,1,0););
 
     AMREX_D_TERM(phi_fc[0].FillBoundary(geom.periodicity());,
-		 phi_fc[1].FillBoundary(geom.periodicity());,
-		 phi_fc[2].FillBoundary(geom.periodicity()););
+     phi_fc[1].FillBoundary(geom.periodicity());,
+     phi_fc[2].FillBoundary(geom.periodicity()););
 
     AMREX_D_TERM(phipred_fc[0].FillBoundary(geom.periodicity());,
-    		 phipred_fc[1].FillBoundary(geom.periodicity());,
-    		 phipred_fc[2].FillBoundary(geom.periodicity()););
+         phipred_fc[1].FillBoundary(geom.periodicity());,
+         phipred_fc[2].FillBoundary(geom.periodicity()););
 
     StagApplyOp(geom,beta_cc,gamma_cc,beta_ed,
                 phi_fc,Lphipred_fc,alpha_fc,dx,1.);
@@ -86,8 +86,8 @@ void StagExpSolver(const std::array< MultiFab, AMREX_SPACEDIM >& alpha_fc,
     // Abort();
 
     AMREX_D_TERM(phipred_fc[0].FillBoundary(geom.periodicity());,
-		 phipred_fc[1].FillBoundary(geom.periodicity());,
-		 phipred_fc[2].FillBoundary(geom.periodicity()););
+     phipred_fc[1].FillBoundary(geom.periodicity());,
+     phipred_fc[2].FillBoundary(geom.periodicity()););
 
     StagApplyOp(geom,beta_cc,gamma_cc,beta_ed,
                 phipred_fc,Lphi_fc,alpha_fc,dx,1.);
@@ -100,8 +100,8 @@ void StagExpSolver(const std::array< MultiFab, AMREX_SPACEDIM >& alpha_fc,
     }
 
     AMREX_D_TERM(phi_fc[0].FillBoundary(geom.periodicity());,
-		 phi_fc[1].FillBoundary(geom.periodicity());,
-		 phi_fc[2].FillBoundary(geom.periodicity()););
+     phi_fc[1].FillBoundary(geom.periodicity());,
+     phi_fc[2].FillBoundary(geom.periodicity()););
 
     //////////////////////////////////
 

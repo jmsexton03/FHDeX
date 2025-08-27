@@ -8,18 +8,18 @@ using namespace amrex;
 using namespace std;
 
 void writePlotFile(const MultiFab& mfcuInst,
-						const MultiFab& mfcuMeans,
-						const MultiFab& mfcuVars,
-						const MultiFab& mfprimInst,
-						const MultiFab& mfprimMeans,
-						const MultiFab& mfprimVars,
-						const MultiFab& mfcoVars,
+            const MultiFab& mfcuMeans,
+            const MultiFab& mfcuVars,
+            const MultiFab& mfprimInst,
+            const MultiFab& mfprimMeans,
+            const MultiFab& mfprimVars,
+            const MultiFab& mfcoVars,
                         const MultiFab& mfspatialCorr1d,
                         FhdParticleContainer& particles,
-						const Geometry& geom,
-						Real time,
+            const Geometry& geom,
+            Real time,
                         const int ncross,
-						int step) {
+            int step) {
     BL_PROFILE_VAR("writePlotFile()",writePlotFile);
 
     int ncon    = (nspecies+1)*5;

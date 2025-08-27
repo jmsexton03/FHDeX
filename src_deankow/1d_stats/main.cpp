@@ -76,26 +76,26 @@ void main_main ()
 
         istat = 0;
 
-	npts_scale = 1.;
-	pp.query ("npts_scale",npts_scale);
+  npts_scale = 1.;
+  pp.query ("npts_scale",npts_scale);
 
-	alg_type = 0;
-	pp.query ("alg_type",alg_type);
+  alg_type = 0;
+  pp.query ("alg_type",alg_type);
 
-	avg_type = 0;
-	pp.query ("avg_type",avg_type);
+  avg_type = 0;
+  pp.query ("avg_type",avg_type);
 
         phileft = 32;
-	pp.query ("phileft",phileft);
+  pp.query ("phileft",phileft);
 
         phiright = 32;
-	pp.query ("phiright",phiright);
+  pp.query ("phiright",phiright);
 
         seed = 0;
         pp.query("seed",seed);
 
-	cfl=.9;
-	pp.query ("cfl",cfl);
+  cfl=.9;
+  pp.query ("cfl",cfl);
 
 
         // By default, the boundary conditions will be set to periodic, or bc_lo = bc_hi = 0.
@@ -300,22 +300,22 @@ void main_main ()
 
             istat += 1;
 
-	    for ( MFIter mfi(stats); mfi.isValid(); ++mfi )
+      for ( MFIter mfi(stats); mfi.isValid(); ++mfi )
             {
                 const Box& vbx = mfi.validbox();
                 const auto lo = amrex::lbound(vbx);
                 const auto hi = amrex::ubound(vbx);
 
-         	auto const& phiNew = phi_new.array(mfi);
-         	auto const& stat_arr = stats.array(mfi);
+           auto const& phiNew = phi_new.array(mfi);
+           auto const& stat_arr = stats.array(mfi);
 
                for (auto k = lo.z; k <= hi.z; ++k) {
                for (auto j = lo.y; j <= hi.y; ++j) {
                for (auto i = lo.x; i <= hi.x; ++i) {
-		   stat_arr(i,j,k,0) += phiNew(i,j,k);
-		   stat_arr(i,j,k,1) += phiNew(i,j,k)*phiNew(i,j,k);
-		   stat_arr(i,j,k,2) += phiNew(i,j,k)*phiNew(icor,j,k);
-		   stat_arr(i,j,k,3) += phiNew(icor,j,k);
+       stat_arr(i,j,k,0) += phiNew(i,j,k);
+       stat_arr(i,j,k,1) += phiNew(i,j,k)*phiNew(i,j,k);
+       stat_arr(i,j,k,2) += phiNew(i,j,k)*phiNew(icor,j,k);
+       stat_arr(i,j,k,3) += phiNew(icor,j,k);
                 }
                 }
                 }
@@ -411,24 +411,24 @@ void main_main ()
            }
         }
 
-//	    amrex::Real Ephi=0.;
-//	    amrex::Real Ephi2=0.;
+//      amrex::Real Ephi=0.;
+//      amrex::Real Ephi2=0.;
 /*
-	    Vector<Real> Ephi(2,0.);
+      Vector<Real> Ephi(2,0.);
             Real Ephimin = npts_scale;
-	    for ( MFIter mfi(phi_old); mfi.isValid(); ++mfi )
+      for ( MFIter mfi(phi_old); mfi.isValid(); ++mfi )
             {
                 const Box& vbx = mfi.validbox();
                 const auto lo = amrex::lbound(vbx);
                 const auto hi = amrex::ubound(vbx);
 
-         	auto const& phiNew = phi_new.array(mfi);
+           auto const& phiNew = phi_new.array(mfi);
 
                for (auto k = lo.z; k <= hi.z; ++k) {
                for (auto j = lo.y; j <= hi.y; ++j) {
                for (auto i = lo.x; i <= hi.x; ++i) {
-		   Ephi[0] += phiNew(i,j,k);
-		   Ephi[1] += phiNew(i,j,k)*phiNew(i,j,k);
+       Ephi[0] += phiNew(i,j,k);
+       Ephi[1] += phiNew(i,j,k)*phiNew(i,j,k);
                    Ephimin = std::min(Ephimin,phiNew(i,j,k));
                 }
                 }
@@ -440,13 +440,13 @@ void main_main ()
             const int IOProc = ParallelDescriptor::IOProcessorNumber();
             ParallelDescriptor::ReduceRealSum(Ephi.dataPtr(),2);
             ParallelDescriptor::ReduceRealMin(Ephimin);
-	    amrex::Real scale = n_cell*n_cell;
-	    amrex::Real scale2 =  AMREX_D_TERM( dx[0],
+      amrex::Real scale = n_cell*n_cell;
+      amrex::Real scale2 =  AMREX_D_TERM( dx[0],
                                * dx[1],
                                * dx[2] );
 
             amrex::Print() << "phi variance = " << Ephi[1]/scale - (Ephi[0]*Ephi[0]
-			    /(scale*scale)) << std::endl;
+          /(scale*scale)) << std::endl;
             amrex::Print() << "phi integral = " << Ephi[0]*scale2 << std::endl;
             amrex::Print() << "phi min = " << Ephimin << std::endl;
 */

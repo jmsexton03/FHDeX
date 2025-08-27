@@ -1,7 +1,7 @@
 #include "multispec_functions.H"
 
 void CorrectionFlux(const MultiFab& rho, const MultiFab& rhotot,
-		    std::array< MultiFab, AMREX_SPACEDIM >& flux)
+        std::array< MultiFab, AMREX_SPACEDIM >& flux)
 {
 
   BL_PROFILE_VAR("CorrectionFlux()",CorrectionFlux);

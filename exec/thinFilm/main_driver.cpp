@@ -52,12 +52,12 @@ void main_driver(const char* argv)
     if (do_1d_x) {
         if (n_cells[0] > max_grid_size[0]) {
             Abort("For 1D-x mode, max_grid_size[0] must be >= n_cells[0]");
-	}
+  }
     }
     if (do_1d_y) {
         if (n_cells[1] > max_grid_size[1]) {
             Abort("For 1D-y mode, max_grid_size[1] must be >= n_cells[1]");
-	}
+  }
     }
 
     /////////////////////////////////////////

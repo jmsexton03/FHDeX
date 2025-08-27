@@ -58,14 +58,14 @@ void DiagSinterFreeEnergy::compute()
 
   double interfacialFEtmp = 0.0;
   for (int i = 0; i < nlocal; i++) {
-	int ispin = spin[i];
-	double surface = 0;
-	if ( ispin > VACANT ) { // If I am a grain site add the number of neighbors that are pore sites
-		for (int j = 0; j < numneigh[i]; j++)
-			if (spin[neighbor[i][j]] == VACANT) surface++;
-	}
-	interfacialFEtmp += surface;
-	//interfacialFEtmp += appsinter->site_surface(i);
+  int ispin = spin[i];
+  double surface = 0;
+  if ( ispin > VACANT ) { // If I am a grain site add the number of neighbors that are pore sites
+    for (int j = 0; j < numneigh[i]; j++)
+      if (spin[neighbor[i][j]] == VACANT) surface++;
+  }
+  interfacialFEtmp += surface;
+  //interfacialFEtmp += appsinter->site_surface(i);
   }
   MPI_Allreduce(&interfacialFEtmp,&interfacialFE,1,MPI_DOUBLE,MPI_SUM,world);
 //  density = appsinter->calculate_density();

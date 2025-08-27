@@ -16,9 +16,9 @@ StructFact::StructFact()
 // var_scaling must be sized to match the total number of pairs of variables
 StructFact::StructFact(const BoxArray& ba_in,
                        const DistributionMapping& dmap_in,
-		       const Vector< std::string >& var_names,
-		       const Vector< Real >& var_scaling_in,
-		       const int& verbosity_in) {
+           const Vector< std::string >& var_names,
+           const Vector< Real >& var_scaling_in,
+           const int& verbosity_in) {
 
     this->define(ba_in,dmap_in,var_names,var_scaling_in,verbosity_in);
 
@@ -29,11 +29,11 @@ StructFact::StructFact(const BoxArray& ba_in,
 // var_scaling must be sized to match the total number of pairs of variables
 StructFact::StructFact(const BoxArray& ba_in,
                        const DistributionMapping& dmap_in,
-		       const Vector< std::string >& var_names,
-		       const Vector< Real >& var_scaling_in,
-		       const Vector< int >& s_pairA_in,
-		       const Vector< int >& s_pairB_in,
-		       const int& verbosity_in) {
+           const Vector< std::string >& var_names,
+           const Vector< Real >& var_scaling_in,
+           const Vector< int >& s_pairA_in,
+           const Vector< int >& s_pairB_in,
+           const int& verbosity_in) {
 
     this->define(ba_in,dmap_in,var_names,var_scaling_in,s_pairA_in,s_pairB_in,verbosity_in);
 
@@ -132,11 +132,11 @@ void StructFact::define(const BoxArray& ba_in,
     for (int n=1; n<NVARU; n++) {
       if (varu_temp[n] < varu_temp[n-1]) {
 
-	x_temp = varu_temp[n];
+  x_temp = varu_temp[n];
         varu_temp[n  ] = varu_temp[n-1];
         varu_temp[n-1] = x_temp;
 
-	loop = 1;
+  loop = 1;
       }
     }
     tot_iters++;
@@ -330,8 +330,8 @@ void StructFact::Reset() {
 }
 
 void StructFact::ComputeFFT(const MultiFab& variables,
-			    MultiFab& variables_dft_real,
-			    MultiFab& variables_dft_imag,
+          MultiFab& variables_dft_real,
+          MultiFab& variables_dft_imag,
                             bool unpack)
 {
 
@@ -692,16 +692,16 @@ void StructFact::ShiftFFT(MultiFab& dft_out, const int& zero_avg) {
       dft_onegrid_temp.ParallelCopy(dft_out, d, 0, 1);
 
       if (zero_avg == 1) {
-	  for (MFIter mfi(dft_onegrid); mfi.isValid(); ++mfi) {
-	      const Box& bx = mfi.tilebox();
-	      const Array4<Real>& dft_temp = dft_onegrid_temp.array(mfi);
-	      amrex::ParallelFor(bx, [=] AMREX_GPU_DEVICE (int i, int j, int k) noexcept
+    for (MFIter mfi(dft_onegrid); mfi.isValid(); ++mfi) {
+        const Box& bx = mfi.tilebox();
+        const Array4<Real>& dft_temp = dft_onegrid_temp.array(mfi);
+        amrex::ParallelFor(bx, [=] AMREX_GPU_DEVICE (int i, int j, int k) noexcept
               {
-  		  if (i == 0 && j == 0 && k == 0) {
-		      dft_temp(i,j,k) = 0.;
-		  }
+        if (i == 0 && j == 0 && k == 0) {
+          dft_temp(i,j,k) = 0.;
+      }
               });
-	  }
+    }
       }
 
     // Shift DFT by N/2+1 (pi)
@@ -796,13 +796,13 @@ void StructFact::IntegratekShells(const int& step, const std::string& name) {
             dist = std::sqrt(dist);
 
             if ( dist <= center[0]-0.5) {
-	        dist = dist+0.5;
+          dist = dist+0.5;
                 int cell = int(dist);
                 for (int d=0; d<AMREX_SPACEDIM; ++d) {
-		  amrex::HostDevice::Atomic::Add(&(phisum_ptr[cell]), cov(i,j,k,d));
-//		    phisum_large_gpu[idist]  += cov(i,j,k,d);
+      amrex::HostDevice::Atomic::Add(&(phisum_ptr[cell]), cov(i,j,k,d));
+//        phisum_large_gpu[idist]  += cov(i,j,k,d);
                 }
-		amrex::HostDevice::Atomic::Add(&(phicnt_ptr[cell]),1);
+    amrex::HostDevice::Atomic::Add(&(phicnt_ptr[cell]),1);
  //               ++phicnt_large_gpu[idist];
             }
         });
@@ -827,10 +827,10 @@ void StructFact::IntegratekShells(const int& step, const std::string& name) {
 
         turb_disc.open(turbNamedisc);
         for (int d=1; d<npts_sq; ++d) {
-	    if(phicnt_device_large[d]>0) {
-		Real dreal = d;
+      if(phicnt_device_large[d]>0) {
+    Real dreal = d;
                 turb_disc << sqrt(dreal) << " " << 4.*M_PI*d*phisum_device_large[d]/phicnt_device_large[d] << std::endl;
-	    }
+      }
         }
     }
 
@@ -854,18 +854,18 @@ void StructFact::IntegratekShells(const int& step, const std::string& name) {
     amrex::ParallelFor(npts, [=] AMREX_GPU_DEVICE (int d) noexcept
     {
       if (d != 0) {
-  	  // phisum_ptr[d] *= 2.*M_PI*d*dk*dk/phicnt_ptr[d];
-	  phisum_ptr[d] *= 2.*M_PI*(d*dk+.5*dk*dk)/phicnt_ptr[d];
+      // phisum_ptr[d] *= 2.*M_PI*d*dk*dk/phicnt_ptr[d];
+    phisum_ptr[d] *= 2.*M_PI*(d*dk+.5*dk*dk)/phicnt_ptr[d];
       }
     });
 #else
     amrex::ParallelFor(npts, [=] AMREX_GPU_DEVICE (int d) noexcept
     {
         if (d != 0) {
-	    // phisum_ptr[d] *= 4.*M_PI*(d*d)*dk*dk*dk/phicnt_ptr[d];
-	    // phisum_ptr[d] *= 4.*M_PI*(d*d*dk+d*dk*dk+dk*dk*dk/3.)/phicnt_ptr[d];
-	    phisum_ptr[d] *= 4.*M_PI*(d*d*dk+dk*dk*dk/12.)/phicnt_ptr[d];
-	}
+      // phisum_ptr[d] *= 4.*M_PI*(d*d)*dk*dk*dk/phicnt_ptr[d];
+      // phisum_ptr[d] *= 4.*M_PI*(d*d*dk+d*dk*dk+dk*dk*dk/3.)/phicnt_ptr[d];
+      phisum_ptr[d] *= 4.*M_PI*(d*d*dk+dk*dk*dk/12.)/phicnt_ptr[d];
+  }
     });
 #endif
 

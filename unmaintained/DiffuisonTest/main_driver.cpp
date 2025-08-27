@@ -199,8 +199,8 @@ void main_driver(const char* argv)
     if (algorithm_type == 2) {
 
       AMREX_D_TERM(umac[0].FillBoundary(geom.periodicity());,
-		   umac[1].FillBoundary(geom.periodicity());,
-		   umac[2].FillBoundary(geom.periodicity()););
+       umac[1].FillBoundary(geom.periodicity());,
+       umac[2].FillBoundary(geom.periodicity()););
 
       Real weight_lap;
 
@@ -225,8 +225,8 @@ void main_driver(const char* argv)
       betaCC_neghlf.FillBoundary(geom.periodicity());
       gammaCC_neghlf.FillBoundary(geom.periodicity());
       AMREX_D_TERM(betaEdge_neghlf[0].FillBoundary(geom.periodicity());,
-      		   betaEdge_neghlf[1].FillBoundary(geom.periodicity());,
-      		   betaEdge_neghlf[2].FillBoundary(geom.periodicity()););
+             betaEdge_neghlf[1].FillBoundary(geom.periodicity());,
+             betaEdge_neghlf[2].FillBoundary(geom.periodicity()););
 
       // multiply beta & gamma by weight_lap = 1/2 : to correct L-matrix
       weight_lap = 0.5;
@@ -249,8 +249,8 @@ void main_driver(const char* argv)
       betaCC_hlf.FillBoundary(geom.periodicity());
       gammaCC_hlf.FillBoundary(geom.periodicity());
       AMREX_D_TERM(betaEdge_hlf[0].FillBoundary(geom.periodicity());,
-      		   betaEdge_hlf[1].FillBoundary(geom.periodicity());,
-      		   betaEdge_hlf[2].FillBoundary(geom.periodicity()););
+             betaEdge_hlf[1].FillBoundary(geom.periodicity());,
+             betaEdge_hlf[2].FillBoundary(geom.periodicity()););
 
     }
 
@@ -261,25 +261,25 @@ void main_driver(const char* argv)
                      umac[1].FillBoundary(geom.periodicity());,
                      umac[2].FillBoundary(geom.periodicity()););
 
-	if (algorithm_type == 2) {
-	  // compute rhs of poisson eqn
+  if (algorithm_type == 2) {
+    // compute rhs of poisson eqn
             StagApplyOp(geom,betaCC_neghlf,gammaCC_neghlf,betaEdge_neghlf,umac,rhs,alpha,dx,1.);
 
-	  AMREX_D_TERM(rhs[0].FillBoundary(geom.periodicity());,
-	  	       rhs[1].FillBoundary(geom.periodicity());,
-	  	       rhs[2].FillBoundary(geom.periodicity()););
+    AMREX_D_TERM(rhs[0].FillBoundary(geom.periodicity());,
+             rhs[1].FillBoundary(geom.periodicity());,
+             rhs[2].FillBoundary(geom.periodicity()););
 
-	  // VisMF::Write(rhs[0],"a_rhs0");
-	  // exit(0);
+    // VisMF::Write(rhs[0],"a_rhs0");
+    // exit(0);
 
-	  StagMGSolver(alpha,betaCC_hlf,betaEdge_hlf,gammaCC_hlf,umacNew,rhs,1.0,geom);
-	} else if (algorithm_type == 1) {
-	  StagMGSolver(alpha,betaCC,betaEdge,gammaCC,umacNew,umac,1.0,geom);
-	} else if (algorithm_type == 0) {
-	  StagExpSolver(alpha,betaCC,betaEdge,gammaCC,umacNew,umac,1.0,geom);
-	} else {
-	  Print() << "Error: Invalid choice of algorithm_type\n";
-	}
+    StagMGSolver(alpha,betaCC_hlf,betaEdge_hlf,gammaCC_hlf,umacNew,rhs,1.0,geom);
+  } else if (algorithm_type == 1) {
+    StagMGSolver(alpha,betaCC,betaEdge,gammaCC,umacNew,umac,1.0,geom);
+  } else if (algorithm_type == 0) {
+    StagExpSolver(alpha,betaCC,betaEdge,gammaCC,umacNew,umac,1.0,geom);
+  } else {
+    Print() << "Error: Invalid choice of algorithm_type\n";
+  }
 
         AMREX_D_TERM(MultiFab::Copy(umac[0], umacNew[0], 0, 0, 1, 0);,
                      MultiFab::Copy(umac[1], umacNew[1], 0, 0, 1, 0);,

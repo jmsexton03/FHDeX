@@ -24,7 +24,7 @@ void WritePlotFileStag(int step,
                        const amrex::MultiFab& surfcov,
                        const amrex::MultiFab& surfcovMeans,
                        const amrex::MultiFab& surfcovVars,
-		               const amrex::MultiFab& surfcovcoVars,
+                   const amrex::MultiFab& surfcovcoVars,
                        const amrex::MultiFab& eta,
                        const amrex::MultiFab& kappa,
                        const amrex::MultiFab& zeta)
@@ -86,7 +86,7 @@ void WritePlotFileStag(int step,
     if (plot_covars == 1) {
         nplot += 26;
 
-	if (nspec_surfcov>0) nplot += nspec_surfcov*6;
+  if (nspec_surfcov>0) nplot += nspec_surfcov*6;
     }
 
     if (plot_mom3) nplot += nvars+1;

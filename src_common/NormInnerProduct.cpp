@@ -1,8 +1,8 @@
 #include "common_functions.H"
 
 void SumStag(const std::array<MultiFab, AMREX_SPACEDIM>& m1,
-	     amrex::Vector<amrex::Real>& sum,
-	     const bool& divide_by_ncells)
+       amrex::Vector<amrex::Real>& sum,
+       const bool& divide_by_ncells)
 {
   BL_PROFILE_VAR("SumStag()",SumStag);
 
@@ -103,8 +103,8 @@ void SumStag(const std::array<MultiFab, AMREX_SPACEDIM>& m1,
 }
 
 void SumEdge(const std::array<MultiFab, NUM_EDGE>& m1,
-	     amrex::Vector<amrex::Real>& sum,
-	     const bool& divide_by_ncells)
+       amrex::Vector<amrex::Real>& sum,
+       const bool& divide_by_ncells)
 {
   BL_PROFILE_VAR("SumEdge()",SumEdge);
 
@@ -237,9 +237,9 @@ void SumEdge(const std::array<MultiFab, NUM_EDGE>& m1,
 }
 
 void SumCC(const amrex::MultiFab& m1,
-	   const int& comp,
-	   amrex::Real& sum,
-	   const bool& divide_by_ncells)
+     const int& comp,
+     amrex::Real& sum,
+     const bool& divide_by_ncells)
 {
   BL_PROFILE_VAR("SumCC()",SumCC);
 
@@ -290,11 +290,11 @@ void EdgeInnerProd(const std::array<MultiFab, NUM_EDGE>& m1,
 }
 
 void CCInnerProd(const amrex::MultiFab& m1,
-		 const int& comp1,
-		 const amrex::MultiFab& m2,
-		 const int& comp2,
+     const int& comp1,
+     const amrex::MultiFab& m2,
+     const int& comp2,
                  amrex::MultiFab& mscr,
-		 amrex::Real& prod_val)
+     amrex::Real& prod_val)
 {
 
   BL_PROFILE_VAR("CCInnerProd()",CCInnerProd);
@@ -307,10 +307,10 @@ void CCInnerProd(const amrex::MultiFab& m1,
 }
 
 void CCMoments(const amrex::MultiFab& m1,
-		 const int& comp1,
+     const int& comp1,
                  amrex::MultiFab& mscr,
-		 const int& power,
-		 amrex::Real& prod_val)
+     const int& power,
+     amrex::Real& prod_val)
 {
 
   BL_PROFILE_VAR("CCMoments()",CCMoments);
@@ -325,10 +325,10 @@ void CCMoments(const amrex::MultiFab& m1,
 }
 
 void FCMoments(const std::array<MultiFab, AMREX_SPACEDIM>& m1,
-		       const amrex::Vector<int>& comps,
+           const amrex::Vector<int>& comps,
                std::array<MultiFab, AMREX_SPACEDIM>&  mscr,
-		       const int& power,
-		       amrex::Vector<amrex::Real>& prod_val)
+           const int& power,
+           amrex::Vector<amrex::Real>& prod_val)
 {
 
   BL_PROFILE_VAR("FCMoments()",FCMoments);
@@ -347,9 +347,9 @@ void FCMoments(const std::array<MultiFab, AMREX_SPACEDIM>& m1,
 
 
 void StagL2Norm(const std::array<MultiFab, AMREX_SPACEDIM>& m1,
-		const int& comp,
+    const int& comp,
                 std::array<MultiFab, AMREX_SPACEDIM>& mscr,
-		Real& norm_l2)
+    Real& norm_l2)
 {
 
     BL_PROFILE_VAR("StagL2Norm()",StagL2Norm);
@@ -361,9 +361,9 @@ void StagL2Norm(const std::array<MultiFab, AMREX_SPACEDIM>& m1,
 }
 
 void EdgeL2Norm(const std::array<MultiFab, NUM_EDGE>& m1,
-		const int& comp,
+    const int& comp,
                 std::array<MultiFab, NUM_EDGE>& mscr,
-		Real& norm_l2)
+    Real& norm_l2)
 {
 
     BL_PROFILE_VAR("EdgeL2Norm()",EdgeL2Norm);
@@ -375,9 +375,9 @@ void EdgeL2Norm(const std::array<MultiFab, NUM_EDGE>& m1,
 }
 
 void CCL2Norm(const amrex::MultiFab& m1,
-	      const int& comp,
+        const int& comp,
               amrex::MultiFab& mscr,
-	      amrex::Real& norm_l2)
+        amrex::Real& norm_l2)
 {
 
   BL_PROFILE_VAR("CCL2Norm()",CCL2Norm);

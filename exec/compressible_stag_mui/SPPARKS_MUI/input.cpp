@@ -125,12 +125,12 @@ void Input::file()
     if (me == 0) {
       m = 0;
       while (1) {
-	if (fgets(&line[m],MAXLINE-m,infile) == NULL) n = 0;
-	else n = strlen(line) + 1;
-	if (n == 0) break;
-	m = n-2;
-	while (m >= 0 && isspace(line[m])) m--;
-	if (m < 0 || line[m] != '&') break;
+  if (fgets(&line[m],MAXLINE-m,infile) == NULL) n = 0;
+  else n = strlen(line) + 1;
+  if (n == 0) break;
+  m = n-2;
+  while (m >= 0 && isspace(line[m])) m--;
+  if (m < 0 || line[m] != '&') break;
       }
     }
 
@@ -144,8 +144,8 @@ void Input::file()
     if (n == 0) {
       if (label_active) error->all(FLERR,"Label wasn't found in input script");
       if (me == 0) {
-	if (infile != stdin) fclose(infile);
-	nfile--;
+  if (infile != stdin) fclose(infile);
+  nfile--;
       }
       MPI_Bcast(&nfile,1,MPI_INT,0,world);
       if (nfile == 0) break;
@@ -310,11 +310,11 @@ void Input::parse()
     if (arg[narg] && arg[narg][0] == '\"') {
       arg[narg] = &arg[narg][1];
       if (arg[narg][strlen(arg[narg])-1] == '\"')
-	arg[narg][strlen(arg[narg])-1] = '\0';
+  arg[narg][strlen(arg[narg])-1] = '\0';
       else {
-	arg[narg][strlen(arg[narg])] = ' ';
-	ptr = strtok(arg[narg],"\"");
-	if (ptr == NULL) error->all(FLERR,"Unbalanced quotes in input line");
+  arg[narg][strlen(arg[narg])] = ' ';
+  ptr = strtok(arg[narg],"\"");
+  if (ptr == NULL) error->all(FLERR,"Unbalanced quotes in input line");
       }
     }
     if (arg[narg]) narg++;
@@ -343,17 +343,17 @@ void Input::substitute(char *str, int flag)
   while (*ptr) {
     if (*ptr == '$' && level == 0) {
       if (*(ptr+1) == '{') {
-	var = ptr+2;
-	int i = 0;
-	while (var[i] != '\0' && var[i] != '}') i++;
-	if (var[i] == '\0') error->one(FLERR,"Invalid variable name");
-	var[i] = '\0';
-	beyond = ptr + strlen(var) + 3;
+  var = ptr+2;
+  int i = 0;
+  while (var[i] != '\0' && var[i] != '}') i++;
+  if (var[i] == '\0') error->one(FLERR,"Invalid variable name");
+  var[i] = '\0';
+  beyond = ptr + strlen(var) + 3;
       } else {
-	var = ptr;
-	var[0] = var[1];
-	var[1] = '\0';
-	beyond = ptr + strlen(var) + 1;
+  var = ptr;
+  var[0] = var[1];
+  var[1] = '\0';
+  beyond = ptr + strlen(var) + 1;
       }
       value = variable->retrieve(var);
       if (value == NULL) error->one(FLERR,"Substitution for illegal variable");
@@ -361,16 +361,16 @@ void Input::substitute(char *str, int flag)
       *ptr = '\0';
       strcpy(work,str);
       if (strlen(work)+strlen(value) >= MAXLINE)
-	error->one(FLERR,"Input line too long after variable substitution");
+  error->one(FLERR,"Input line too long after variable substitution");
       strcat(work,value);
       if (strlen(work)+strlen(beyond) >= MAXLINE)
-	error->one(FLERR,"Input line too long after variable substitution");
+  error->one(FLERR,"Input line too long after variable substitution");
       strcat(work,beyond);
       strcpy(str,work);
       ptr += strlen(value);
       if (flag && me == 0 && label_active == 0) {
-	if (echo_screen && screen) fprintf(screen,"%s",str);
-	if (echo_log && logfile) fprintf(logfile,"%s",str);
+  if (echo_screen && screen) fprintf(screen,"%s",str);
+  if (echo_log && logfile) fprintf(logfile,"%s",str);
       }
       continue;
     }
@@ -589,9 +589,9 @@ void Input::log()
     else {
       logfile = fopen(arg[0],"w");
       if (logfile == NULL) {
-	char str[128];
-	sprintf(str,"Cannot open logfile %s",arg[0]);
-	error->one(FLERR,str);
+  char str[128];
+  sprintf(str,"Cannot open logfile %s",arg[0]);
+  error->one(FLERR,str);
       }
     }
     if (universe->nworlds == 1) universe->ulogfile = logfile;

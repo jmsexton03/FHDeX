@@ -601,7 +601,7 @@ void main_driver(const char* argv)
         Real ts2 = ParallelDescriptor::second() - ts1;
         ParallelDescriptor::ReduceRealMax(ts2);
         if (step%100 == 0) {
-    	      amrex::Print() << "Advanced step " << step << " in " << ts2 << " seconds\n";
+            amrex::Print() << "Advanced step " << step << " in " << ts2 << " seconds\n";
         }
 
         // compute mean and variances
@@ -688,8 +688,8 @@ void main_driver(const char* argv)
             amrex::Print() << "WriteCheckPoint time " << t2 << " seconds\n";
         }
 
-	// collect a snapshot for structure factor
-	if (step > n_steps_skip && struct_fact_int > 0 && (step-n_steps_skip)%struct_fact_int == 0) {
+  // collect a snapshot for structure factor
+  if (step > n_steps_skip && struct_fact_int > 0 && (step-n_steps_skip)%struct_fact_int == 0) {
 
             // timer
             Real t1 = ParallelDescriptor::second();
@@ -725,11 +725,11 @@ void main_driver(const char* argv)
             // timer
             Real t1 = ParallelDescriptor::second();
 
-	    Print() << "HERE1\n";
+      Print() << "HERE1\n";
 
             structFactPrim.WritePlotFile(step,time,"plt_SF_prim");
 
-	    Print() << "HERE2\n";
+      Print() << "HERE2\n";
             structFactCons.WritePlotFile(step,time,"plt_SF_cons");
             if(project_dir >= 0) {
                 structFactPrimFlattened.WritePlotFile(step,time,"plt_SF_prim_Flattened");

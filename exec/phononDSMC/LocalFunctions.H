@@ -18,13 +18,13 @@
 
 
 void writePlotFile(
-        	    const MultiFab& mfcuInst,
-        		const MultiFab& mfcuMeans,
-        		const MultiFab& mfcuVars,
+               const MultiFab& mfcuInst,
+              const MultiFab& mfcuMeans,
+              const MultiFab& mfcuVars,
                 FhdParticleContainer& particles,
-        		const Geometry& geom,
-        		Real time,
-        		int step);
+              const Geometry& geom,
+              Real time,
+              int step);
 ///////////////////////////
 
 
@@ -32,9 +32,9 @@ void writePlotFile(
 // in Checkpoint.cpp
 
 void WriteCheckPoint(int step,
-					 const Real time,
-					 const Real dt,
-					 int statsCount,
+                const Real time,
+                const Real dt,
+                int statsCount,
                      const amrex::MultiFab& cuInst,
                      const amrex::MultiFab& cuMeans,
                      const amrex::MultiFab& cuVars,
@@ -47,9 +47,9 @@ void WriteCheckPoint(int step,
                      const int ncross);
 
 void ReadCheckPoint(int& step,
-					 Real& time,
-					 Real& dt,
-					 int& statsCount,
+                Real& time,
+                Real& dt,
+                int& statsCount,
                      amrex::MultiFab& cuInst,
                      amrex::MultiFab& cuMeans,
                      amrex::MultiFab& cuVars,
@@ -68,7 +68,7 @@ void ReadFile(const std::string& filename, Vector<char>& charBuf,
 void globalVars(Real time);
 
 void ReadFile(const std::string& filename, Vector<char>& charBuf,
-	      bool bExitOnError=true);
+         bool bExitOnError=true);
 
 ///////////////////////////
 

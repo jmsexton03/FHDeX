@@ -4,13 +4,13 @@
 // FIXME: Fill ghost cells
 
 void DiffusiveMassFluxdiv(const MultiFab& rho,
-			  const MultiFab& rhotot,
-			  const MultiFab& molarconc,
-			  const MultiFab& rhoWchi,
-			  const MultiFab& Gamma,
-			  MultiFab& diff_mass_fluxdiv,
-			  std::array< MultiFab, AMREX_SPACEDIM >& diff_mass_flux,
-			  const Geometry& geom)
+        const MultiFab& rhotot,
+        const MultiFab& molarconc,
+        const MultiFab& rhoWchi,
+        const MultiFab& Gamma,
+        MultiFab& diff_mass_fluxdiv,
+        std::array< MultiFab, AMREX_SPACEDIM >& diff_mass_flux,
+        const Geometry& geom)
 {
 
     BL_PROFILE_VAR("DiffusiveMassFluxdiv()",DiffusiveMassFluxdiv);
@@ -25,12 +25,12 @@ void DiffusiveMassFluxdiv(const MultiFab& rho,
 }
 
 void DiffusiveMassFlux(const MultiFab& rho,
-		       const MultiFab& rhotot,
-		       const MultiFab& molarconc,
-		       const MultiFab& rhoWchi,
-		       const MultiFab& Gamma,
-		       std::array< MultiFab, AMREX_SPACEDIM >& diff_mass_flux,
-		       const Geometry& geom)
+           const MultiFab& rhotot,
+           const MultiFab& molarconc,
+           const MultiFab& rhoWchi,
+           const MultiFab& Gamma,
+           std::array< MultiFab, AMREX_SPACEDIM >& diff_mass_flux,
+           const Geometry& geom)
 {
 
     BL_PROFILE_VAR("DiffusiveMassFlux()",DiffusiveMassFlux);
@@ -361,8 +361,8 @@ void ComputeFHHigherOrderTerm(const MultiFab& molarconc,
                            18.* ( phi(i,j+1,k+1,n)+ phi(i-1,j,k+1,n)+ phi(i+1,j,k+1,n) + phi(i,j-1,k+1,n) +
                                   phi(i-1,j+1,k,n)+ phi(i+1,j+1,k,n)+ phi(i-1,j-1,k,n) + phi(i+1,j-1,k,n) +
                                   phi(i,j+1,k-1,n)+ phi(i-1,j,k-1,n)+ phi(i+1,j,k-1,n) + phi(i,j-1,k-1,n))+
-			   60. * (phi(i-1,j,k,n)+   phi(i+1,j,k,n)+   phi(i,j-1,k,n) +   phi(i,j+1,k,n) + phi(i,j,k-1,n) + phi(i,j,k+1,n))
-		            -600.*phi(i,j,k,n))
+         60. * (phi(i-1,j,k,n)+   phi(i+1,j,k,n)+   phi(i,j-1,k,n) +   phi(i,j+1,k,n) + phi(i,j,k-1,n) + phi(i,j,k+1,n))
+                -600.*phi(i,j,k,n))
                 * (one44inv*dxinv*dxinv);
 #endif
 #endif

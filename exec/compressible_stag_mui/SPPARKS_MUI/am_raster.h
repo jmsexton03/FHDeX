@@ -37,12 +37,12 @@ namespace pool_shape {
 class point {
 
 public:
-	inline point() {p[0]=0.0;p[1]=0.0;p[2]=0.0;}
-	inline point(double value) {p[0]=value; p[1]=value; p[2]=value;}
-	inline point(double a, double b, double c) { p[0]=a; p[1]=b; p[2]=c; }
-	inline point(const double q[3]) { p[0]=q[0]; p[1]=q[1]; p[2]=q[2]; }
+   inline point() {p[0]=0.0;p[1]=0.0;p[2]=0.0;}
+   inline point(double value) {p[0]=value; p[1]=value; p[2]=value;}
+   inline point(double a, double b, double c) { p[0]=a; p[1]=b; p[2]=c; }
+   inline point(const double q[3]) { p[0]=q[0]; p[1]=q[1]; p[2]=q[2]; }
 
-	inline point& operator=(const point& rhs) {
+   inline point& operator=(const point& rhs) {
       if(this != &rhs){
          p[0]=rhs.p[0];
          p[1]=rhs.p[1];
@@ -51,18 +51,18 @@ public:
       return *this;
    }
 
-	inline point(const point& copyMe) {
+   inline point(const point& copyMe) {
          p[0]=copyMe.p[0];
          p[1]=copyMe.p[1];
          p[2]=copyMe.p[2];
    }
 
-	inline double squared() const {
-		double x=p[X],y=p[Y],z=p[Z];
-		return x*x+y*y+z*z;
-	}
+   inline double squared() const {
+      double x=p[X],y=p[Y],z=p[Z];
+      return x*x+y*y+z*z;
+   }
 
-	inline double operator[](int c) const { return p[c%3]; }
+   inline double operator[](int c) const { return p[c%3]; }
 
   friend std::ostream& operator<<(std::ostream &os, const point &p)  {
     os << p[X] << ", " << p[Y] << ", " << p[Z] << std::endl;
@@ -71,7 +71,7 @@ public:
 
 private:
    enum Component {NONE=-1,X=0,Y=1,Z=2};
-	double p[3];
+   double p[3];
 };
 
 enum DIR {NONE=-1,X=0,Y=1};

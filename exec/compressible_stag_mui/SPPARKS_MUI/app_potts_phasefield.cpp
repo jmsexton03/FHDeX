@@ -130,13 +130,13 @@ AppPottsPhaseField::AppPottsPhaseField(SPPARKS *spk, int narg, char **arg) :
       iarg++;
       if (iarg >= narg) error->all(FLERR,"Illegal app_style potts/pfm command");
       if (strcmp(arg[iarg],"yes") == 0) {
-	enforceConcentrationLimits = true;
-	warn_concentration_deviation = 1;
-	warn_concentration_deviation_all = 1;
+  enforceConcentrationLimits = true;
+  warn_concentration_deviation = 1;
+  warn_concentration_deviation_all = 1;
       } else if (strcmp(arg[iarg],"no") == 0) {
-	enforceConcentrationLimits = false;
-	warn_concentration_deviation = 0;
-	warn_concentration_deviation_all = 0;
+  enforceConcentrationLimits = false;
+  warn_concentration_deviation = 0;
+  warn_concentration_deviation_all = 0;
       } else error->all(FLERR,"Illegal app_style potts/pfm command");
     } else error->all(FLERR,"Illegal app_style potts/pfm command");
     iarg++;
@@ -700,17 +700,17 @@ void AppPottsPhaseField::set_phasefield_resetfield()
   pf_nresetlist=0;
   for (int i=0;i<nlocal;i++)
     if ( ( xyz[i][0] <= domain->boxxlo ) ||
-	 ( xyz[i][0] >= (domain->boxxhi - 1) ) )
+   ( xyz[i][0] >= (domain->boxxhi - 1) ) )
       pf_nresetlist++;
 
   // setup lists
 
   pf_resetlist = (int *) memory->
     smalloc(pf_nresetlist*sizeof(int),
-	    "app_potts_pfm:pf_resetlist");
+      "app_potts_pfm:pf_resetlist");
   pf_resetlistvals = (double *) memory->
     smalloc(pf_nresetlist*sizeof(double),
-	    "app_potts_pfm:pf_resetlistvals");
+      "app_potts_pfm:pf_resetlistvals");
 
   // set values in the list
 

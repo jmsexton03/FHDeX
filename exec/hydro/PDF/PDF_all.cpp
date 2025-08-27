@@ -152,7 +152,7 @@ main (int   argc,
 
 
     if(nderivs == 0){
-	    Copy(laplacian,mf,AMREX_SPACEDIM,0,AMREX_SPACEDIM,0);
+        Copy(laplacian,mf,AMREX_SPACEDIM,0,AMREX_SPACEDIM,0);
     } else {
 
     // fill ghost cells of mf_grown
@@ -198,7 +198,7 @@ main (int   argc,
 
     Vector<Real> L2(AMREX_SPACEDIM,0.);
     for (int i=0; i<AMREX_SPACEDIM; i++)
-	    L2[i]=0.;
+        L2[i]=0.;
 
     for ( MFIter mfi(laplacian,false); mfi.isValid(); ++mfi ) {
 
@@ -259,7 +259,7 @@ main (int   argc,
     amrex::Long count=0;
     amrex::Long totbin=0;
     for (int ind=0 ; ind < nbins+1; ind++)
-	    bins[ind]=0;
+        bins[ind]=0;
 
     for ( MFIter mfi(laplacian,false); mfi.isValid(); ++mfi ) {
 
@@ -302,7 +302,7 @@ main (int   argc,
     }
     if (ParallelDescriptor::IOProcessor()) {
         std::ofstream outfile;
-	oFile = oFile_save;
+    oFile = oFile_save;
         oFile +="_";
         oFile += std::to_string(nderivs);
         oFile += ".dat";

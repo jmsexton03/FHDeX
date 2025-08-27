@@ -224,7 +224,7 @@ void ReadCheckPoint(int& step,
 
         // read in statsCount
         is >> statsCount;
-	GotoNextLine(is);
+    GotoNextLine(is);
 
         // read in BoxArray (fluid) from Header
         BoxArray ba;

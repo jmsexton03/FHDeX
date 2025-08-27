@@ -63,7 +63,7 @@ struct FHD_realData {
         sigma,
         eepsilon,
         potential,
-	    p3m_radius,
+      p3m_radius,
         spring,
         omega,
         lambda,
@@ -118,7 +118,7 @@ struct FHD_realData {
         "sigma",
         "eepsilon",
         "potential",
-	    "p3m_radius",
+      "p3m_radius",
         "spring",
         "omega",
         "lambda"
@@ -287,14 +287,14 @@ public:
 
     void SpreadIonsGPU(const Real* dxFluid, const Real* dxE, const Geometry geomF,
                     const std::array<MultiFab, AMREX_SPACEDIM>& umac,
-		    const std::array<MultiFab, AMREX_SPACEDIM>& coords,
-		    std::array<MultiFab, AMREX_SPACEDIM>& efield,
+        const std::array<MultiFab, AMREX_SPACEDIM>& coords,
+        std::array<MultiFab, AMREX_SPACEDIM>& efield,
                     std::array<MultiFab, AMREX_SPACEDIM>& source,
                     std::array<MultiFab, AMREX_SPACEDIM>& sourceTemp);
 
     void SpreadIonsGPU(const Real* dxFluid, const Geometry geomF,
                     const std::array<MultiFab, AMREX_SPACEDIM>& umac,
-		    const std::array<MultiFab, AMREX_SPACEDIM>& coords,
+        const std::array<MultiFab, AMREX_SPACEDIM>& coords,
                     std::array<MultiFab, AMREX_SPACEDIM>& source,
                     std::array<MultiFab, AMREX_SPACEDIM>& sourceTemp);
 

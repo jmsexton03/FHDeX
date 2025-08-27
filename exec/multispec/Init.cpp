@@ -44,7 +44,7 @@ void InitRhoUmac(std::array< MultiFab, AMREX_SPACEDIM >& umac,
               can be discontinous or smooth depending on smoothing_width
             */
             Real rad = L[0] / 4.;
-	    rad = radius_cyl;
+      rad = radius_cyl;
 
             amrex::ParallelFor(bx, [=] AMREX_GPU_DEVICE (int i, int j, int k) noexcept
             {
@@ -78,7 +78,7 @@ void InitRhoUmac(std::array< MultiFab, AMREX_SPACEDIM >& umac,
 
             });
 
-	} else if (prob_type == 5) {
+  } else if (prob_type == 5) {
 
             /*
               bubble with radius = 1/4 of domain in x
@@ -101,14 +101,14 @@ void InitRhoUmac(std::array< MultiFab, AMREX_SPACEDIM >& umac,
 
                     // discontinuous interface
                     if (x< 0. && y < 0.) {
-		           c(i,j,k,0) = 0.97;
+               c(i,j,k,0) = 0.97;
                     } else if ( x > 0. && y < 0.){
                            c(i,j,k,1) = 0.97;
                     } else if ( x < 0. && y > 0.){
                            c(i,j,k,2) = 0.97;
-		    } else {
+        } else {
                            c(i,j,k,3) = 0.97;
-	            }
+              }
 
 
 //
@@ -129,8 +129,8 @@ void InitRhoUmac(std::array< MultiFab, AMREX_SPACEDIM >& umac,
               can be discontinous or smooth depending on smoothing_width
             */
             //Real rad = L[0] / 8.;
-	    Real rad = L[1]/8.;
-	    amrex::Print() << "smoothing width " << smoothing_width << " radius " << rad << std::endl;
+      Real rad = L[1]/8.;
+      amrex::Print() << "smoothing width " << smoothing_width << " radius " << rad << std::endl;
 
             amrex::ParallelFor(bx, [=] AMREX_GPU_DEVICE (int i, int j, int k) noexcept
             {
@@ -178,8 +178,8 @@ void InitRhoUmac(std::array< MultiFab, AMREX_SPACEDIM >& umac,
               can be discontinous or smooth depending on smoothing_width
             */
             //Real rad = L[0] / 8.;
-	    Real rad = radius_cyl;
-	    amrex::Print() << "smoothing width " << smoothing_width << " radius " << rad << std::endl;
+      Real rad = radius_cyl;
+      amrex::Print() << "smoothing width " << smoothing_width << " radius " << rad << std::endl;
 
             amrex::ParallelFor(bx, [=] AMREX_GPU_DEVICE (int i, int j, int k) noexcept
             {
@@ -220,13 +220,13 @@ void InitRhoUmac(std::array< MultiFab, AMREX_SPACEDIM >& umac,
               can be discontinous or smooth depending on smoothing_width
             */
             //Real rad = L[0] / 8.;
-	    Real rad = radius_cyl;
-	    int nsub = 10;
-	    Real factor = nsub;
-	    Real dxsub = dx[0]/factor;
-	    Real dysub = dx[1]/factor;
+      Real rad = radius_cyl;
+      int nsub = 10;
+      Real factor = nsub;
+      Real dxsub = dx[0]/factor;
+      Real dysub = dx[1]/factor;
             Real x,y,z;
-	    amrex::Print() << "smoothing width " << smoothing_width << " radius " << rad << std::endl;
+      amrex::Print() << "smoothing width " << smoothing_width << " radius " << rad << std::endl;
 
             amrex::ParallelFor(bx, [=] AMREX_GPU_DEVICE (int i, int j, int k) noexcept
             {
@@ -277,8 +277,8 @@ void InitRhoUmac(std::array< MultiFab, AMREX_SPACEDIM >& umac,
             const Array4<Real> & wmac = (umac[2]).array(mfi);
             Box bx_wmac = mfi.tilebox(nodal_flag_z);
 
-	   //  Real veljet = 4082.e0;
-	    Real veljet = 0.e0;
+     //  Real veljet = 4082.e0;
+      Real veljet = 0.e0;
 
             amrex::ParallelFor(bx_wmac, [=] AMREX_GPU_DEVICE (int i, int j, int k) noexcept
             {
@@ -318,18 +318,18 @@ void InitRhoUmac(std::array< MultiFab, AMREX_SPACEDIM >& umac,
         } else if (prob_type == 9) {
 
             /*
-	       torus
+         torus
             */
             //Real rad = L[0] / 8.;
-	    Real router = 1.5*5.73e-6;
-	    Real rad = radius_cyl;
-	    int nsub = 10;
-	    Real factor = nsub;
-	    Real dxsub = dx[0]/factor;
-	    Real dysub = dx[1]/factor;
-	    Real dzsub = dx[2]/factor;
+      Real router = 1.5*5.73e-6;
+      Real rad = radius_cyl;
+      int nsub = 10;
+      Real factor = nsub;
+      Real dxsub = dx[0]/factor;
+      Real dysub = dx[1]/factor;
+      Real dzsub = dx[2]/factor;
             Real x,y,z;
-	    amrex::Print() << "smoothing width " << smoothing_width << " radius " << rad << std::endl;
+      amrex::Print() << "smoothing width " << smoothing_width << " radius " << rad << std::endl;
 
             amrex::ParallelFor(bx, [=] AMREX_GPU_DEVICE (int i, int j, int k) noexcept
             {
@@ -347,7 +347,7 @@ void InitRhoUmac(std::array< MultiFab, AMREX_SPACEDIM >& umac,
                              z = prob_lo[2] + k*dx[2] + (k1+0.5)*dzsub - center[2];);
 
                 Real r_ring = (AMREX_SPACEDIM == 2) ? std::sqrt(x*x+y*y) : std::sqrt(x*x+y*y);
-		Real r = std::sqrt((r_ring-router)*(r_ring-router)+ z*z);
+    Real r = std::sqrt((r_ring-router)*(r_ring-router)+ z*z);
 
                 if (smoothing_width == 0.) {
 
@@ -380,16 +380,16 @@ void InitRhoUmac(std::array< MultiFab, AMREX_SPACEDIM >& umac,
         } else if (prob_type == 16) {
 
             /*
-	       thin film
+         thin film
             */
             //Real rad = L[0] / 8.;
-	    int nsub = 10;
-	    Real factor = nsub;
-	    Real dxsub = dx[0]/factor;
-	    Real dysub = dx[1]/factor;
-	    Real dzsub = dx[2]/factor;
+      int nsub = 10;
+      Real factor = nsub;
+      Real dxsub = dx[0]/factor;
+      Real dysub = dx[1]/factor;
+      Real dzsub = dx[2]/factor;
             Real x,y,z;
-	    amrex::Print() << "smoothing width " << smoothing_width << " film_thickness " << film_thickness << std::endl;
+      amrex::Print() << "smoothing width " << smoothing_width << " film_thickness " << film_thickness << std::endl;
 
             amrex::ParallelFor(bx, [=] AMREX_GPU_DEVICE (int i, int j, int k) noexcept
             {
@@ -438,12 +438,12 @@ void InitRhoUmac(std::array< MultiFab, AMREX_SPACEDIM >& umac,
               can be discontinous or smooth depending on smoothing_width
             */
             //Real rad = L[0] / 8.;
-	    int nsub = 100;
-	    Real factor = nsub;
-	    Real dxsub = dx[0]/factor;
-	    Real dysub = dx[1]/factor;
+      int nsub = 100;
+      Real factor = nsub;
+      Real dxsub = dx[0]/factor;
+      Real dysub = dx[1]/factor;
             Real x,y,z;
-	    amrex::Print() << "smoothing width " << smoothing_width << " film_thickness " << film_thickness << std::endl;
+      amrex::Print() << "smoothing width " << smoothing_width << " film_thickness " << film_thickness << std::endl;
 
             amrex::ParallelFor(bx, [=] AMREX_GPU_DEVICE (int i, int j, int k) noexcept
             {
@@ -462,7 +462,7 @@ void InitRhoUmac(std::array< MultiFab, AMREX_SPACEDIM >& umac,
                 Real height = film_thickness + 0.4*film_thickness*amrex::Math::cospi(2.*x/L[0]);
                 //height = film_thickness ;
 
-//		amrex::Print{} << "x,thickness,height " << x << " " << film_thickness << " " << height << std::endl;
+//    amrex::Print{} << "x,thickness,height " << x << " " << film_thickness << " " << height << std::endl;
 
                 if (smoothing_width == 0.) {
 

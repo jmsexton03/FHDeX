@@ -616,7 +616,7 @@ void StagMGSolver::Solve(const std::array<MultiFab, AMREX_SPACEDIM> & alpha_fc,
                     Print() << "resid/resid0 " << d << " " << resid[d] << std::endl;
                 }
             }
-	    break;
+      break;
         }
 
         if (vcycle == stag_mg_max_vcycles) {
@@ -1061,8 +1061,8 @@ void stag_mg_update_visc_p1 (Box const& tbx,
                              AMREX_D_DECL(Array4<Real const> const& alphax,
                                           Array4<Real const> const& alphay,
                                           Array4<Real const> const& alphaz),
-			     Array4<Real const> const& beta,
-			     Array4<Real const> const& gamma,
+           Array4<Real const> const& beta,
+           Array4<Real const> const& gamma,
                              AMREX_D_DECL(bool do_x,
                                           bool do_y,
                                           bool do_z),
@@ -1105,9 +1105,9 @@ void stag_mg_update_visc_p1 (Box const& tbx,
         for (int k = xlo.z; k <= xhi.z; ++k) {
         for (int j = xlo.y; j <= xhi.y; ++j) {
         ioff = 0;
-	if (offset == 2 && (xlo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+  if (offset == 2 && (xlo.x+j+k)%2 != (color+1)%2 ) {
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = xlo.x+ioff; i <= xhi.x; i+=offset) {
             fac = alphax(i,j,k) + 2.*AMREX_SPACEDIM*beta(i,j,k) * dxsqinv;
@@ -1123,8 +1123,8 @@ void stag_mg_update_visc_p1 (Box const& tbx,
         for (int j = ylo.y; j <= yhi.y; ++j) {
         ioff = 0;
         if (offset == 2 && (ylo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = ylo.x+ioff; i <= yhi.x; i+=offset) {
             fac = alphay(i,j,k) + 2.*AMREX_SPACEDIM*beta(i,j,k) * dxsqinv;
@@ -1141,8 +1141,8 @@ void stag_mg_update_visc_p1 (Box const& tbx,
         for (int j = zlo.y; j <= zhi.y; ++j) {
         ioff = 0;
         if (offset == 2 && (zlo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = zlo.x+ioff; i <= zhi.x; i+=offset) {
             fac = alphaz(i,j,k) + 2.*AMREX_SPACEDIM*beta(i,j,k) * dxsqinv;
@@ -1221,9 +1221,9 @@ void stag_mg_update_visc_m1 (Box const& tbx,
         for (int k = xlo.z; k <= xhi.z; ++k) {
         for (int j = xlo.y; j <= xhi.y; ++j) {
         ioff = 0;
-	if (offset == 2 && (xlo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+  if (offset == 2 && (xlo.x+j+k)%2 != (color+1)%2 ) {
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = xlo.x+ioff; i <= xhi.x; i+=offset) {
 
@@ -1247,8 +1247,8 @@ void stag_mg_update_visc_m1 (Box const& tbx,
         for (int j = ylo.y; j <= yhi.y; ++j) {
         ioff = 0;
         if (offset == 2 && (ylo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = ylo.x+ioff; i <= yhi.x; i+=offset) {
 
@@ -1274,8 +1274,8 @@ void stag_mg_update_visc_m1 (Box const& tbx,
         for (int j = zlo.y; j <= zhi.y; ++j) {
         ioff = 0;
         if (offset == 2 && (zlo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = zlo.x+ioff; i <= zhi.x; i+=offset) {
 
@@ -1312,8 +1312,8 @@ void stag_mg_update_visc_p2 (Box const& tbx,
                              AMREX_D_DECL(Array4<Real const> const& alphax,
                                           Array4<Real const> const& alphay,
                                           Array4<Real const> const& alphaz),
-			     Array4<Real const> const& beta,
-			     Array4<Real const> const& gamma,
+           Array4<Real const> const& beta,
+           Array4<Real const> const& gamma,
                              AMREX_D_DECL(bool do_x,
                                           bool do_y,
                                           bool do_z),
@@ -1356,9 +1356,9 @@ void stag_mg_update_visc_p2 (Box const& tbx,
         for (int k = xlo.z; k <= xhi.z; ++k) {
         for (int j = xlo.y; j <= xhi.y; ++j) {
         ioff = 0;
-	if (offset == 2 && (xlo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+  if (offset == 2 && (xlo.x+j+k)%2 != (color+1)%2 ) {
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = xlo.x+ioff; i <= xhi.x; i+=offset) {
             fac = alphax(i,j,k) + 2.*(1.+AMREX_SPACEDIM)*beta(i,j,k) * dxsqinv;
@@ -1374,8 +1374,8 @@ void stag_mg_update_visc_p2 (Box const& tbx,
         for (int j = ylo.y; j <= yhi.y; ++j) {
         ioff = 0;
         if (offset == 2 && (ylo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = ylo.x+ioff; i <= yhi.x; i+=offset) {
             fac = alphay(i,j,k) + 2.*(1.+AMREX_SPACEDIM)*beta(i,j,k) * dxsqinv;
@@ -1392,8 +1392,8 @@ void stag_mg_update_visc_p2 (Box const& tbx,
         for (int j = zlo.y; j <= zhi.y; ++j) {
         ioff = 0;
         if (offset == 2 && (zlo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = zlo.x+ioff; i <= zhi.x; i+=offset) {
             fac = alphaz(i,j,k) + 2.*(1.+AMREX_SPACEDIM)*beta(i,j,k) * dxsqinv;
@@ -1472,9 +1472,9 @@ void stag_mg_update_visc_m2 (Box const& tbx,
         for (int k = xlo.z; k <= xhi.z; ++k) {
         for (int j = xlo.y; j <= xhi.y; ++j) {
         ioff = 0;
-	if (offset == 2 && (xlo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+  if (offset == 2 && (xlo.x+j+k)%2 != (color+1)%2 ) {
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = xlo.x+ioff; i <= xhi.x; i+=offset) {
             fac = alphax(i,j,k) +
@@ -1496,8 +1496,8 @@ void stag_mg_update_visc_m2 (Box const& tbx,
         for (int j = ylo.y; j <= yhi.y; ++j) {
         ioff = 0;
         if (offset == 2 && (ylo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = ylo.x+ioff; i <= yhi.x; i+=offset) {
             fac = alphay(i,j,k) +
@@ -1520,8 +1520,8 @@ void stag_mg_update_visc_m2 (Box const& tbx,
         for (int j = zlo.y; j <= zhi.y; ++j) {
         ioff = 0;
         if (offset == 2 && (zlo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = zlo.x+ioff; i <= zhi.x; i+=offset) {
             fac = alphaz(i,j,k) +
@@ -1555,8 +1555,8 @@ void stag_mg_update_visc_p3 (Box const& tbx,
                              AMREX_D_DECL(Array4<Real const> const& alphax,
                                           Array4<Real const> const& alphay,
                                           Array4<Real const> const& alphaz),
-			     Array4<Real const> const& beta,
-			     Array4<Real const> const& gamma,
+           Array4<Real const> const& beta,
+           Array4<Real const> const& gamma,
                              AMREX_D_DECL(bool do_x,
                                           bool do_y,
                                           bool do_z),
@@ -1600,9 +1600,9 @@ void stag_mg_update_visc_p3 (Box const& tbx,
         for (int k = xlo.z; k <= xhi.z; ++k) {
         for (int j = xlo.y; j <= xhi.y; ++j) {
         ioff = 0;
-	if (offset == 2 && (xlo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+  if (offset == 2 && (xlo.x+j+k)%2 != (color+1)%2 ) {
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = xlo.x+ioff; i <= xhi.x; i+=offset) {
             fac = alphax(i,j,k)+(fac2*beta(i,j,k)+2.*gamma(i,j,k)) * dxsqinv;
@@ -1618,8 +1618,8 @@ void stag_mg_update_visc_p3 (Box const& tbx,
         for (int j = ylo.y; j <= yhi.y; ++j) {
         ioff = 0;
         if (offset == 2 && (ylo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = ylo.x+ioff; i <= yhi.x; i+=offset) {
             fac = alphay(i,j,k)+(fac2*beta(i,j,k)+2.*gamma(i,j,k)) * dxsqinv;
@@ -1636,8 +1636,8 @@ void stag_mg_update_visc_p3 (Box const& tbx,
         for (int j = zlo.y; j <= zhi.y; ++j) {
         ioff = 0;
         if (offset == 2 && (zlo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = zlo.x+ioff; i <= zhi.x; i+=offset) {
             fac = alphaz(i,j,k)+(fac2*beta(i,j,k)+2.*gamma(i,j,k)) * dxsqinv;
@@ -1718,9 +1718,9 @@ void stag_mg_update_visc_m3 (Box const& tbx,
         for (int k = xlo.z; k <= xhi.z; ++k) {
         for (int j = xlo.y; j <= xhi.y; ++j) {
         ioff = 0;
-	if (offset == 2 && (xlo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+  if (offset == 2 && (xlo.x+j+k)%2 != (color+1)%2 ) {
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = xlo.x+ioff; i <= xhi.x; i+=offset) {
 
@@ -1745,8 +1745,8 @@ void stag_mg_update_visc_m3 (Box const& tbx,
         for (int j = ylo.y; j <= yhi.y; ++j) {
         ioff = 0;
         if (offset == 2 && (ylo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = ylo.x+ioff; i <= yhi.x; i+=offset) {
 
@@ -1772,8 +1772,8 @@ void stag_mg_update_visc_m3 (Box const& tbx,
         for (int j = zlo.y; j <= zhi.y; ++j) {
         ioff = 0;
         if (offset == 2 && (zlo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = zlo.x+ioff; i <= zhi.x; i+=offset) {
 
@@ -1888,7 +1888,7 @@ void StagMGSolver::StagMGUpdate (std::array< MultiFab, AMREX_SPACEDIM >& phi_fc,
                                        AMREX_D_DECL(rhsx_fab,rhsy_fab,rhsz_fab),
                                        AMREX_D_DECL(Lphix_fab,Lphiy_fab,Lphiz_fab),
                                        AMREX_D_DECL(alphax_fab,alphay_fab,alphaz_fab),
-				       beta_cc_fab, gamma_cc_fab,
+               beta_cc_fab, gamma_cc_fab,
                                        AMREX_D_DECL(do_x,do_y,do_z),
                                        offset, color, omega, dx_gpu);
             });
@@ -1921,7 +1921,7 @@ void StagMGSolver::StagMGUpdate (std::array< MultiFab, AMREX_SPACEDIM >& phi_fc,
                                        AMREX_D_DECL(rhsx_fab,rhsy_fab,rhsz_fab),
                                        AMREX_D_DECL(Lphix_fab,Lphiy_fab,Lphiz_fab),
                                        AMREX_D_DECL(alphax_fab,alphay_fab,alphaz_fab),
-				       beta_cc_fab, gamma_cc_fab,
+               beta_cc_fab, gamma_cc_fab,
                                        AMREX_D_DECL(do_x,do_y,do_z),
                                        offset, color, omega, dx_gpu);
             });
@@ -1953,7 +1953,7 @@ void StagMGSolver::StagMGUpdate (std::array< MultiFab, AMREX_SPACEDIM >& phi_fc,
                                        AMREX_D_DECL(rhsx_fab,rhsy_fab,rhsz_fab),
                                        AMREX_D_DECL(Lphix_fab,Lphiy_fab,Lphiz_fab),
                                        AMREX_D_DECL(alphax_fab,alphay_fab,alphaz_fab),
-				       beta_cc_fab, gamma_cc_fab,
+               beta_cc_fab, gamma_cc_fab,
                                        AMREX_D_DECL(do_x,do_y,do_z),
                                        offset, color, omega, dx_gpu);
             });

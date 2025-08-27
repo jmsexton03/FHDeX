@@ -29,8 +29,8 @@ void WriteCheckPoint(int step,
                      const MultiFab& chargeM,
                      const MultiFab& potential,
                      const MultiFab& potentialM,
-	             const MultiFab& struct_cc_numdens0_real,
-		     const MultiFab& struct_cc_numdens0_imag)
+                 const MultiFab& struct_cc_numdens0_real,
+             const MultiFab& struct_cc_numdens0_imag)
 {
     // timer for profiling
     BL_PROFILE_VAR("WriteCheckPoint()",WriteCheckPoint);
@@ -197,8 +197,8 @@ void ReadCheckPoint(int& step,
                     MultiFab& chargeM,
                     MultiFab& potential,
                     MultiFab& potentialM,
-	            MultiFab& struct_cc_numdens0_real,
-		    MultiFab& struct_cc_numdens0_imag)
+                MultiFab& struct_cc_numdens0_real,
+            MultiFab& struct_cc_numdens0_imag)
 {
     // timer for profiling
     BL_PROFILE_VAR("ReadCheckPoint()",ReadCheckPoint);
@@ -234,7 +234,7 @@ void ReadCheckPoint(int& step,
 
         // read in statsCount
         is >> statsCount;
-	GotoNextLine(is);
+    GotoNextLine(is);
 
         // read in BoxArray (fluid) from Header
         BoxArray ba;
@@ -298,7 +298,7 @@ void ReadCheckPoint(int& step,
         else if (*(std::max_element(eskernel_fluid.begin(),eskernel_fluid.begin()+nspecies)) > 0) {
             ngp = static_cast<int>(floor(*(std::max_element(eskernel_fluid.begin(),eskernel_fluid.begin()+nspecies)))/2+1);
         }
-	//// TODO: need a better way to determine ghost cells for bonds
+    //// TODO: need a better way to determine ghost cells for bonds
         //if (bond_tog != 0) {
         //    ngp = std::max(ngp, 6);
         //}

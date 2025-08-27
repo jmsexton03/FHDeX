@@ -193,8 +193,8 @@ void WriteHorizontalAverageToMF(const MultiFab& mf_in, MultiFab& mf_out,
 
 
 void ComputeVerticalAverage(const MultiFab& mf, MultiFab& mf_flat,
-			    const int& dir,
-			    const int& incomp, const int& ncomp,
+          const int& dir,
+          const int& incomp, const int& ncomp,
                             const int& slablo, const int& slabhi)
 {
     BL_PROFILE_VAR("ComputVerticalAverage()",ComputeVerticalAverage);

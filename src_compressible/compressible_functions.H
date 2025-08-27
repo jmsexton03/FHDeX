@@ -22,7 +22,7 @@ void InitConsVar(MultiFab& cons,
 
 void calculateFlux(const MultiFab& cons, const MultiFab& prim,
                    const MultiFab& eta, const MultiFab& zeta, const MultiFab& kappa,
-		   const MultiFab& chi, const MultiFab& D,
+       const MultiFab& chi, const MultiFab& D,
                    std::array<MultiFab, AMREX_SPACEDIM>& flux,
                    std::array<MultiFab, AMREX_SPACEDIM>& stochFlux,
                    std::array<MultiFab, AMREX_SPACEDIM>& cornx,
@@ -31,12 +31,12 @@ void calculateFlux(const MultiFab& cons, const MultiFab& prim,
                    MultiFab& visccorn,
                    MultiFab& rancorn,
                    const Geometry& geom,
-		   const Vector< Real >& stoch_weights,
-	           const Real dt);
+       const Vector< Real >& stoch_weights,
+             const Real dt);
 
 void calculateTransportCoeffs(const MultiFab& prim_in,
-			      MultiFab& eta_in, MultiFab& zeta_in, MultiFab& kappa_in,
-			      MultiFab& chi_in, MultiFab& Dij_in);
+            MultiFab& eta_in, MultiFab& zeta_in, MultiFab& kappa_in,
+            MultiFab& chi_in, MultiFab& Dij_in);
 
 void RK3step(MultiFab& cu, MultiFab& cup, MultiFab& cup2, MultiFab& cup3,
              MultiFab& prim, MultiFab& source,
@@ -84,15 +84,15 @@ void doMembrane(MultiFab& cons, MultiFab& prim, std::array<MultiFab, AMREX_SPACE
 void WritePlotFile(int step,
                    const Real time,
                    const Geometry& geom,
-	           const MultiFab& cu,
-	           const MultiFab& cuMeans,
-	           const MultiFab& cuVars,
-	           const MultiFab& prim,
-	           const MultiFab& primMeans,
-	           const MultiFab& primVars,
+             const MultiFab& cu,
+             const MultiFab& cuMeans,
+             const MultiFab& cuVars,
+             const MultiFab& prim,
+             const MultiFab& primMeans,
+             const MultiFab& primVars,
                    const MultiFab& spatialCross,
                    const MultiFab& eta,
-		   const MultiFab& kappa);
+       const MultiFab& kappa);
 
 void yzAverage(const MultiFab& consMean,
                const MultiFab& consVar,

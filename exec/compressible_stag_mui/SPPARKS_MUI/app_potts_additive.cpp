@@ -114,7 +114,7 @@ void AppPottsAdditive::input_app(char *command, int narg, char **arg)
          transverse_pass_id=std::atoi(arg[7]);
       } else {error->all(FLERR,"Illegal cartesian_layer command. Expected 'transverse_pass_id.'");}
       if(strcmp(arg[8],"serpentine")==0){
-      	 //Parsing this as boolean wasn't working, temporarily changed to integer
+          //Parsing this as boolean wasn't working, temporarily changed to integer
          serpentine=std::atoi(arg[9]);
       } else {error->all(FLERR,"Illegal cartesian_layer command. Expected 'serpentine.'");}
       {
@@ -203,8 +203,8 @@ void AppPottsAdditive::init_app()
 }
 
 /* ----------------------------------------------------------------------
-	Use app update to set the new position of the weld pool and determine the
-	mobilities for the new configuration
+   Use app update to set the new position of the weld pool and determine the
+   mobilities for the new configuration
  ------------------------------------------------------------------------- */
 
 void AppPottsAdditive::app_update(double dt)
@@ -222,56 +222,56 @@ void AppPottsAdditive::app_update(double dt)
 
 
 
-	//Use the new position as input to the mobility calculation
-	//Loop through all of the local sites and assign the new mobilities
+   //Use the new position as input to the mobility calculation
+   //Loop through all of the local sites and assign the new mobilities
 
-	//Specify the shape of the melt pool and then calculate the distance at each local site.
-	RASTER::pool_shape::AmEllipsoid ae(spot_width, melt_depth, melt_tail_length, cap_height, HAZ, tail_HAZ);
+   //Specify the shape of the melt pool and then calculate the distance at each local site.
+   RASTER::pool_shape::AmEllipsoid ae(spot_width, melt_depth, melt_tail_length, cap_height, HAZ, tail_HAZ);
 
-	//Go through all the local sites and calculate the distance.
+   //Go through all the local sites and calculate the distance.
    double d;
-	for(int i=0;i<nlocal;i++){
+   for(int i=0;i<nlocal;i++){
 
-		// SPPARKS lattice site
-		double XYZ[]={xyz[i][0],xyz[i][1],xyz[i][2]};
-		// Lattice point location relative to 'pool' position
-		point xyz_r_p=active_layer.compute_position_relative_to_pool(XYZ,layer_z);
+      // SPPARKS lattice site
+      double XYZ[]={xyz[i][0],xyz[i][1],xyz[i][2]};
+      // Lattice point location relative to 'pool' position
+      point xyz_r_p=active_layer.compute_position_relative_to_pool(XYZ,layer_z);
 
-		//Temporary assignment of xo, xo is in the melt pool's reference frame!
-		double xo[]={xyz_r_p[0],xyz_r_p[1],xyz_r_p[2]};
+      //Temporary assignment of xo, xo is in the melt pool's reference frame!
+      double xo[]={xyz_r_p[0],xyz_r_p[1],xyz_r_p[2]};
 
 
-		if(xo[0] < 0 && xo[2] <= 0 && abs(xo[2]) <= depth_HAZ  && xo[0] > -tail_HAZ && abs(xo[1]) <= HAZ/2.0) {
+      if(xo[0] < 0 && xo[2] <= 0 && abs(xo[2]) <= depth_HAZ  && xo[0] > -tail_HAZ && abs(xo[1]) <= HAZ/2.0) {
 
-			//If we're in the fusion zone, calculate distance
-			if (abs(xo[1]) <= spot_width * 0.5 && abs(xo[0]) <= tail_HAZ) {
-				d = ae.distance(xo);
-			}
-			//If we're in the HAZ, calculate distance
-			else if (abs(xo[1]) <= HAZ/2.0 && abs(xo[0]) <tail_HAZ) {
-				d = ae.distance(xo);
-			}
-		}
-		//If we're in front of the pool, look out to a distance cap_HAZ away
-		else if (abs(xo[0]) <= cap_HAZ && xo[2] <=0 && abs(xo[2]) <= depth_HAZ && abs(xo[1]) <= HAZ/2.0) {
-			d = ae.distance(xo);
-		}
-		else d = -10;
+         //If we're in the fusion zone, calculate distance
+         if (abs(xo[1]) <= spot_width * 0.5 && abs(xo[0]) <= tail_HAZ) {
+            d = ae.distance(xo);
+         }
+         //If we're in the HAZ, calculate distance
+         else if (abs(xo[1]) <= HAZ/2.0 && abs(xo[0]) <tail_HAZ) {
+            d = ae.distance(xo);
+         }
+      }
+      //If we're in front of the pool, look out to a distance cap_HAZ away
+      else if (abs(xo[0]) <= cap_HAZ && xo[2] <=0 && abs(xo[2]) <= depth_HAZ && abs(xo[1]) <= HAZ/2.0) {
+         d = ae.distance(xo);
+      }
+      else d = -10;
 
-		//Only calculate mobilities for things inside the HAZ bounds and below the active layer
-		if (d >= 0) {
-			MobilityOut[i] =  compute_mobility(i, d);
-		}
-		//Inside the pool so set mobilty to 1 (which randomizes things)
-		else if (d > -5) {
+      //Only calculate mobilities for things inside the HAZ bounds and below the active layer
+      if (d >= 0) {
+         MobilityOut[i] =  compute_mobility(i, d);
+      }
+      //Inside the pool so set mobilty to 1 (which randomizes things)
+      else if (d > -5) {
 
-			MobilityOut[i] = 1;
-		}
-		//If we're outside the region of interest, make Mobility zero
-		else {
-			MobilityOut[i] = 0;
-		}
-	}
+         MobilityOut[i] = 1;
+      }
+      //If we're outside the region of interest, make Mobility zero
+      else {
+         MobilityOut[i] = 0;
+      }
+   }
    active_layer.move(dt);
 }
 
@@ -283,11 +283,11 @@ void AppPottsAdditive::app_update(double dt)
 
 double AppPottsAdditive::compute_mobility(int site, double d)  {
 
-	//We're going to take care of categorizing all the little details of the mobility
-	//gradient in app_update, so here we'll just calculate the mobility based on distance
-	MobilityOut[site] = exp(-exp_factor * d);
+   //We're going to take care of categorizing all the little details of the mobility
+   //gradient in app_update, so here we'll just calculate the mobility based on distance
+   MobilityOut[site] = exp(-exp_factor * d);
 
-	return MobilityOut[site];
+   return MobilityOut[site];
 }
 
 /* ----------------------------------------------------------------------
