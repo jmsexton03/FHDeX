@@ -8,25 +8,25 @@
 AMREX_GPU_HOST_DEVICE
 inline
 void stag_applyop_visc_p1 (Box const& tbx,
-			   AMREX_D_DECL(Box const& xbx,
-					Box const& ybx,
-					Box const& zbx),
-			   Array4<Real const> const& betacc,
-			   Array4<Real const> const& gammacc,
+         AMREX_D_DECL(Box const& xbx,
+          Box const& ybx,
+          Box const& zbx),
+         Array4<Real const> const& betacc,
+         Array4<Real const> const& gammacc,
                            AMREX_D_DECL(Array4<Real const> const& alphax,
-					Array4<Real const> const& alphay,
-					Array4<Real const> const& alphaz),
+          Array4<Real const> const& alphay,
+          Array4<Real const> const& alphaz),
                            AMREX_D_DECL(Array4<Real const> const& phix,
-					Array4<Real const> const& phiy,
-					Array4<Real const> const& phiz),
+          Array4<Real const> const& phiy,
+          Array4<Real const> const& phiz),
                            AMREX_D_DECL(Array4<Real> const& Lphix,
-					Array4<Real> const& Lphiy,
-					Array4<Real> const& Lphiz),
-			   AMREX_D_DECL(bool do_x,
-					bool do_y,
-					bool do_z),
-			   Real theta_alpha, int offset,  int color,
-			   const GpuArray<Real, AMREX_SPACEDIM> & dx) noexcept
+          Array4<Real> const& Lphiy,
+          Array4<Real> const& Lphiz),
+         AMREX_D_DECL(bool do_x,
+          bool do_y,
+          bool do_z),
+         Real theta_alpha, int offset,  int color,
+         const GpuArray<Real, AMREX_SPACEDIM> & dx) noexcept
 {
     // xbx, ybx, and zbx are the face-centered boxes
 
@@ -81,17 +81,17 @@ void stag_applyop_visc_p1 (Box const& tbx,
         for (int k = xlo.z; k <= xhi.z; ++k) {
         for (int j = xlo.y; j <= xhi.y; ++j) {
         ioff = 0;
-	if (offset == 2 && (xlo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+  if (offset == 2 && (xlo.x+j+k)%2 != (color+1)%2 ) {
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = xlo.x+ioff; i <= xhi.x; i+=offset) {
 
-	    Lphix(i,j,k) = phix(i,j,k)*(theta_alpha*alphax(i,j,k) + term1*betacc(i,j,k))
-	        -(phix(i+1,j,k)+phix(i-1,j,k))*term2*betacc(i,j,k)
-	        -(phix(i,j+1,k)+phix(i,j-1,k))*term3*betacc(i,j,k)
+      Lphix(i,j,k) = phix(i,j,k)*(theta_alpha*alphax(i,j,k) + term1*betacc(i,j,k))
+          -(phix(i+1,j,k)+phix(i-1,j,k))*term2*betacc(i,j,k)
+          -(phix(i,j+1,k)+phix(i,j-1,k))*term3*betacc(i,j,k)
 #if (AMREX_SPACEDIM == 3)
-	        -(phix(i,j,k+1)+phix(i,j,k-1))*term4*betacc(i,j,k)
+          -(phix(i,j,k+1)+phix(i,j,k-1))*term4*betacc(i,j,k)
 #endif
                 ;
         }
@@ -105,16 +105,16 @@ void stag_applyop_visc_p1 (Box const& tbx,
         for (int j = ylo.y; j <= yhi.y; ++j) {
         ioff = 0;
         if (offset == 2 && (ylo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = ylo.x+ioff; i <= yhi.x; i+=offset) {
 
-	  Lphiy(i,j,k) = phiy(i,j,k)*(theta_alpha*alphay(i,j,k) + term1*betacc(i,j,k))
-	      -(phiy(i+1,j,k)+phiy(i-1,j,k))*term2*betacc(i,j,k)
-	      -(phiy(i,j+1,k)+phiy(i,j-1,k))*term3*betacc(i,j,k)
+    Lphiy(i,j,k) = phiy(i,j,k)*(theta_alpha*alphay(i,j,k) + term1*betacc(i,j,k))
+        -(phiy(i+1,j,k)+phiy(i-1,j,k))*term2*betacc(i,j,k)
+        -(phiy(i,j+1,k)+phiy(i,j-1,k))*term3*betacc(i,j,k)
 #if (AMREX_SPACEDIM == 3)
- 	      -(phiy(i,j,k+1)+phiy(i,j,k-1))*term4*betacc(i,j,k)
+         -(phiy(i,j,k+1)+phiy(i,j,k-1))*term4*betacc(i,j,k)
 #endif
                 ;
         }
@@ -129,15 +129,15 @@ void stag_applyop_visc_p1 (Box const& tbx,
         for (int j = zlo.y; j <= zhi.y; ++j) {
         ioff = 0;
         if (offset == 2 && (zlo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = zlo.x+ioff; i <= zhi.x; i+=offset) {
 
-	    Lphiz(i,j,k) = phiz(i,j,k)*(theta_alpha*alphaz(i,j,k) + term1*betacc(i,j,k))
-	        -(phiz(i+1,j,k)+phiz(i-1,j,k))*term2*betacc(i,j,k)
-	        -(phiz(i,j+1,k)+phiz(i,j-1,k))*term3*betacc(i,j,k)
-	        -(phiz(i,j,k+1)+phiz(i,j,k-1))*term4*betacc(i,j,k);
+      Lphiz(i,j,k) = phiz(i,j,k)*(theta_alpha*alphaz(i,j,k) + term1*betacc(i,j,k))
+          -(phiz(i+1,j,k)+phiz(i-1,j,k))*term2*betacc(i,j,k)
+          -(phiz(i,j+1,k)+phiz(i,j-1,k))*term3*betacc(i,j,k)
+          -(phiz(i,j,k+1)+phiz(i,j,k-1))*term4*betacc(i,j,k);
         }
         }
         }
@@ -149,29 +149,29 @@ void stag_applyop_visc_p1 (Box const& tbx,
 AMREX_GPU_HOST_DEVICE
 inline
 void stag_applyop_visc_m1 (Box const& tbx,
-			   AMREX_D_DECL(Box const& xbx,
-					Box const& ybx,
-					Box const& zbx),
+         AMREX_D_DECL(Box const& xbx,
+          Box const& ybx,
+          Box const& zbx),
                            AMREX_D_DECL(Array4<Real const> const& alphax,
-					Array4<Real const> const& alphay,
-					Array4<Real const> const& alphaz),
+          Array4<Real const> const& alphay,
+          Array4<Real const> const& alphaz),
                            AMREX_D_DECL(Array4<Real const> const& phix,
-					Array4<Real const> const& phiy,
-					Array4<Real const> const& phiz),
+          Array4<Real const> const& phiy,
+          Array4<Real const> const& phiz),
                            AMREX_D_DECL(Array4<Real> const& Lphix,
-					Array4<Real> const& Lphiy,
-					Array4<Real> const& Lphiz),
+          Array4<Real> const& Lphiy,
+          Array4<Real> const& Lphiz),
                            Array4<Real const> const& betacc,
                            Array4<Real const> const& betaxy,
 #if (AMREX_SPACEDIM == 3)
                            Array4<Real const> const& betaxz,
                            Array4<Real const> const& betayz,
 #endif
-			   AMREX_D_DECL(bool do_x,
-					bool do_y,
-					bool do_z),
-			   Real theta_alpha, int offset,  int color,
-			   const GpuArray<Real, AMREX_SPACEDIM> & dx) noexcept
+         AMREX_D_DECL(bool do_x,
+          bool do_y,
+          bool do_z),
+         Real theta_alpha, int offset,  int color,
+         const GpuArray<Real, AMREX_SPACEDIM> & dx) noexcept
 {
     // xbx, ybx, and zbx are the face-centered boxes
 
@@ -213,22 +213,22 @@ void stag_applyop_visc_m1 (Box const& tbx,
         for (int k = xlo.z; k <= xhi.z; ++k) {
         for (int j = xlo.y; j <= xhi.y; ++j) {
         ioff = 0;
-	if (offset == 2 && (xlo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+  if (offset == 2 && (xlo.x+j+k)%2 != (color+1)%2 ) {
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = xlo.x+ioff; i <= xhi.x; i+=offset) {
             Lphix(i,j,k) = phix(i,j,k)*
                 (theta_alpha*alphax(i,j,k)
                  +(betacc(i,j,k)+betacc(i-1,j,k))*dxsqinv
                  +(betaxy(i,j,k)+betaxy(i,j+1,k))*dysqinv
-#if (AMREX_SPACEDIM == 3)                                        
+#if (AMREX_SPACEDIM == 3)
                  +(betaxz(i,j,k)+betaxz(i,j,k+1))*dzsqinv
 #endif
                 )
                 +(-phix(i+1,j,k)*betacc(i,j,k)-phix(i-1,j,k)*betacc(i-1,j,k))*dxsqinv
                 +(-phix(i,j+1,k)*betaxy(i,j+1,k)-phix(i,j-1,k)*betaxy(i,j,k))*dysqinv
-#if (AMREX_SPACEDIM == 3)                                        
+#if (AMREX_SPACEDIM == 3)
                 +(-phix(i,j,k+1)*betaxz(i,j,k+1)-phix(i,j,k-1)*betaxz(i,j,k))*dysqinv
 #endif
                 ;
@@ -243,21 +243,21 @@ void stag_applyop_visc_m1 (Box const& tbx,
         for (int j = ylo.y; j <= yhi.y; ++j) {
         ioff = 0;
         if (offset == 2 && (ylo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = ylo.x+ioff; i <= yhi.x; i+=offset) {
             Lphiy(i,j,k) = phiy(i,j,k)*
                 (theta_alpha*alphay(i,j,k)
                  +(betacc(i,j,k)+betacc(i,j-1,k))*dysqinv
                  +(betaxy(i,j,k)+betaxy(i+1,j,k))*dxsqinv
-#if (AMREX_SPACEDIM == 3)                                        
+#if (AMREX_SPACEDIM == 3)
                  +(betayz(i,j,k)+betayz(i,j,k+1))*dzsqinv
 #endif
                 )
                 +(-phiy(i,j+1,k)*betacc(i,j,k)-phiy(i,j-1,k)*betacc(i,j-1,k))*dysqinv
                 +(-phiy(i+1,j,k)*betaxy(i+1,j,k)-phiy(i-1,j,k)*betaxy(i,j,k))*dxsqinv
-#if (AMREX_SPACEDIM == 3)                                        
+#if (AMREX_SPACEDIM == 3)
                 +(-phiy(i,j,k+1)*betayz(i,j,k+1)-phiy(i,j,k-1)*betayz(i,j,k))*dzsqinv
 #endif
                 ;
@@ -273,8 +273,8 @@ void stag_applyop_visc_m1 (Box const& tbx,
         for (int j = zlo.y; j <= zhi.y; ++j) {
         ioff = 0;
         if (offset == 2 && (zlo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = zlo.x+ioff; i <= zhi.x; i+=offset) {
             Lphiz(i,j,k) = phiz(i,j,k)*
@@ -290,31 +290,31 @@ void stag_applyop_visc_m1 (Box const& tbx,
         }
     }
 #endif
-    
+
 }
 
 AMREX_GPU_HOST_DEVICE
 inline
 void stag_applyop_visc_p2 (Box const& tbx,
-			   AMREX_D_DECL(Box const& xbx,
-					Box const& ybx,
-					Box const& zbx),
-			   Array4<Real const> const& betacc,
-			   Array4<Real const> const& gammacc,
+         AMREX_D_DECL(Box const& xbx,
+          Box const& ybx,
+          Box const& zbx),
+         Array4<Real const> const& betacc,
+         Array4<Real const> const& gammacc,
                            AMREX_D_DECL(Array4<Real const> const& alphax,
-					Array4<Real const> const& alphay,
-					Array4<Real const> const& alphaz),
+          Array4<Real const> const& alphay,
+          Array4<Real const> const& alphaz),
                            AMREX_D_DECL(Array4<Real const> const& phix,
-					Array4<Real const> const& phiy,
-					Array4<Real const> const& phiz),
+          Array4<Real const> const& phiy,
+          Array4<Real const> const& phiz),
                            AMREX_D_DECL(Array4<Real> const& Lphix,
-					Array4<Real> const& Lphiy,
-					Array4<Real> const& Lphiz),
-			   AMREX_D_DECL(bool do_x,
-					bool do_y,
-					bool do_z),
-			   Real theta_alpha, int offset,  int color,
-			   const GpuArray<Real, AMREX_SPACEDIM> & dx) noexcept
+          Array4<Real> const& Lphiy,
+          Array4<Real> const& Lphiz),
+         AMREX_D_DECL(bool do_x,
+          bool do_y,
+          bool do_z),
+         Real theta_alpha, int offset,  int color,
+         const GpuArray<Real, AMREX_SPACEDIM> & dx) noexcept
 {
     // xbx, ybx, and zbx are the face-centered boxes
 
@@ -361,24 +361,24 @@ void stag_applyop_visc_p2 (Box const& tbx,
 #elif (AMREX_SPACEDIM == 3)
         Real term1 = 2.*(2.*dxsqinv+dysqinv+dzsqinv);
 #endif
-    
+
         for (int k = xlo.z; k <= xhi.z; ++k) {
         for (int j = xlo.y; j <= xhi.y; ++j) {
         ioff = 0;
-	if (offset == 2 && (xlo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+  if (offset == 2 && (xlo.x+j+k)%2 != (color+1)%2 ) {
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = xlo.x+ioff; i <= xhi.x; i+=offset) {
-  	    Lphix(i,j,k) = phix(i,j,k)*(theta_alpha*alphax(i,j,k) + term1*betacc(i,j,k))
-  	        -betacc(i,j,k)*( (phix(i+1,j,k)+phix(i-1,j,k))*2.*dxsqinv
+        Lphix(i,j,k) = phix(i,j,k)*(theta_alpha*alphax(i,j,k) + term1*betacc(i,j,k))
+            -betacc(i,j,k)*( (phix(i+1,j,k)+phix(i-1,j,k))*2.*dxsqinv
                                 +(phix(i,j+1,k)+phix(i,j-1,k))*dysqinv
                                 +(phiy(i,j+1,k)-phiy(i,j,k)-phiy(i-1,j+1,k)+phiy(i-1,j,k))*dxdyinv
 #if (AMREX_SPACEDIM == 3)
                                 +(phix(i,j,k+1)+phix(i,j,k-1))*dzsqinv
                                 +(phiz(i,j,k+1)-phiz(i,j,k)-phiz(i-1,j,k+1)+phiz(i-1,j,k))*dxdzinv
 #endif
-			       );
+             );
         }
         }
         }
@@ -396,19 +396,19 @@ void stag_applyop_visc_p2 (Box const& tbx,
         for (int j = ylo.y; j <= yhi.y; ++j) {
         ioff = 0;
         if (offset == 2 && (ylo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = ylo.x+ioff; i <= yhi.x; i+=offset) {
-	    Lphiy(i,j,k) = phiy(i,j,k)*( theta_alpha*alphay(i,j,k) + term1*betacc(i,j,k))
-	        -betacc(i,j,k)*( (phiy(i,j+1,k)+phiy(i,j-1,k))*2.*dysqinv
-				+(phiy(i+1,j,k)+phiy(i-1,j,k))*dxsqinv
-				+(phix(i+1,j,k)-phix(i,j,k)-phix(i+1,j-1,k)+phix(i,j-1,k))*dxdyinv
+      Lphiy(i,j,k) = phiy(i,j,k)*( theta_alpha*alphay(i,j,k) + term1*betacc(i,j,k))
+          -betacc(i,j,k)*( (phiy(i,j+1,k)+phiy(i,j-1,k))*2.*dysqinv
+        +(phiy(i+1,j,k)+phiy(i-1,j,k))*dxsqinv
+        +(phix(i+1,j,k)-phix(i,j,k)-phix(i+1,j-1,k)+phix(i,j-1,k))*dxdyinv
 #if (AMREX_SPACEDIM == 3)
-				+(phiy(i,j,k+1)+phiy(i,j,k-1))*dzsqinv
-				+(phiz(i,j,k+1)-phiz(i,j,k)-phiz(i,j-1,k+1)+phiz(i,j-1,k))*dydzinv
+        +(phiy(i,j,k+1)+phiy(i,j,k-1))*dzsqinv
+        +(phiz(i,j,k+1)-phiz(i,j,k)-phiz(i,j-1,k+1)+phiz(i,j-1,k))*dydzinv
 #endif
-			       );
+             );
         }
         }
         }
@@ -418,21 +418,21 @@ void stag_applyop_visc_p2 (Box const& tbx,
     if (do_z) {
 
         Real term1 = 2.*(dxsqinv+dysqinv+2.*dzsqinv);
-        
+
         for (int k = zlo.z; k <= zhi.z; ++k) {
         for (int j = zlo.y; j <= zhi.y; ++j) {
         ioff = 0;
         if (offset == 2 && (zlo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = zlo.x+ioff; i <= zhi.x; i+=offset) {
-	    Lphiz(i,j,k) = phiz(i,j,k)*( theta_alpha*alphaz(i,j,k) + term1*betacc(i,j,k))
-	        -betacc(i,j,k)*( (phiz(i,j,k+1)+phiz(i,j,k-1))*2.*dzsqinv
-				+(phiz(i+1,j,k)+phiz(i-1,j,k))*dxsqinv
-				+(phiz(i,j+1,k)+phiz(i,j-1,k))*dysqinv
-				+(phix(i+1,j,k)-phix(i,j,k)-phix(i+1,j,k-1)+phix(i,j,k-1))*dxdzinv
-				+(phiy(i,j+1,k)-phiy(i,j,k)-phiy(i,j+1,k-1)+phiy(i,j,k-1))*dydzinv);
+      Lphiz(i,j,k) = phiz(i,j,k)*( theta_alpha*alphaz(i,j,k) + term1*betacc(i,j,k))
+          -betacc(i,j,k)*( (phiz(i,j,k+1)+phiz(i,j,k-1))*2.*dzsqinv
+        +(phiz(i+1,j,k)+phiz(i-1,j,k))*dxsqinv
+        +(phiz(i,j+1,k)+phiz(i,j-1,k))*dysqinv
+        +(phix(i+1,j,k)-phix(i,j,k)-phix(i+1,j,k-1)+phix(i,j,k-1))*dxdzinv
+        +(phiy(i,j+1,k)-phiy(i,j,k)-phiy(i,j+1,k-1)+phiy(i,j,k-1))*dydzinv);
         }
         }
         }
@@ -444,29 +444,29 @@ void stag_applyop_visc_p2 (Box const& tbx,
 AMREX_GPU_HOST_DEVICE
 inline
 void stag_applyop_visc_m2 (Box const& tbx,
-			   AMREX_D_DECL(Box const& xbx,
-					Box const& ybx,
-					Box const& zbx),
+         AMREX_D_DECL(Box const& xbx,
+          Box const& ybx,
+          Box const& zbx),
                            AMREX_D_DECL(Array4<Real const> const& alphax,
-					Array4<Real const> const& alphay,
-					Array4<Real const> const& alphaz),
+          Array4<Real const> const& alphay,
+          Array4<Real const> const& alphaz),
                            AMREX_D_DECL(Array4<Real const> const& phix,
-					Array4<Real const> const& phiy,
-					Array4<Real const> const& phiz),
+          Array4<Real const> const& phiy,
+          Array4<Real const> const& phiz),
                            AMREX_D_DECL(Array4<Real> const& Lphix,
-					Array4<Real> const& Lphiy,
-					Array4<Real> const& Lphiz),
+          Array4<Real> const& Lphiy,
+          Array4<Real> const& Lphiz),
                            Array4<Real const> const& betacc,
                            Array4<Real const> const& betaxy,
 #if (AMREX_SPACEDIM == 3)
                            Array4<Real const> const& betaxz,
                            Array4<Real const> const& betayz,
 #endif
-			   AMREX_D_DECL(bool do_x,
-					bool do_y,
-					bool do_z),
-			   Real theta_alpha, int offset,  int color,
-			   const GpuArray<Real, AMREX_SPACEDIM> & dx) noexcept
+         AMREX_D_DECL(bool do_x,
+          bool do_y,
+          bool do_z),
+         Real theta_alpha, int offset,  int color,
+         const GpuArray<Real, AMREX_SPACEDIM> & dx) noexcept
 {
     // xbx, ybx, and zbx are the face-centered boxes
 
@@ -511,12 +511,12 @@ void stag_applyop_visc_m2 (Box const& tbx,
         for (int k = xlo.z; k <= xhi.z; ++k) {
         for (int j = xlo.y; j <= xhi.y; ++j) {
         ioff = 0;
-	if (offset == 2 && (xlo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+  if (offset == 2 && (xlo.x+j+k)%2 != (color+1)%2 ) {
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = xlo.x+ioff; i <= xhi.x; i+=offset) {
-                   
+
             Lphix(i,j,k) = phix(i,j,k)*
                 ( theta_alpha*alphax(i,j,k) +
                   2.*(betacc(i,j,k)+betacc(i-1,j,k))*dxsqinv
@@ -525,7 +525,7 @@ void stag_applyop_visc_m2 (Box const& tbx,
                   + (betaxz(i,j,k)+betaxz(i,j,k+1))*dzsqinv
 #endif
                     )
-                        
+
                 -2.*phix(i+1,j,k)*betacc(i,j,k)*dxsqinv
                 -2.*phix(i-1,j,k)*betacc(i-1,j,k)*dxsqinv
                 -phix(i,j+1,k)*betaxy(i,j+1,k)*dysqinv
@@ -534,19 +534,19 @@ void stag_applyop_visc_m2 (Box const& tbx,
                 -phix(i,j,k+1)*betaxz(i,j,k+1)*dzsqinv
                 -phix(i,j,k-1)*betaxz(i,j,k)*dzsqinv
 #endif
-                        
+
                 -phiy(i,j+1,k)*betaxy(i,j+1,k)*dxdyinv
                 +phiy(i,j,k)*betaxy(i,j,k)*dxdyinv
                 +phiy(i-1,j+1,k)*betaxy(i,j+1,k)*dxdyinv
                 -phiy(i-1,j,k)*betaxy(i,j,k)*dxdyinv
-                        
+
 #if (AMREX_SPACEDIM == 3)
                 -phiz(i,j,k+1)*betaxz(i,j,k+1)*dxdzinv
                 +phiz(i,j,k)*betaxz(i,j,k)*dxdzinv
                 +phiz(i-1,j,k+1)*betaxz(i,j,k+1)*dxdzinv
                 -phiz(i-1,j,k)*betaxz(i,j,k)*dxdzinv
 #endif
-                ;            
+                ;
         }
         }
         }
@@ -558,11 +558,11 @@ void stag_applyop_visc_m2 (Box const& tbx,
         for (int j = ylo.y; j <= yhi.y; ++j) {
         ioff = 0;
         if (offset == 2 && (ylo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = ylo.x+ioff; i <= yhi.x; i+=offset) {
-                   
+
             Lphiy(i,j,k) = phiy(i,j,k)*
                 ( theta_alpha*alphay(i,j,k) +
                   2.*(betacc(i,j,k)+betacc(i,j-1,k))*dysqinv
@@ -571,7 +571,7 @@ void stag_applyop_visc_m2 (Box const& tbx,
                   + (betayz(i,j,k)+betayz(i,j,k+1))*dzsqinv
 #endif
                     )
-                        
+
                 -2.*phiy(i,j+1,k)*betacc(i,j,k)*dysqinv
                 -2.*phiy(i,j-1,k)*betacc(i,j-1,k)*dysqinv
                 -phiy(i+1,j,k)*betaxy(i+1,j,k)*dxsqinv
@@ -580,12 +580,12 @@ void stag_applyop_visc_m2 (Box const& tbx,
                 -phiy(i,j,k+1)*betayz(i,j,k+1)*dzsqinv
                 -phiy(i,j,k-1)*betayz(i,j,k)*dzsqinv
 #endif
-                        
+
                 -phix(i+1,j,k)*betaxy(i+1,j,k)*dxdyinv
                 +phix(i,j,k)*betaxy(i,j,k)*dxdyinv
                 +phix(i+1,j-1,k)*betaxy(i+1,j,k)*dxdyinv
                 -phix(i,j-1,k)*betaxy(i,j,k)*dxdyinv
-                        
+
 #if (AMREX_SPACEDIM == 3)
                 -phiz(i,j,k+1)*betayz(i,j,k+1)*dydzinv
                 +phiz(i,j,k)*betayz(i,j,k)*dydzinv
@@ -605,8 +605,8 @@ void stag_applyop_visc_m2 (Box const& tbx,
         for (int j = zlo.y; j <= zhi.y; ++j) {
         ioff = 0;
         if (offset == 2 && (zlo.x+j+k)%2 != (color+1)%2 ) {
-	  ioff = 1;
-	}
+    ioff = 1;
+  }
         AMREX_PRAGMA_SIMD
         for (int i = zlo.x+ioff; i <= zhi.x; i+=offset) {
 
@@ -615,23 +615,23 @@ void stag_applyop_visc_m2 (Box const& tbx,
                   2.*(betacc(i,j,k)+betacc(i,j,k-1))*dzsqinv
                   + (betaxz(i,j,k)+betaxz(i+1,j,k))*dxsqinv
                   + (betayz(i,j,k)+betayz(i,j+1,k))*dysqinv )
-                        
+
                 -2.*phiz(i,j,k+1)*betacc(i,j,k)*dzsqinv
                 -2.*phiz(i,j,k-1)*betacc(i,j,k-1)*dzsqinv
                 -phiz(i+1,j,k)*betaxz(i+1,j,k)*dxsqinv
                 -phiz(i-1,j,k)*betaxz(i,j,k)*dxsqinv
                 -phiz(i,j+1,k)*betayz(i,j+1,k)*dysqinv
                 -phiz(i,j-1,k)*betayz(i,j,k)*dysqinv
-                        
+
                 -phix(i+1,j,k)*betaxz(i+1,j,k)*dxdzinv
                 +phix(i,j,k)*betaxz(i,j,k)*dxdzinv
                 +phix(i+1,j,k-1)*betaxz(i+1,j,k)*dxdzinv
                 -phix(i,j,k-1)*betaxz(i,j,k)*dxdzinv
-                        
+
                 -phiy(i,j+1,k)*betayz(i,j+1,k)*dydzinv
                 +phiy(i,j,k)*betayz(i,j,k)*dydzinv
                 +phiy(i,j+1,k-1)*betayz(i,j+1,k)*dydzinv
-                -phiy(i,j,k-1)*betayz(i,j,k)*dydzinv;            
+                -phiy(i,j,k-1)*betayz(i,j,k)*dydzinv;
         }
         }
         }
@@ -652,9 +652,9 @@ void StagApplyOp(const Geometry & geom,
 {
 
     BL_PROFILE_VAR("StagApplyOp()",StagApplyOp);
-    
+
     GpuArray<Real,AMREX_SPACEDIM> dx_gpu{AMREX_D_DECL(dx[0], dx[1], dx[2])};
-    
+
     AMREX_D_DECL(bool do_x,do_y,do_z);
 
     int offset = 1;
@@ -725,7 +725,7 @@ void StagApplyOp(const Geometry & geom,
             AMREX_LAUNCH_HOST_DEVICE_LAMBDA(index_bounds, tbx,
             {
                 stag_applyop_visc_p1(tbx, AMREX_D_DECL(bx_x,bx_y,bx_z),
-				     betacc, gammacc,
+             betacc, gammacc,
                                      AMREX_D_DECL(alphax,alphay,alphaz),
                                      AMREX_D_DECL(phix,phiy,phiz),
                                      AMREX_D_DECL(Lphix,Lphiy,Lphiz),
@@ -743,7 +743,7 @@ void StagApplyOp(const Geometry & geom,
                                      betacc, betaxy,
 #if (AMREX_SPACEDIM == 3)
                                      betaxz, betayz,
-#endif                                 
+#endif
                                      AMREX_D_DECL(do_x,do_y,do_z),
                                      theta_alpha, offset, color, dx_gpu);
             });
@@ -752,7 +752,7 @@ void StagApplyOp(const Geometry & geom,
             AMREX_LAUNCH_HOST_DEVICE_LAMBDA(index_bounds, tbx,
             {
                 stag_applyop_visc_p2(tbx, AMREX_D_DECL(bx_x,bx_y,bx_z),
-				     betacc, gammacc,
+             betacc, gammacc,
                                      AMREX_D_DECL(alphax,alphay,alphaz),
                                      AMREX_D_DECL(phix,phiy,phiz),
                                      AMREX_D_DECL(Lphix,Lphiy,Lphiz),
@@ -770,19 +770,19 @@ void StagApplyOp(const Geometry & geom,
                                      betacc, betaxy,
 #if (AMREX_SPACEDIM == 3)
                                      betaxz, betayz,
-#endif                                 
+#endif
                                      AMREX_D_DECL(do_x,do_y,do_z),
                                      theta_alpha, offset, color, dx_gpu);
-            });            
+            });
         }
         else {
             Abort("StagApplyOp.cpp: visc_type not supported");
         }
-            
+
     }
 
     for (int i=0; i<AMREX_SPACEDIM; ++i) {
         MultiFabPhysBCDomainVel(Lphi[i], geom, i);
     }
-    
+
 }

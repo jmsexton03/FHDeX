@@ -102,12 +102,12 @@ main (int   argc,
     // read in prob_lo and prob_hi
     amrex::GpuArray<amrex::Real, AMREX_SPACEDIM> prob_lo, prob_hi;
     for (int i=0; i<AMREX_SPACEDIM; ++i) {
-        x >> prob_lo[i];        
+        x >> prob_lo[i];
     }
     for (int i=0; i<AMREX_SPACEDIM; ++i) {
-        x >> prob_hi[i];        
+        x >> prob_hi[i];
     }
-    
+
     // now read in the plotfile data
     // check to see whether the user pointed to the plotfile base directory
     // or the data itself
@@ -137,11 +137,11 @@ main (int   argc,
 
     // set to 1 (periodic)
     Vector<int> is_periodic(AMREX_SPACEDIM,1);
-    
+
     Geometry geom(domain,&real_box,CoordSys::cartesian,is_periodic.data());
-    
+
     const Real* dx = geom.CellSize();
-  
+
     MultiFab mf_grown(ba,dmap,AMREX_SPACEDIM,1);
     MultiFab laplacian(ba,dmap,AMREX_SPACEDIM,1);
 
@@ -152,14 +152,14 @@ main (int   argc,
 
 
     if(nderivs == 0){
-	    Copy(laplacian,mf,AMREX_SPACEDIM,0,AMREX_SPACEDIM,0);
+        Copy(laplacian,mf,AMREX_SPACEDIM,0,AMREX_SPACEDIM,0);
     } else {
 
     // fill ghost cells of mf_grown
     mf_grown.FillBoundary(geom.periodicity());
 
 //    for (int m=0; m<nderivs; ++m) {
-    
+
         for ( MFIter mfi(mf_grown,false); mfi.isValid(); ++mfi ) {
 
             const Box& bx = mfi.validbox();
@@ -193,19 +193,19 @@ main (int   argc,
 
         // fill ghost cells of mf_grown
         mf_grown.FillBoundary(geom.periodicity());
-        
+
     } // end loop over nderivs
-        
+
     Vector<Real> L2(AMREX_SPACEDIM,0.);
     for (int i=0; i<AMREX_SPACEDIM; i++)
-	    L2[i]=0.;
+        L2[i]=0.;
 
     for ( MFIter mfi(laplacian,false); mfi.isValid(); ++mfi ) {
 
         const Box& bx = mfi.validbox();
         const auto lo = amrex::lbound(bx);
         const auto hi = amrex::ubound(bx);
-        
+
         const Array4<Real>& lap = laplacian.array(mfi);
 
         for (auto n=0; n<AMREX_SPACEDIM; ++n) {
@@ -214,7 +214,7 @@ main (int   argc,
         for (auto i = lo.x; i <= hi.x; ++i) {
 
             L2[n] += lap(i,j,k,n)*lap(i,j,k,n);
-                
+
         }
         }
         }
@@ -259,14 +259,14 @@ main (int   argc,
     amrex::Long count=0;
     amrex::Long totbin=0;
     for (int ind=0 ; ind < nbins+1; ind++)
-	    bins[ind]=0;
+        bins[ind]=0;
 
     for ( MFIter mfi(laplacian,false); mfi.isValid(); ++mfi ) {
 
         const Box& bx = mfi.validbox();
         const auto lo = amrex::lbound(bx);
         const auto hi = amrex::ubound(bx);
-        
+
         const Array4<Real>& lap = laplacian.array(mfi);
 
         for (auto n=0; n<AMREX_SPACEDIM; ++n) {
@@ -276,14 +276,14 @@ main (int   argc,
 
             int index = floor((lap(i,j,k,n) + hbinwidth)/binwidth);
             index += halfbin;
-            
+
             if( index >=0 && index <= nbins) {
                 bins[index] += 1;
                 totbin++;
             }
 
             count++;
-                
+
         }
         }
         }
@@ -302,7 +302,7 @@ main (int   argc,
     }
     if (ParallelDescriptor::IOProcessor()) {
         std::ofstream outfile;
-	oFile = oFile_save;
+    oFile = oFile_save;
         oFile +="_";
         oFile += std::to_string(nderivs);
         oFile += ".dat";
@@ -317,6 +317,6 @@ main (int   argc,
 
 }
     amrex::Finalize();
-    
-                 
+
+
 }

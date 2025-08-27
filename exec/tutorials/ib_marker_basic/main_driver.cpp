@@ -108,7 +108,7 @@ void main_driver(const char * argv) {
     // Find the optimal number of ghost cells for the IBMarkerContainer
     Real min_dx = dx[0];
     for (int d=1; d<AMREX_SPACEDIM; ++d)
-	    min_dx = amrex::min(min_dx, dx[d]);
+        min_dx = amrex::min(min_dx, dx[d]);
 
     int ib_nghost = 1;
     Print() << "Initializing IBMarkerContainer with "
@@ -218,20 +218,20 @@ void main_driver(const char * argv) {
 
      // Get sorted ibs list
     vector<pair<int, int>> sorted_ibs = ib_mc.get_sorted_map();
-    
-//   	vector<pair<int, int>> sorted_ibs;
 
-//    	for (int i = 0; i < ibs.size(); ++i) {
-//        	sorted_ibs.push_back(make_pair(ibs[i], i));
-//    	}
+//       vector<pair<int, int>> sorted_ibs;
 
-//    	sort(sorted_ibs.begin(), sorted_ibs.end());
+//        for (int i = 0; i < ibs.size(); ++i) {
+//            sorted_ibs.push_back(make_pair(ibs[i], i));
+//        }
 
-    	Print() << "Flagellum number\t" << "index in PullDown Vector" << std::endl;
-	for (int i = 0; i < ibs.size(); i++) {
-      		 Print() << sorted_ibs[i].first << "\t" << sorted_ibs[i].second << std::endl;
-    	}
-   
+//        sort(sorted_ibs.begin(), sorted_ibs.end());
+
+        Print() << "Flagellum number\t" << "index in PullDown Vector" << std::endl;
+    for (int i = 0; i < ibs.size(); i++) {
+               Print() << sorted_ibs[i].first << "\t" << sorted_ibs[i].second << std::endl;
+        }
+
 
     //Vectors for storing forces in each direction
     Vector<Real> fx(ib_mc.getTotalNumIDs());
@@ -253,16 +253,16 @@ void main_driver(const char * argv) {
 
         for (int ind=index_start; ind < index_start+N; ++ind ) {    //going through the sorted ibs index
 
-	        //Getting index for the current marker in the PullDown Vectors
-		int i_c = sorted_ibs[ind].second;
+            //Getting index for the current marker in the PullDown Vectors
+        int i_c = sorted_ibs[ind].second;
 
-	       	if(sorted_ibs[ind].first != i_ib) Abort("Mismatched flagella detected in predictor!!! flee for your lunch!");                  
+               if(sorted_ibs[ind].first != i_ib) Abort("Mismatched flagella detected in predictor!!! flee for your lunch!");
 
                 if(ind>index_start and ind<index_start+N-1) {   //exclude the first and last marker on the flagellum that doesn't have either next or previous marker
-	               //Getting indexes for the previous/minus and next/plus markers in the PullDown Vectors
+                   //Getting indexes for the previous/minus and next/plus markers in the PullDown Vectors
 
-			int i_p = sorted_ibs[ind+1].second;
-			int i_m = sorted_ibs[ind-1].second;
+            int i_p = sorted_ibs[ind+1].second;
+            int i_m = sorted_ibs[ind-1].second;
 
                         RealVect      pos = {pos_x[i_c],   pos_y[i_c],   pos_z[i_c]};
                         RealVect next_pos = {pos_x[i_p],   pos_y[i_p],   pos_z[i_p]};
@@ -296,8 +296,8 @@ void main_driver(const char * argv) {
 
                         if(ind>index_start and ind<index_start+N-1) {   //exclude the first and last markers on the flagellum that doesn't have either next or previous marker
 
-	                        int i_p = sorted_ibs[ind+1].second;
-	                        int i_m = sorted_ibs[ind-1].second;
+                            int i_p = sorted_ibs[ind+1].second;
+                            int i_m = sorted_ibs[ind-1].second;
 
                                 RealVect      pos = {pos_x[i_c], pos_y[i_c], pos_z[i_c]};
                                 RealVect next_pos = {pos_x[i_p], pos_y[i_p], pos_z[i_p]};
@@ -339,16 +339,16 @@ void main_driver(const char * argv) {
     for (auto & i:fz) Print() << i << " ";
     Print() << std::endl;
 
-   
-//   for (int i=0; i<ib_mc.getTotalNumIDs(); i++) { 
-//    	std::vector<int>::iterator gx = std::find(sorted_ibs.begin(), sorted_ibs.end(), i_ib);
-                    
+
+//   for (int i=0; i<ib_mc.getTotalNumIDs(); i++) {
+//        std::vector<int>::iterator gx = std::find(sorted_ibs.begin(), sorted_ibs.end(), i_ib);
+
    //actual index in PullDown vectors
 //    int i_c = sorted.ibs[std::distance(sorted_ibs.begin(), gx) + id].second;
 
 //    Print() << "Adding forces to particles..." << std::endl;
 
-  
+
 
 
     // Just for fun, print out the max runtime

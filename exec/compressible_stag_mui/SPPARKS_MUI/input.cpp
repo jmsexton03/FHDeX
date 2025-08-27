@@ -5,7 +5,7 @@
 
    Copyright (2008) Sandia Corporation.  Under the terms of Contract
    DE-AC04-94AL85000 with Sandia Corporation, the U.S. Government retains
-   certain rights in this software.  This software is distributed under 
+   certain rights in this software.  This software is distributed under
    the GNU General Public License.
 
    See the README file in the top-level SPPARKS directory.
@@ -116,7 +116,7 @@ void Input::file()
   int m,n;
 
   while (1) {
-    
+
     // read one line from input script
     // if line ends in continuation char '&', concatenate next line(s)
     // n = length of line including str terminator, 0 if end of file
@@ -125,12 +125,12 @@ void Input::file()
     if (me == 0) {
       m = 0;
       while (1) {
-	if (fgets(&line[m],MAXLINE-m,infile) == NULL) n = 0;
-	else n = strlen(line) + 1;
-	if (n == 0) break;
-	m = n-2;
-	while (m >= 0 && isspace(line[m])) m--;
-	if (m < 0 || line[m] != '&') break;
+  if (fgets(&line[m],MAXLINE-m,infile) == NULL) n = 0;
+  else n = strlen(line) + 1;
+  if (n == 0) break;
+  m = n-2;
+  while (m >= 0 && isspace(line[m])) m--;
+  if (m < 0 || line[m] != '&') break;
       }
     }
 
@@ -144,8 +144,8 @@ void Input::file()
     if (n == 0) {
       if (label_active) error->all(FLERR,"Label wasn't found in input script");
       if (me == 0) {
-	if (infile != stdin) fclose(infile);
-	nfile--;
+  if (infile != stdin) fclose(infile);
+  nfile--;
       }
       MPI_Bcast(&nfile,1,MPI_INT,0,world);
       if (nfile == 0) break;
@@ -166,7 +166,7 @@ void Input::file()
     // echo the command unless scanning for label
 
     if (me == 0 && label_active == 0) {
-      if (echo_screen && screen) fprintf(screen,"%s",line); 
+      if (echo_screen && screen) fprintf(screen,"%s",line);
       if (echo_log && logfile) fprintf(logfile,"%s",line);
     }
 
@@ -226,9 +226,9 @@ char *Input::one(const char *single)
   strcpy(line,single);
 
   // echo the command unless scanning for label
-  
+
   if (me == 0 && label_active == 0) {
-    if (echo_screen && screen) fprintf(screen,"%s",line); 
+    if (echo_screen && screen) fprintf(screen,"%s",line);
     if (echo_log && logfile) fprintf(logfile,"%s",line);
   }
 
@@ -310,11 +310,11 @@ void Input::parse()
     if (arg[narg] && arg[narg][0] == '\"') {
       arg[narg] = &arg[narg][1];
       if (arg[narg][strlen(arg[narg])-1] == '\"')
-	arg[narg][strlen(arg[narg])-1] = '\0';
+  arg[narg][strlen(arg[narg])-1] = '\0';
       else {
-	arg[narg][strlen(arg[narg])] = ' ';
-	ptr = strtok(arg[narg],"\"");
-	if (ptr == NULL) error->all(FLERR,"Unbalanced quotes in input line");
+  arg[narg][strlen(arg[narg])] = ' ';
+  ptr = strtok(arg[narg],"\"");
+  if (ptr == NULL) error->all(FLERR,"Unbalanced quotes in input line");
       }
     }
     if (arg[narg]) narg++;
@@ -343,17 +343,17 @@ void Input::substitute(char *str, int flag)
   while (*ptr) {
     if (*ptr == '$' && level == 0) {
       if (*(ptr+1) == '{') {
-	var = ptr+2;
-	int i = 0;
-	while (var[i] != '\0' && var[i] != '}') i++;
-	if (var[i] == '\0') error->one(FLERR,"Invalid variable name");
-	var[i] = '\0';
-	beyond = ptr + strlen(var) + 3;
+  var = ptr+2;
+  int i = 0;
+  while (var[i] != '\0' && var[i] != '}') i++;
+  if (var[i] == '\0') error->one(FLERR,"Invalid variable name");
+  var[i] = '\0';
+  beyond = ptr + strlen(var) + 3;
       } else {
-	var = ptr;
-	var[0] = var[1];
-	var[1] = '\0';
-	beyond = ptr + strlen(var) + 1;
+  var = ptr;
+  var[0] = var[1];
+  var[1] = '\0';
+  beyond = ptr + strlen(var) + 1;
       }
       value = variable->retrieve(var);
       if (value == NULL) error->one(FLERR,"Substitution for illegal variable");
@@ -361,16 +361,16 @@ void Input::substitute(char *str, int flag)
       *ptr = '\0';
       strcpy(work,str);
       if (strlen(work)+strlen(value) >= MAXLINE)
-	error->one(FLERR,"Input line too long after variable substitution");
+  error->one(FLERR,"Input line too long after variable substitution");
       strcat(work,value);
       if (strlen(work)+strlen(beyond) >= MAXLINE)
-	error->one(FLERR,"Input line too long after variable substitution");
+  error->one(FLERR,"Input line too long after variable substitution");
       strcat(work,beyond);
       strcpy(str,work);
       ptr += strlen(value);
       if (flag && me == 0 && label_active == 0) {
-	if (echo_screen && screen) fprintf(screen,"%s",str); 
-	if (echo_log && logfile) fprintf(logfile,"%s",str);
+  if (echo_screen && screen) fprintf(screen,"%s",str);
+  if (echo_log && logfile) fprintf(logfile,"%s",str);
       }
       continue;
     }
@@ -443,7 +443,7 @@ int Input::execute_command()
 
   // assume command is application-specific
 
-  if (app == NULL) 
+  if (app == NULL)
     error->all(FLERR,"App_style specific command before app_style set");
   app->input(command,narg,arg);
   return 0;
@@ -505,7 +505,7 @@ void Input::ifthenelse()
   } else error->all(FLERR,"Illegal if command");
 
   if (strcmp(arg[3],"then") != 0) error->all(FLERR,"Illegal if command");
-  if (narg == 7 && strcmp(arg[5],"else") != 0) 
+  if (narg == 7 && strcmp(arg[5],"else") != 0)
     error->all(FLERR,"Illegal if command");
 
   char str[128] = "\0";
@@ -525,7 +525,7 @@ void Input::include()
   if (me == 0) {
     if (nfile == maxfile) {
       maxfile++;
-      infiles = (FILE **) 
+      infiles = (FILE **)
         memory->srealloc(infiles,maxfile*sizeof(FILE *),"input:infiles");
     }
     infile = fopen(arg[0],"r");
@@ -589,9 +589,9 @@ void Input::log()
     else {
       logfile = fopen(arg[0],"w");
       if (logfile == NULL) {
-	char str[128];
-	sprintf(str,"Cannot open logfile %s",arg[0]);
-	error->one(FLERR,str);
+  char str[128];
+  sprintf(str,"Cannot open logfile %s",arg[0]);
+  error->one(FLERR,str);
       }
     }
     if (universe->nworlds == 1) universe->ulogfile = logfile;
@@ -640,7 +640,7 @@ void Input::variable_command()
 
 void Input::app_style()
 {
-  if (domain->box_exist) 
+  if (domain->box_exist)
     error->all(FLERR,"App_style command after simulation box is defined");
   if (narg < 1) error->all(FLERR,"Illegal app command");
   delete app;
@@ -666,7 +666,7 @@ void Input::app_style()
 
 void Input::boundary()
 {
-  if (domain->box_exist) 
+  if (domain->box_exist)
     error->all(FLERR,"Boundary command after simulation box is defined");
   domain->set_boundary(narg,arg);
 }
@@ -697,9 +697,9 @@ void Input::diag_style()
 
 void Input::dimension()
 {
-  if (domain->box_exist) 
+  if (domain->box_exist)
     error->all(FLERR,"Dimension command after simulation box is defined");
-  if (domain->lattice) 
+  if (domain->lattice)
     error->all(FLERR,"Dimension command after lattice is defined");
   if (narg != 1) error->all(FLERR,"Illegal dimension command");
 
@@ -749,7 +749,7 @@ void Input::lattice()
 void Input::pair_coeff()
 {
   if (app == NULL) error->all(FLERR,"Pair_coeff command before app_style set");
-  if (potential->pair == NULL) 
+  if (potential->pair == NULL)
     error->all(FLERR,"Pair_coeff command before pair_style is defined");
   potential->pair->coeff(narg,arg);
 }

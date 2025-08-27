@@ -82,7 +82,7 @@ void find_equilibrium_position(IBMarkerContainer & ib_mc, int ib_lev, int nstep,
         update_ibm_marker(driv_u, driv_amp, 0, ib_mc, ib_lev,
                           IBMReal::forcex, false,
                           geom);
-	  
+
         // Sum predictor forces added to neighbors back to the real markers
         ib_mc.sumNeighbors(IBMReal::forcex, AMREX_SPACEDIM, 0, 0);
 
@@ -456,7 +456,7 @@ void main_driver(const char * argv) {
     // Find the optimal number of ghost cells for the IBMarkerContainer
     Real min_dx = dx[0];
     for (int d=1; d<AMREX_SPACEDIM; ++d)
-	    min_dx = amrex::min(min_dx, dx[d]);
+      min_dx = amrex::min(min_dx, dx[d]);
 
     // min of 4 is a HACK: something large enough but not too large
     int ib_nghost = 4;
@@ -497,7 +497,7 @@ void main_driver(const char * argv) {
 
   int N_markers = immbdy::contains_fourier ? N+1 : N;
 
-      Vector<RealVect> marker_positions = equil_pos(i_ib, 0, geom); 
+      Vector<RealVect> marker_positions = equil_pos(i_ib, 0, geom);
         // Vector<RealVect> marker_positions(N_markers);
         // if (immbdy::contains_fourier) {
         //     marker_positions = equil_pos(i_ib, 0, geom);

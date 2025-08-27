@@ -12,7 +12,7 @@ void MultiFabFillRandom(MultiFab& mf, const int& comp, const amrex::Real& varian
         const Array4<Real>& mf_fab = mf.array(mfi);
         amrex::ParallelForRNG(bx, [=] AMREX_GPU_DEVICE (int i, int j, int k, amrex::RandomEngine const& engine) noexcept
         {
-	  mf_fab(i,j,k,comp) = amrex::RandomNormal(0.,1.,engine);
+    mf_fab(i,j,k,comp) = amrex::RandomNormal(0.,1.,engine);
         });
     }
 
@@ -39,7 +39,7 @@ void MultiFabFillRandomNormal(MultiFab& mf, const int& scomp, const int& ncomp,
 
     // FillRandomNormal requires standard deviation
     amrex::Real stddev = sqrt(variance);
-    
+
     FillRandomNormal(mf, scomp, ncomp, mean, stddev);
 
     // overridesync

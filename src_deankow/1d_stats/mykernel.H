@@ -100,35 +100,35 @@ void compute_flux_x (int i, int j, int k,
         }
     } else
     {
-//	amrex::Real phiavg = 2.*(phi(i,j,k)*phi(i-1,j,k))/(phi(i,j,k)+phi(i-1,j,k)+1.e-16);
+//  amrex::Real phiavg = 2.*(phi(i,j,k)*phi(i-1,j,k))/(phi(i,j,k)+phi(i-1,j,k)+1.e-16);
         amrex::Real phiavg, phip, phim, noise_coeff;
         if(avg_type == 0 || avg_type == 2 ) {
 
             phip = std::max(phi(i,j,k,coeff_index),0.);
             phim = std::max(phi(i-1,j,k,coeff_index),0.);
-	    phiavg = 0.5*(phip+phim);
+      phiavg = 0.5*(phip+phim);
             noise_coeff = std::sqrt(phiavg);
 
         } else if (avg_type == 1) {
 
             phip = std::max(phi(i,j,k,coeff_index),0.);
             phim = std::max(phi(i-1,j,k,coeff_index),0.);
-	    phiavg = 2.*(phip*phim)/(phip+phim+1.e-16);
+      phiavg = 2.*(phip*phim)/(phip+phim+1.e-16);
             noise_coeff = std::sqrt(phiavg);
 
         } else if (avg_type == 3) {
 
              phip = phi(i,j,k,coeff_index);
              phim = phi(i-1,j,k,coeff_index);
-	     phiavg = 0.5*(phip+phim);
+       phiavg = 0.5*(phip+phim);
              noise_coeff = reg_sqrt(phiavg,deltaN);
         }
 //        phiavg = .1;
 //        amrex::Print() << "test " << std::sqrt(phiavg) << " " << phiavg/std::sqrt(deltaN) << " " << deltaN << std::endl;
         //phiavg = 1600.;
         fluxx(i,j,k,0) = 0.5*(phi(i,j,k,0)-phi(i-1,j,k,0)) * dxinv
-    	  + stochfluxx(i,j,k) * noise_coeff;
-//	  + stochfluxx(i,j,k) * reg_sqrt(phiavg,deltaN);
+        + stochfluxx(i,j,k) * noise_coeff;
+//    + stochfluxx(i,j,k) * reg_sqrt(phiavg,deltaN);
 //          + stochfluxx(i,j,k) * phiavg/std::sqrt(deltaN);
         if(Ncomp == 2){
            fluxx(i,j,k,1) = 0.5*(phi(i,j,k,1)-phi(i-1,j,k,1)) * dxinv;
@@ -172,12 +172,12 @@ void compute_flux_y (int i, int j, int k,
     }
     else
     {
-//	amrex::Real phiavg = 2.*(phi(i,j,k)*phi(i,j-1,k))/(phi(i,j,k)+phi(i,j-1,k)+1.e-16);
+//  amrex::Real phiavg = 2.*(phi(i,j,k)*phi(i,j-1,k))/(phi(i,j,k)+phi(i,j-1,k)+1.e-16);
         Real phip = std::max(phi(i,j,k,coeff_index),0.);
         Real phim = std::max(phi(i,j-1,k,coeff_index),0.);
-	amrex::Real phiavg = 2.*(phip*phim)/(phip+phim+1.e-16);
+  amrex::Real phiavg = 2.*(phip*phim)/(phip+phim+1.e-16);
         fluxy(i,j,k,0) = 0.5*(phi(i,j,k,0)-phi(i,j-1,k,0)) * dyinv
-	+ stochfluxy(i,j,k)* std::sqrt(phiavg);
+  + stochfluxy(i,j,k)* std::sqrt(phiavg);
         if(Ncomp == 2){
            fluxy(i,j,k,1) = 0.5*(phi(i,j,k,1)-phi(i,j-1,k,1)) * dyinv;
         }
@@ -222,12 +222,12 @@ void compute_flux_z (int i, int j, int k,
     }
     else
     {
-//	amrex::Real phiavg = 2.*(phi(i,j,k)*phi(i,j,k-1))/(phi(i,j,k)+phi(i,j,k-1)+1.e-16);
+//  amrex::Real phiavg = 2.*(phi(i,j,k)*phi(i,j,k-1))/(phi(i,j,k)+phi(i,j,k-1)+1.e-16);
         Real phip = std::max(phi(i,j,k,coeff_index),0.);
         Real phim = std::max(phi(i,j,k-1,coeff_index),0.);
-	amrex::Real phiavg = 2.*(phip*phim)/(phip+phim+1.e-16);
+  amrex::Real phiavg = 2.*(phip*phim)/(phip+phim+1.e-16);
         fluxz(i,j,k,0) = 0.5*(phi(i,j,k,0)-phi(i,j,k-1,0)) * dzinv
-	 +stochfluxz(i,j,k) * std::sqrt(phiavg);
+   +stochfluxz(i,j,k) * std::sqrt(phiavg);
         if(Ncomp == 2){
            fluxz(i,j,k,1) = 0.5*(phi(i,j,k,1)-phi(i,j,k-1,1)) * dzinv;
         }

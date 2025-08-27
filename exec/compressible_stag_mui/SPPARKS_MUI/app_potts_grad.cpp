@@ -5,7 +5,7 @@
 
    Copyright (2008) Sandia Corporation.  Under the terms of Contract
    DE-AC04-94AL85000 with Sandia Corporation, the U.S. Government retains
-   certain rights in this software.  This software is distributed under 
+   certain rights in this software.  This software is distributed under
    the GNU General Public License.
 
    See the README file in the top-level SPPARKS directory.
@@ -32,8 +32,8 @@ enum{NONE,LINE_2N,SQ_4N,SQ_8N,TRI,SC_6N,SC_26N,FCC,BCC,DIAMOND,
 
 /* ---------------------------------------------------------------------- */
 
-AppPottsGrad::AppPottsGrad(SPPARKS *spk, int narg, char **arg) : 
-   AppPotts(spk,narg,arg), T0(0.0), 
+AppPottsGrad::AppPottsGrad(SPPARKS *spk, int narg, char **arg) :
+   AppPotts(spk,narg,arg), T0(0.0),
    grad_x(0.0), grad_y(0.0), grad_z(0.0),
    max_T(std::numeric_limits<double>::min()),
    max_M(0.0), T(0), m0(1.0), M(0), activation_energy(1.0), convert(1.0)
@@ -53,30 +53,30 @@ AppPottsGrad::AppPottsGrad(SPPARKS *spk, int narg, char **arg) :
 
    m0 = atof(arg[3]); // as in m = m0 * exp(-q/kT) for temp grad and initial mobility at the center for mobility grad
    if(m0 <= 0)
-	   error->all(FLERR,"Invalid mobility argument");
+      error->all(FLERR,"Invalid mobility argument");
 
    convert = atof(arg[4]);
    if(convert <= 0)
-	   error->all(FLERR,"Invalid convert argument");
+      error->all(FLERR,"Invalid convert argument");
 
    activation_energy = atof(arg[5]);
    if(activation_energy < 0)
-	   error->all(FLERR,"Invalid activation energy argument");
+      error->all(FLERR,"Invalid activation energy argument");
 
    T0 = atof(arg[6]);
    if(T0 < 0)
-	   error->all(FLERR,"Invalid temperature argument");
+      error->all(FLERR,"Invalid temperature argument");
 
    grad_x = atof(arg[7]) * convert;
 
    grad_y = atof(arg[8]) * convert;
 
    if(narg == 10){
-	 grad_z = atof(arg[9]) * convert;
+    grad_z = atof(arg[9]) * convert;
    }
 
    if(!(strcmp(gradient_choice,"temp") == 0 || strcmp(gradient_choice,"mob") == 0))
-	   error->all(FLERR,"Invalid grad_style command");
+      error->all(FLERR,"Invalid grad_style command");
 
    // adding temperature array 'T'
    // add mobility array 'M'
@@ -114,7 +114,7 @@ void AppPottsGrad::init_app()
   //error checking for specific app
    int latticeStyle = domain->lattice->style;
    if(!(latticeStyle == SC_6N || latticeStyle == SC_26N || latticeStyle == SQ_4N || latticeStyle == SQ_8N)){
-	   error->all(FLERR,"illegal lattice style with app");
+      error->all(FLERR,"illegal lattice style with app");
    }
 
 
@@ -124,22 +124,22 @@ void AppPottsGrad::init_app()
     */
    if(strcmp(gradient_choice,"temp") == 0)
    {
-	   double global_max;
-	   for(int i=0;i<nlocal;i++){
-		  T[i]=compute_site_temperature(i);
-		  //temperature cannot be negative
-		  if(T[i] < 0)
-			  error->one(FLERR,"gradient caused negative temperature");
+      double global_max;
+      for(int i=0;i<nlocal;i++){
+        T[i]=compute_site_temperature(i);
+        //temperature cannot be negative
+        if(T[i] < 0)
+           error->one(FLERR,"gradient caused negative temperature");
 
-		  if(max_T<T[i]) max_T=T[i];
-	   }
-	   MPI_Allreduce(&max_T,&global_max,1,MPI_DOUBLE,MPI_MAX,world);
-	   max_T=global_max;
-	   for(int i=0;i<nlocal;i++){
-		  // skip this site if pinned
-		  if(M[i]<0.0) continue;
-		  M[i]=compute_mobility(T[i],max_T);
-	   }
+        if(max_T<T[i]) max_T=T[i];
+      }
+      MPI_Allreduce(&max_T,&global_max,1,MPI_DOUBLE,MPI_MAX,world);
+      max_T=global_max;
+      for(int i=0;i<nlocal;i++){
+        // skip this site if pinned
+        if(M[i]<0.0) continue;
+        M[i]=compute_mobility(T[i],max_T);
+      }
    }
 
    /*
@@ -147,25 +147,25 @@ void AppPottsGrad::init_app()
     */
    else
    {
-	   double global_mob_max;
-	   for(int i=0;i<nlocal;i++){
-		  // skip this site if pinned
-		  if(M[i]<0.0) continue;
-		  M[i]=mobility_grad(i);
-		  if(max_M < M[i])
-			  max_M = M[i];
+      double global_mob_max;
+      for(int i=0;i<nlocal;i++){
+        // skip this site if pinned
+        if(M[i]<0.0) continue;
+        M[i]=mobility_grad(i);
+        if(max_M < M[i])
+           max_M = M[i];
 
-		  //mobility cannot be negative
-		  if(M[i] < 0)
-			  error->one(FLERR,"gradient caused negative mobility");
-	   }
+        //mobility cannot be negative
+        if(M[i] < 0)
+           error->one(FLERR,"gradient caused negative mobility");
+      }
 
-	   MPI_Allreduce(&max_M,&global_mob_max,1,MPI_DOUBLE,MPI_MAX,world);
-	   max_M = global_mob_max;
+      MPI_Allreduce(&max_M,&global_mob_max,1,MPI_DOUBLE,MPI_MAX,world);
+      max_M = global_mob_max;
 
-	   //scale the mobility from 0 to 1
-	   for(int i = 0; i<nlocal;i++)
-		   M[i]=M[i]/max_M;
+      //scale the mobility from 0 to 1
+      for(int i = 0; i<nlocal;i++)
+         M[i]=M[i]/max_M;
 
    }
 
@@ -178,33 +178,33 @@ void AppPottsGrad::init_app()
 }
 
 double AppPottsGrad::mobility_grad(int i){
-	  double c=this->convert;
-	   const Domain *d=this->domain;
+     double c=this->convert;
+      const Domain *d=this->domain;
 
-	   // num site along each axis
-	   int nx = domain->nx;
-	   int ny = domain->ny;
-	   int nz = domain->nz;
+      // num site along each axis
+      int nx = domain->nx;
+      int ny = domain->ny;
+      int nz = domain->nz;
 
-	   // domain dimension; ASSUMES lattice constant is same for each dimension
-	   double lx=d->xprd;
-	   double h=lx/nx;
+      // domain dimension; ASSUMES lattice constant is same for each dimension
+      double lx=d->xprd;
+      double h=lx/nx;
 
-	   // site coordinates (spparks coordinate system)
-	   // xyz -- public member 'app.h'
-	   double xi = xyz[i][0];
-	   double yi = xyz[i][1];
-	   double zi = xyz[i][2];
+      // site coordinates (spparks coordinate system)
+      // xyz -- public member 'app.h'
+      double xi = xyz[i][0];
+      double yi = xyz[i][1];
+      double zi = xyz[i][2];
 
-	   double x = xi + (1.0-nx) * h / 2.0;
-	   double y = yi + (1.0-ny) * h / 2.0;
-	   double z = zi + (1.0-nz) * h / 2.0;
+      double x = xi + (1.0-nx) * h / 2.0;
+      double y = yi + (1.0-ny) * h / 2.0;
+      double z = zi + (1.0-nz) * h / 2.0;
 
-	   return m0 + grad_x * x + grad_y * y + grad_z * z;
+      return m0 + grad_x * x + grad_y * y + grad_z * z;
 }
 
 double AppPottsGrad::compute_mobility(double Ti,double max_T) const {
-   
+
    // Ti: site temperature
    // max_T: maximum temperature across entire domain
    // Boltzman constant k = 1.3806488 × 10^{-23} Units --> (m^2 - kg / (s^2 K)) = energy/(per degree K)
@@ -215,7 +215,7 @@ double AppPottsGrad::compute_mobility(double Ti,double max_T) const {
    double q= activation_energy;
    double max_M=m0*exp(-q/(K*max_T));
 
-   /** 
+   /**
     * The gb mobility have to be scaled to our simulations as M[i]/max_M,
     *  otherwise the simulation will run too long for no good reason.
     */
@@ -272,32 +272,32 @@ void AppPottsGrad::site_event_rejection(int i, RandomPark *random){
        * Finding unique neighbor spins
        */
 
-	 std::set<int> my_unique;
-	  for (int j = 0; j < numneigh[i]; j++) {
-		 int value = spin[neighbor[i][j]];
-		 double j_mobility= M[neighbor[i][j]];
-		 // mobilities <= 0 are 'pinned' sites
-		 if (value == spin[i] || j_mobility < 0.0) continue;
-		 my_unique.insert(value);
-	  }
-	  // how many unique spins
-	  nevent=my_unique.size();
+    std::set<int> my_unique;
+     for (int j = 0; j < numneigh[i]; j++) {
+       int value = spin[neighbor[i][j]];
+       double j_mobility= M[neighbor[i][j]];
+       // mobilities <= 0 are 'pinned' sites
+       if (value == spin[i] || j_mobility < 0.0) continue;
+       my_unique.insert(value);
+     }
+     // how many unique spins
+     nevent=my_unique.size();
 
-	  // scale random number according number of unique neighbor spins
-	  if (nevent == 0) return;
-	  int iran = (int) (nevent*random->uniform());
-	  if (iran >= nevent) iran = nevent-1;
+     // scale random number according number of unique neighbor spins
+     if (nevent == 0) return;
+     int iran = (int) (nevent*random->uniform());
+     if (iran >= nevent) iran = nevent-1;
 
 
-	  {
-		 /*
-		  * Store unique spins
-		  */
-		 int c=0;
-		  for(std::set<int>::iterator i=my_unique.begin();i!=my_unique.end();i++){
-			unique[c++]=*i;
-		  }
-	  }
+     {
+       /*
+        * Store unique spins
+        */
+       int c=0;
+        for(std::set<int>::iterator i=my_unique.begin();i!=my_unique.end();i++){
+         unique[c++]=*i;
+        }
+     }
 
       spin[i] = unique[iran];
       double efinal = site_energy(i);

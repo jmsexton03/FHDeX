@@ -24,7 +24,7 @@ void advance_stokes(std::array<MultiFab, AMREX_SPACEDIM >& umac,
                     std::array<MultiFab, AMREX_SPACEDIM >& umacNew,
                     MultiFab& pres,
                     IBMarkerContainer & ib_mc,
-		    const std::map<std::tuple<int, int>, double> & bond_map,
+        const std::map<std::tuple<int, int>, double> & bond_map,
                     const std::map<int, std::vector<int>> & bond_neighbors,
                     const std::array<MultiFab, AMREX_SPACEDIM>& mfluxdiv_predict,
                     const std::array<MultiFab, AMREX_SPACEDIM>& mfluxdiv_correct,
@@ -158,7 +158,7 @@ void advance_stokes(std::array<MultiFab, AMREX_SPACEDIM >& umac,
     constrain_ibm_marker(ib_mc, ib_lev, IBMReal::velz);
 
     // anchor the first two markers on flagellum with the two markers on the cells body
-    // by ensuing they share the same velocities before moving 
+    // by ensuing they share the same velocities before moving
     if(immbdy::contains_fourier)
        anchor_coupling_markers(ib_mc, ib_lev, IBMReal::velx);
 //     anchor_first_marker(ib_mc, ib_lev, IBMReal::velx);
@@ -180,8 +180,8 @@ void advance_stokes(std::array<MultiFab, AMREX_SPACEDIM >& umac,
                       geom);
 
     update_bdy_marker(bond_map, bond_neighbors, time, ib_mc, ib_lev,
-		      IBMReal::forcex, false,
-		      geom);
+          IBMReal::forcex, false,
+          geom);
 
     // Constrain it to move in the z = constant plane only
     constrain_ibm_marker(ib_mc, ib_lev, IBMReal::forcez);

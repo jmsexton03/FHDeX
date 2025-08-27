@@ -7,12 +7,12 @@ using namespace amrex;
 // takes cell-centered s_in
 // fixme: not boundary-condition aware
 void MkAdvSFluxdiv_cc(const std::array<MultiFab, AMREX_SPACEDIM>& umac_in,
-		   const MultiFab& s_in,
-		   MultiFab& s_update_in,
-		   const Geometry& geom,
-		   const int& scomp,
+         const MultiFab& s_in,
+         MultiFab& s_update_in,
+         const Geometry& geom,
+         const int& scomp,
                    const int& ncomp,
-		   const int& increment)
+         const int& increment)
 {
 
      BL_PROFILE_VAR("MkAdvSFluxdiv_cc()",MkAdvSFluxdiv_cc);
@@ -24,7 +24,7 @@ void MkAdvSFluxdiv_cc(const std::array<MultiFab, AMREX_SPACEDIM>& umac_in,
      if (increment == 0) {
          s_update_in.setVal(0.,scomp,ncomp,0);
      }
-     
+
      // Loop over boxes
      for (MFIter mfi(s_in); mfi.isValid(); ++mfi) {
 
@@ -53,12 +53,12 @@ void MkAdvSFluxdiv_cc(const std::array<MultiFab, AMREX_SPACEDIM>& umac_in,
 
 // takes face-centered s_fc_in
 void MkAdvSFluxdiv(const std::array<MultiFab, AMREX_SPACEDIM>& umac_in,
-		   const std::array<MultiFab, AMREX_SPACEDIM>& s_fc_in,
-		   MultiFab& s_update_in,
-		   const Geometry& geom,
-		   const int& scomp,
+         const std::array<MultiFab, AMREX_SPACEDIM>& s_fc_in,
+         MultiFab& s_update_in,
+         const Geometry& geom,
+         const int& scomp,
                    const int& ncomp,
-		   const int& increment)
+         const int& increment)
 {
 
      BL_PROFILE_VAR("MkAdvSFluxdiv()",MkAdvSFluxdiv);
@@ -71,7 +71,7 @@ void MkAdvSFluxdiv(const std::array<MultiFab, AMREX_SPACEDIM>& umac_in,
      if (increment == 0) {
          s_update_in.setVal(0.,scomp,ncomp,0);
      }
-     
+
      // Loop over boxes
      for (MFIter mfi(s_update_in); mfi.isValid(); ++mfi) {
 
@@ -83,7 +83,7 @@ void MkAdvSFluxdiv(const std::array<MultiFab, AMREX_SPACEDIM>& umac_in,
          AMREX_D_TERM(Array4<Real const> const& sx = s_fc_in[0].array(mfi);,
                       Array4<Real const> const& sy = s_fc_in[1].array(mfi);,
                       Array4<Real const> const& sz = s_fc_in[2].array(mfi););
-         
+
          AMREX_D_TERM(Array4<Real const> const& umac = umac_in[0].array(mfi);,
                       Array4<Real const> const& vmac = umac_in[1].array(mfi);,
                       Array4<Real const> const& wmac = umac_in[2].array(mfi););

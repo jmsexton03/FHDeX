@@ -27,13 +27,13 @@ inline MPI_Datatype mpi_type( short          const &t ) { return MPI_SHORT; }
 inline MPI_Datatype mpi_type( unsigned short const &t ) { return MPI_UNSIGNED_SHORT; }
 
 template<typename T> inline std::vector<T> gather( T t, MPI_Comm comm ) {
-	int size, rank;
-	MPI_Comm_size( comm, &size );
-	MPI_Comm_rank( comm, &rank );
-	std::vector<T> v;
-	if ( rank == 0 ) v.resize( size );
-	MPI_Gather( &t, 1, mpi_type(t), v.data(), 1, mpi_type(t), 0, comm );
-	return v;
+        int size, rank;
+        MPI_Comm_size( comm, &size );
+        MPI_Comm_rank( comm, &rank );
+        std::vector<T> v;
+        if ( rank == 0 ) v.resize( size );
+        MPI_Gather( &t, 1, mpi_type(t), v.data(), 1, mpi_type(t), 0, comm );
+        return v;
 }
 
 }

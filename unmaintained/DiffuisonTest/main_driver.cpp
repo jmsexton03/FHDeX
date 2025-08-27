@@ -59,7 +59,7 @@ void main_driver(const char* argv)
         // This defines a Geometry object
         geom.define(domain,&real_box,CoordSys::cartesian,is_periodic.data());
     }
-  
+
     // how boxes are distrubuted among MPI processes
     DistributionMapping dmap(ba);
 
@@ -95,11 +95,11 @@ void main_driver(const char* argv)
     betaEdge[2].define(convert(ba,nodal_flag_yz), dmap, 1, 1);
 
     if ( algorithm_type == 1 || algorithm_type == 2) {
-      betaEdge[0].setVal(visc_coef*dt);  
+      betaEdge[0].setVal(visc_coef*dt);
       betaEdge[1].setVal(visc_coef*dt);
       betaEdge[2].setVal(visc_coef*dt);
     } else if (algorithm_type == 0) {
-      betaEdge[0].setVal(-visc_coef*dt);  
+      betaEdge[0].setVal(-visc_coef*dt);
       betaEdge[1].setVal(-visc_coef*dt);
       betaEdge[2].setVal(-visc_coef*dt);
     } else {
@@ -148,18 +148,18 @@ void main_driver(const char* argv)
     int dm = 0;
     for ( MFIter mfi(betaCC); mfi.isValid(); ++mfi ) {
         const Box& bx = mfi.validbox();
-        
+
         AMREX_D_TERM(dm=0; init_vel(BL_TO_FORTRAN_BOX(bx),
                                     BL_TO_FORTRAN_ANYD(umac[0][mfi]), geom.CellSize(),
-                                    geom.ProbLo(), geom.ProbHi() ,&dm, 
+                                    geom.ProbLo(), geom.ProbHi() ,&dm,
                                     ZFILL(realDomain.lo()), ZFILL(realDomain.hi()));,
                      dm=1; init_vel(BL_TO_FORTRAN_BOX(bx),
                                     BL_TO_FORTRAN_ANYD(umac[1][mfi]), geom.CellSize(),
-                                    geom.ProbLo(), geom.ProbHi() ,&dm, 
+                                    geom.ProbLo(), geom.ProbHi() ,&dm,
                                     ZFILL(realDomain.lo()), ZFILL(realDomain.hi()));,
                      dm=2; init_vel(BL_TO_FORTRAN_BOX(bx),
                                     BL_TO_FORTRAN_ANYD(umac[2][mfi]), geom.CellSize(),
-                                    geom.ProbLo(), geom.ProbHi() ,&dm, 
+                                    geom.ProbLo(), geom.ProbHi() ,&dm,
                                     ZFILL(realDomain.lo()), ZFILL(realDomain.hi())););
     }
 
@@ -197,10 +197,10 @@ void main_driver(const char* argv)
 #endif
 
     if (algorithm_type == 2) {
-      
+
       AMREX_D_TERM(umac[0].FillBoundary(geom.periodicity());,
-		   umac[1].FillBoundary(geom.periodicity());,
-		   umac[2].FillBoundary(geom.periodicity()););
+       umac[1].FillBoundary(geom.periodicity());,
+       umac[2].FillBoundary(geom.periodicity()););
 
       Real weight_lap;
 
@@ -225,8 +225,8 @@ void main_driver(const char* argv)
       betaCC_neghlf.FillBoundary(geom.periodicity());
       gammaCC_neghlf.FillBoundary(geom.periodicity());
       AMREX_D_TERM(betaEdge_neghlf[0].FillBoundary(geom.periodicity());,
-      		   betaEdge_neghlf[1].FillBoundary(geom.periodicity());,
-      		   betaEdge_neghlf[2].FillBoundary(geom.periodicity()););
+             betaEdge_neghlf[1].FillBoundary(geom.periodicity());,
+             betaEdge_neghlf[2].FillBoundary(geom.periodicity()););
 
       // multiply beta & gamma by weight_lap = 1/2 : to correct L-matrix
       weight_lap = 0.5;
@@ -249,8 +249,8 @@ void main_driver(const char* argv)
       betaCC_hlf.FillBoundary(geom.periodicity());
       gammaCC_hlf.FillBoundary(geom.periodicity());
       AMREX_D_TERM(betaEdge_hlf[0].FillBoundary(geom.periodicity());,
-      		   betaEdge_hlf[1].FillBoundary(geom.periodicity());,
-      		   betaEdge_hlf[2].FillBoundary(geom.periodicity()););
+             betaEdge_hlf[1].FillBoundary(geom.periodicity());,
+             betaEdge_hlf[2].FillBoundary(geom.periodicity()););
 
     }
 
@@ -261,25 +261,25 @@ void main_driver(const char* argv)
                      umac[1].FillBoundary(geom.periodicity());,
                      umac[2].FillBoundary(geom.periodicity()););
 
-	if (algorithm_type == 2) {
-	  // compute rhs of poisson eqn
+  if (algorithm_type == 2) {
+    // compute rhs of poisson eqn
             StagApplyOp(geom,betaCC_neghlf,gammaCC_neghlf,betaEdge_neghlf,umac,rhs,alpha,dx,1.);
 
-	  AMREX_D_TERM(rhs[0].FillBoundary(geom.periodicity());,
-	  	       rhs[1].FillBoundary(geom.periodicity());,
-	  	       rhs[2].FillBoundary(geom.periodicity()););
+    AMREX_D_TERM(rhs[0].FillBoundary(geom.periodicity());,
+             rhs[1].FillBoundary(geom.periodicity());,
+             rhs[2].FillBoundary(geom.periodicity()););
 
-	  // VisMF::Write(rhs[0],"a_rhs0");
-	  // exit(0);
-	  
-	  StagMGSolver(alpha,betaCC_hlf,betaEdge_hlf,gammaCC_hlf,umacNew,rhs,1.0,geom);
-	} else if (algorithm_type == 1) {
-	  StagMGSolver(alpha,betaCC,betaEdge,gammaCC,umacNew,umac,1.0,geom);
-	} else if (algorithm_type == 0) {
-	  StagExpSolver(alpha,betaCC,betaEdge,gammaCC,umacNew,umac,1.0,geom);
-	} else {
-	  Print() << "Error: Invalid choice of algorithm_type\n";
-	}
+    // VisMF::Write(rhs[0],"a_rhs0");
+    // exit(0);
+
+    StagMGSolver(alpha,betaCC_hlf,betaEdge_hlf,gammaCC_hlf,umacNew,rhs,1.0,geom);
+  } else if (algorithm_type == 1) {
+    StagMGSolver(alpha,betaCC,betaEdge,gammaCC,umacNew,umac,1.0,geom);
+  } else if (algorithm_type == 0) {
+    StagExpSolver(alpha,betaCC,betaEdge,gammaCC,umacNew,umac,1.0,geom);
+  } else {
+    Print() << "Error: Invalid choice of algorithm_type\n";
+  }
 
         AMREX_D_TERM(MultiFab::Copy(umac[0], umacNew[0], 0, 0, 1, 0);,
                      MultiFab::Copy(umac[1], umacNew[1], 0, 0, 1, 0);,
@@ -295,7 +295,7 @@ void main_driver(const char* argv)
         }
     }
 
-    // Call the timer again and compute the maximum difference between the start time 
+    // Call the timer again and compute the maximum difference between the start time
     // and stop time over all processors
     Real stop_time = ParallelDescriptor::second() - strt_time;
     ParallelDescriptor::ReduceRealMax(stop_time);

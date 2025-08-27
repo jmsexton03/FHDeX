@@ -21,7 +21,7 @@ void app_bc_phonon_gpu(const paramPlane* surf, FhdParticleContainer::ParticleTyp
             part.idata(FHD_intData::fluxRec) = surf->boundary;
 //         char str[] = std::to_string(surf->boundary);
       }
-      
+
       if(amrex::Random(engine) < surf->sinkRight)
       {
         *runtime = 0;
@@ -39,21 +39,21 @@ void app_bc_phonon_gpu(const paramPlane* surf, FhdParticleContainer::ParticleTyp
         Real cosAlpha = dotprod/speed;
 
         Real probSpec = exp(-16*M_PI*M_PI*surf->specularityRight*surf->specularityRight*cosAlpha*cosAlpha/(part.rdata(FHD_realData::lambda)*part.rdata(FHD_realData::lambda)));
-        
+
         //cout << "SPEC " << surf->boundary << ": " << part.id() << ", " << surf->specularityRight << ", " << part.rdata(FHD_realData::lambda) << ", " << probSpec << endl;
-        
+
         if(amrex::Random(engine) < probSpec)
         {
             //Specular
           //(*specCount)++;
           amrex::Gpu::Atomic::Add(specCount, 1);
           dotprod = part.rdata(FHD_realData::velx)*surf->rnx + part.rdata(FHD_realData::vely)*surf->rny
-          	+ part.rdata(FHD_realData::velz)*surf->rnz;
+            + part.rdata(FHD_realData::velz)*surf->rnz;
 
           part.rdata(FHD_realData::velx) = -2.0*dotprod*surf->rnx + part.rdata(FHD_realData::velx);
           part.rdata(FHD_realData::vely) = -2.0*dotprod*surf->rny + part.rdata(FHD_realData::vely);
           part.rdata(FHD_realData::velz) = -2.0*dotprod*surf->rnz + part.rdata(FHD_realData::velz);
-        
+
         }else
         {
             //Lambert cosine law
@@ -61,11 +61,11 @@ void app_bc_phonon_gpu(const paramPlane* surf, FhdParticleContainer::ParticleTyp
 /*          randomhemisphere(surf->cosThetaRight, surf->sinThetaRight, surf->cosPhiRight, surf->sinPhiRight,*/
 /*                            &part.rdata(FHD_realData::velx),&part.rdata(FHD_realData::vely), &part.rdata(FHD_realData::velz), */
 /*                            engine);        */
-            
+
           cosineLawHemisphere(surf->cosThetaRight, surf->sinThetaRight, surf->cosPhiRight, surf->sinPhiRight,
-                            &part.rdata(FHD_realData::velx),&part.rdata(FHD_realData::vely), &part.rdata(FHD_realData::velz), speed, 
-                            engine);        
-        
+                            &part.rdata(FHD_realData::velx),&part.rdata(FHD_realData::vely), &part.rdata(FHD_realData::velz), speed,
+                            engine);
+
         }
       }
       else if(amrex::Random(engine) < surf->periodicity)
@@ -118,7 +118,7 @@ void app_bc_phonon_gpu(const paramPlane* surf, FhdParticleContainer::ParticleTyp
             part.idata(FHD_intData::fluxRec) = -surf->boundary;
          //   cout << "BC2: " << part.idata(FHD_intData::fluxRec) << endl;
       }
-      
+
       if(amrex::Random(engine) < surf->sinkLeft)
       {
         *runtime = 0;
@@ -134,31 +134,31 @@ void app_bc_phonon_gpu(const paramPlane* surf, FhdParticleContainer::ParticleTyp
         Real cosAlpha = dotprod/speed;
 
         Real probSpec = exp(-16*M_PI*M_PI*surf->specularityLeft*surf->specularityLeft*cosAlpha*cosAlpha/(part.rdata(FHD_realData::lambda)*part.rdata(FHD_realData::lambda)));
-        
+
         if(amrex::Random(engine) < probSpec)
         {
             //Specular
           //(*specCount)++;
           amrex::Gpu::Atomic::Add(specCount, 1);
           dotprod = part.rdata(FHD_realData::velx)*surf->lnx + part.rdata(FHD_realData::vely)*surf->lny
-          	+ part.rdata(FHD_realData::velz)*surf->lnz;
+            + part.rdata(FHD_realData::velz)*surf->lnz;
 
           part.rdata(FHD_realData::velx) = -2.0*dotprod*surf->lnx + part.rdata(FHD_realData::velx);
           part.rdata(FHD_realData::vely) = -2.0*dotprod*surf->lny + part.rdata(FHD_realData::vely);
           part.rdata(FHD_realData::velz) = -2.0*dotprod*surf->lnz + part.rdata(FHD_realData::velz);
-        
+
         }else
         {
-            //Lambert cosine law 
+            //Lambert cosine law
           cosineLawHemisphere(surf->cosThetaLeft, surf->sinThetaLeft, surf->cosPhiLeft, surf->sinPhiLeft,
-                &part.rdata(FHD_realData::velx),&part.rdata(FHD_realData::vely), &part.rdata(FHD_realData::velz), speed, 
+                &part.rdata(FHD_realData::velx),&part.rdata(FHD_realData::vely), &part.rdata(FHD_realData::velz), speed,
                 engine);
-                
+
 /*            randomhemisphere(surf->cosThetaLeft, surf->sinThetaLeft, surf->cosPhiLeft, surf->sinPhiLeft,*/
 /*                &part.rdata(FHD_realData::velx),&part.rdata(FHD_realData::vely), &part.rdata(FHD_realData::velz), */
 /*                engine);       */
         }
-        
+
 
       }
       else if(amrex::Random(engine) < surf->periodicity)
@@ -196,7 +196,7 @@ void app_bc_phonon_gpu(const paramPlane* surf, FhdParticleContainer::ParticleTyp
         *push = 1;
       }
    }
-   
+
 
 }
 

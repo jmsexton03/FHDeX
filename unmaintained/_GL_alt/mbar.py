@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-  
+
 import numpy as np
 import pymbar
 
@@ -15,8 +15,8 @@ files = []
 phi_initial = 0.05
 phi_increment = 0.0025
 for y in range (0,N):
-	print('data'+str((y)*phi_increment+phi_initial))
-	files.append('data'+str((y)*phi_increment+phi_initial))
+  print('data'+str((y)*phi_increment+phi_initial))
+  files.append('data'+str((y)*phi_increment+phi_initial))
 
 x_kn = []
 N_k = []
